@@ -24,7 +24,7 @@ function HeroBanner() {
             PHYSIQUE
           </span>
         </h1>
-        <button className="m-2 rounded-md bg-[#AAFF00] px-8 py-4 text-[#1d1d1f] hover:bg-[#9EF200]">
+        <button className="m-2 rounded-md bg-[#AAFF00] px-5 py-3 text-[#1d1d1f] hover:bg-[#9EF200] md:px-8 md:py-4">
           GET STARTED
         </button>
       </div>
