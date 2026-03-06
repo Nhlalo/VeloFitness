@@ -89,12 +89,9 @@ export default function Header({}) {
             </figcaption>
           </button>
           <nav className="hidden lg:block">
-            <ul className="flex gap-10">
+            <ul className="flex items-center gap-10">
               {navLinksContent.map((element) => (
-                <li
-                  key={element.key}
-                  className="cursor:pointer hover:underline"
-                >
+                <li key={element.key} className="hover:underline">
                   <Link
                     to="/"
                     style={{ color: currentColors?.color }}
@@ -104,6 +101,15 @@ export default function Header({}) {
                   </Link>
                 </li>
               ))}
+              <li className="rounded-md bg-[#AAFF00] px-8 py-4 hover:bg-[#9EF200]">
+                <Link
+                  to="/"
+                  style={{ color: currentColors?.color }}
+                  className="block min-w-[9ch] text-center font-bold"
+                >
+                  Join Today
+                </Link>
+              </li>
             </ul>
           </nav>
 
