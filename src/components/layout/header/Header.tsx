@@ -57,7 +57,7 @@ export default function Header({}) {
   return (
     <>
       {/* Placeholder pushes the content down, while the real header floats above it. */}
-      <div className="h-16" aria-hidden="true"></div>
+      <div className="h-20" aria-hidden="true"></div>
       <header
         style={{
           backgroundColor: currentColors?.bg,
