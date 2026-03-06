@@ -17,12 +17,17 @@ function HeroBanner() {
       >
         Your browser does not support the video tag
       </video>
-      <h1 className="absolute top-[30%] flex flex-col pl-8 text-5xl md:text-7xl">
-        <span className="text-[#4B5563]">DESIGN YOUR</span>
-        <span className="text-transparent [-webkit-text-stroke:2px_#4B5563]">
-          PHYSIQUE
-        </span>
-      </h1>
+      <div className="absolute top-[30%] pl-8">
+        <h1 className="flex flex-col text-5xl md:text-7xl">
+          <span className="text-[#1d1d1f]">DESIGN YOUR</span>
+          <span className="text-transparent [-webkit-text-stroke:2px_#1d1d1f]">
+            PHYSIQUE
+          </span>
+        </h1>
+        <button className="m-2 rounded-md bg-[#AAFF00] px-8 py-4 text-[#1d1d1f] hover:bg-[#9EF200]">
+          GET STARTED
+        </button>
+      </div>
     </section>
   );
 }
