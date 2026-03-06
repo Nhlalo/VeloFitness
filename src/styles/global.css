@@ -1,0 +1,40 @@
+/* RESET STRATEGY:
+   - Normalize.css provides consistent browser defaults
+   - Tailwind Preflight is imported but overridden by Normalize
+   - We want browser-native defaults, not zero-based reset
+*/
+@import "tailwindcss";
+@import url(normalize.css);
+
+@layer base {
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+  body {
+    min-height: 100vh;
+  }
+
+  p {
+    margin: 0;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
