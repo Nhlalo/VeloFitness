@@ -16,9 +16,11 @@ function HeroBanner() {
       >
         Your browser does not support the video tag
       </video>
-      <h1>
-        <span>DESIGN YOUR</span>
-        <span>PHYSIQUE</span>
+      <h1 className="absolute top-[30%] flex flex-col pl-8 text-5xl md:text-7xl">
+        <span className="text-[#4B5563]">DESIGN YOUR</span>
+        <span className="text-transparent [-webkit-text-stroke:2px_#4B5563]">
+          PHYSIQUE
+        </span>
       </h1>
     </section>
   );
