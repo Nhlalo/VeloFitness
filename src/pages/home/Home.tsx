@@ -3,7 +3,7 @@ import WorkOutVideo from "../../assets/videos/herobanner.mp4";
 
 function HeroBanner() {
   return (
-    <section className="h-[88vh]">
+    <section className="relative h-[88vh]">
       <video
         src={WorkOutVideo}
         autoPlay
@@ -16,6 +16,10 @@ function HeroBanner() {
       >
         Your browser does not support the video tag
       </video>
+      <h1>
+        <span>DESIGN YOUR</span>
+        <span>PHYSIQUE</span>
+      </h1>
     </section>
   );
 }
