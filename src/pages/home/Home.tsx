@@ -12,6 +12,7 @@ function HeroBanner() {
         playsInline
         disablePictureInPicture
         controls={false}
+        aria-hidden="true"
         className="pointer-events-none h-full w-full scale-x-[-1] object-cover"
       >
         Your browser does not support the video tag
