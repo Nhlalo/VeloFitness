@@ -6,6 +6,7 @@ import {
   faSnapchat,
 } from "@fortawesome/free-brands-svg-icons";
 import handleScrollToTop from "../../../utils/scrollToTop";
+import Logo from "../../../assets/images/logo.png";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -23,13 +24,17 @@ export default function Footer() {
                 aria-hidden="true"
                 className="flex w-fit items-center justify-center rounded-full bg-[#5b5b5b] p-1"
               >
-                <img src="#" alt="logo" className="height-11 w-11 fill-white" />
+                <img
+                  src={Logo}
+                  alt="  Vélo Fitness"
+                  className="height-11 w-11 fill-white"
+                />
               </div>
               <span
                 aria-hidden="true"
                 className="ml-2 text-2xl font-black text-white"
               >
-                Website name
+                Vélo Fitness
               </span>
             </button>
             <p className="max-w-[55ch] leading-relaxed">
