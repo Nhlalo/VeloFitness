@@ -7,10 +7,10 @@ const listItemKeys = {
 };
 //Array containing the content within the links and keys assigned to the list items
 const navLinksContent = [
-  { content: "#Link", key: listItemKeys.concerts },
-  { content: "#Link", key: listItemKeys.charts },
-  { content: "#Link", key: listItemKeys.mymusic },
-  { content: "#Link", key: listItemKeys.contacts },
+  { content: "Clubs", key: listItemKeys.concerts },
+  { content: "Membership", key: listItemKeys.charts },
+  { content: "Classes", key: listItemKeys.mymusic },
+  { content: "Join Today", key: listItemKeys.contacts },
 ];
 
 type Prop = {
