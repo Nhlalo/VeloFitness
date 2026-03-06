@@ -5,6 +5,7 @@ import { Menu } from "lucide-react";
 import { navLinksContent } from "../../../data/constants/navigation.ts";
 import handleScrollToTop from "../../../utils/scrollToTop.ts";
 import Sidebar from "./Sidebar.tsx";
+import Logo from "../../../assets/images/logo.png";
 
 export default function Header({}) {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -71,11 +72,11 @@ export default function Header({}) {
             className="flex items-center gap-2"
           >
             <div
-              className="w-[clamp(15px, 10%, 45px)] flex items-center justify-center rounded-full"
+              className="flex w-[clamp(15px,10%,45px)] items-center justify-center rounded-full"
               style={{ backgroundColor: currentColors?.logoBG }}
               aria-hidden="true"
             >
-              <img src="#" alt="Logo" className="h-auto w-[95%]" />
+              <img src={Logo} alt="Vélo Fitness" className="h-auto w-[95%]" />
             </div>
             <figcaption
               aria-hidden="true"
@@ -84,7 +85,7 @@ export default function Header({}) {
               }}
               className="text-lg font-bold"
             >
-              Website Name
+              Vélo Fitness
             </figcaption>
           </button>
           <nav className="hidden lg:block">
