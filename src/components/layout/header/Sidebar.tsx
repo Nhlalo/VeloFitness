@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import useFocusTrap from "../../../hooks/useFocusTrap";
 import NavLinksContentRef from "../../../data/constants/navigation";
 import Container from "../../shared/Container";
+import Logo from "../../../assets/images/logo.png";
 
 //UpdateSidebarVisibility(function)- change the state, in the parent component, of whether the side bar should be closed or not
 //sideBarStatus(boolean) - the value that determines if the side bar should be displayed or not
@@ -91,15 +92,15 @@ export default function Sidebar({
             >
               <div
                 aria-hidden="true"
-                className="w-[clamp(15px, 10%, 45px)] flex items-center justify-center rounded-full bg-[#636366]"
+                className="flex w-[clamp(15px,10%,45px)] items-center justify-center rounded-full bg-[#636366]"
               >
-                <img src="#" alt="Website" className="h-auto w-[95%]" />
+                <img src={Logo} alt="Vélo Fitness" className="h-auto w-[95%]" />
               </div>
               <figcaption
                 aria-hidden="true"
                 className="text-5 font-bold text-white"
               >
-                Website Name
+                Vélo Fitness
               </figcaption>
             </button>
             <button
