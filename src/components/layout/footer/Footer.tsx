@@ -38,10 +38,11 @@ export default function Footer() {
               </span>
             </button>
             <p className="max-w-[55ch] leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente
-              hic unde repellendus eaque sint facere nobis eum molestiae veniam,
-              voluptas esse labore, necessitatibus aliquid ex dignissimos
-              consequuntur possimus. Veritatis, qui?
+              More than just a gym—we're a wellness destination. From
+              high-intensity workouts to recovery zones and nutrition guidance,
+              we support your complete health journey in one modern facility.
+              Whether you're a first-timer or a seasoned athlete, our community
+              welcomes you to become the strongest version of yourself.
             </p>
           </div>
 
