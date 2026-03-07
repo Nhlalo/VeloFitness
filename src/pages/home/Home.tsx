@@ -19,7 +19,7 @@ function HeroBanner() {
       >
         Your browser does not support the video tag
       </video>
-      <div className="absolute top-[30%] pl-8">
+      <div className="absolute top-[50%] -translate-y-1/2 pl-8">
         <h1 className="flex flex-col text-5xl md:text-7xl">
           <span className="text-[#1d1d1f]">DESIGN YOUR</span>
           <span className="text-transparent [-webkit-text-stroke:2px_#1d1d1f]">
