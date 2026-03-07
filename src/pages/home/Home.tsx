@@ -2,6 +2,7 @@ import Container from "../../components/shared/Container";
 import WorkOutVideo from "../../assets/videos/herobanner.mp4";
 import TenseTraining from "../../assets/images/tensetraining.jpg";
 import TenseTraining2 from "../../assets/images/tenseTraining.jpg";
+import PeopleTraining from "../../assets/images/people-training.jpg";
 
 function HeroBanner() {
   return (
@@ -73,11 +74,37 @@ function Classes() {
     </Container>
   );
 }
+
+function JoinUs() {
+  return (
+    <Container>
+      <div>
+        <h2 className="mb-4 text-center text-4xl font-semibold">
+          WHY JOIN US?
+        </h2>
+        <p className="m-auto max-w-[75ch] text-gray-800">
+          Our community brings together professionals from diverse backgrounds,
+          fostering a collaborative environment where ideas flourish. You'll
+          find mentorship, build valuable connections, and grow alongside
+          motivated peers who share your ambition.
+        </p>
+        <div className="mt-16">
+          <img
+            src={PeopleTraining}
+            alt="Person training inside a gym"
+            className="aspect-2/1 rounded-xl object-cover"
+          />
+        </div>
+      </div>
+    </Container>
+  );
+}
 export default function Home() {
   return (
     <>
       <HeroBanner />
       <Classes />
+      <JoinUs />
     </>
   );
 }
