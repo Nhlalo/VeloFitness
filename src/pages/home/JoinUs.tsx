@@ -40,16 +40,18 @@ export default function JoinUs() {
 
   const handleClick = (e: React.PointerEvent<HTMLAnchorElement>) => {
     e.preventDefault(); // Prevents the "to" navigation
-    const linkName: string | undefined = e.currentTarget.dataset.linkName;
-    if (linkName === "Discover Classes") {
-      navigate("/classes");
-    } else if (linkName === "Discover Personal Training") {
-      navigate("/classes");
-    }
-    if (linkName === "Discover Clubs") {
-      navigate("/clubs");
-    }
+    const linkName = e.currentTarget.dataset.linkName;
+
+    const routes: Record<string, string> = {
+      "Discover Classes": "/classes",
+      "Discover Personal Training": "/classes",
+      "Discover Clubs": "/clubs",
+    };
+
+    const route = linkName ? routes[linkName] : null;
+    if (route) navigate(route);
   };
+
   return (
     <Container>
       <div>
