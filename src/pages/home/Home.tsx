@@ -1,9 +1,15 @@
+import { Link, useNavigate } from "react-router";
 import Container from "../../components/shared/Container";
 import WorkOutVideo from "../../assets/videos/herobanner.mp4";
 import TenseTraining from "../../assets/images/tensetraining.jpg";
 import TenseTraining2 from "../../assets/images/tenseTraining.jpg";
 import PeopleTraining from "../../assets/images/people-training.jpg";
 
+const joinUsKeys: string[] = [
+  crypto.randomUUID(),
+  crypto.randomUUID(),
+  crypto.randomUUID(),
+];
 function HeroBanner() {
   return (
     <section className="relative h-[88vh]">
@@ -74,8 +80,47 @@ function Classes() {
     </Container>
   );
 }
-
+type Training = {
+  heading: string;
+  description: string;
+  linkName: string;
+};
 function JoinUs() {
+  const navigate = useNavigate();
+
+  const gymOfferings: Training[] = [
+    {
+      heading: "Signature Classes",
+      description:
+        " New and Unlimited classes exclusive to Velo. Designed for the individual. Powered by the collective.",
+      linkName: "Discover Classes",
+    },
+    {
+      heading: "Personal Training",
+      description:
+        "Precision-backed 1:1 Personal Training with EFTI-certified COACHES, dedicated to maximizing your potential.",
+      linkName: "Discover Personal Training",
+    },
+    {
+      heading: "Clubs",
+      description:
+        "State-of-the-art training environments equipped with premium functional and strength equipment. Access to EFTI-certified coach oversight and structured training zones.",
+      linkName: "Discover Clubs",
+    },
+  ];
+
+  const handleClick = (e: React.PointerEvent<HTMLAnchorElement>) => {
+    e.preventDefault(); // Prevents the "to" navigation
+    const linkName: string | undefined = e.currentTarget.dataset.linkName;
+    if (linkName === "Discover Classes") {
+      navigate("/classes");
+    } else if (linkName === "Discover Personal Training") {
+      navigate("/classes");
+    }
+    if (linkName === "Discover Clubs") {
+      navigate("/clubs");
+    }
+  };
   return (
     <Container>
       <div>
@@ -92,8 +137,26 @@ function JoinUs() {
           <img
             src={PeopleTraining}
             alt="Person training inside a gym"
-            className="aspect-2/1 rounded-xl object-cover"
+            className="rounded-xl object-cover md:aspect-2/1"
           />
+        </div>
+        <div>
+          {gymOfferings.map((content: Training, index: number) => {
+            return (
+              <div key={joinUsKeys[index]}>
+                <hr aria-hidden="true" />
+                <h3>{content.heading}</h3>
+                <p>{content.description}</p>
+                <Link
+                  to="/"
+                  data-link-name={content.linkName}
+                  onClick={handleClick}
+                >
+                  {content.linkName}
+                </Link>
+              </div>
+            );
+          })}
         </div>
       </div>
     </Container>
