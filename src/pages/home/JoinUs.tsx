@@ -8,12 +8,6 @@ type Training = {
   linkName: string;
 };
 
-const joinUsKeys: string[] = [
-  crypto.randomUUID(),
-  crypto.randomUUID(),
-  crypto.randomUUID(),
-];
-
 export default function JoinUs() {
   const navigate = useNavigate();
 
@@ -72,9 +66,9 @@ export default function JoinUs() {
           />
         </div>
         <div>
-          {gymOfferings.map((content: Training, index: number) => {
+          {gymOfferings.map((content: Training) => {
             return (
-              <div key={joinUsKeys[index]}>
+              <div key={content.heading}>
                 <hr aria-hidden="true" />
                 <h3>{content.heading}</h3>
                 <p>{content.description}</p>
