@@ -56,24 +56,33 @@ export default function JoinUs() {
           find mentorship, build valuable connections, and grow alongside
           motivated peers who share your ambition.
         </p>
-        <div className="mt-16">
+        <div className="mt-16 lg:relative">
           <img
             src={PeopleTraining}
             alt="Person training inside a gym"
             className="rounded-xl object-cover md:aspect-2/1"
           />
         </div>
-        <div>
+        <div className="flex flex-col gap-3 px-9 lg:absolute lg:bottom-0 lg:flex-row">
           {gymOfferings.map((content: Training) => {
             return (
-              <div key={content.heading}>
-                <hr aria-hidden="true" />
-                <h3>{content.heading}</h3>
-                <p>{content.description}</p>
+              <div
+                key={content.heading}
+                className="flex-1 bg-white px-6 pt-0 pb-8 text-black lg:bg-transparent lg:text-white lg:hover:bg-white lg:hover:text-black"
+              >
+                <hr
+                  aria-hidden="true"
+                  className="text-white opacity-0 lg:opacity-100"
+                />
+                <h3 className="mb-6 pt-8 text-3xl font-semibold">
+                  {content.heading}
+                </h3>
+                <p className="mb-6">{content.description}</p>
                 <button
                   type="button"
                   data-link-name={content.linkName}
                   onClick={handleClick}
+                  className="font-semibold text-black underline underline-offset-8"
                 >
                   {content.linkName}
                 </button>
