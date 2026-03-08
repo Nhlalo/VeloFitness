@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import Container from "../../components/shared/Container";
 import PeopleTraining from "../../assets/images/people-training.jpg";
+import { useState } from "react";
 
 type Training = {
   heading: string;
@@ -15,6 +16,8 @@ const routes: Record<string, string> = {
 };
 
 export default function JoinUs() {
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+
   const navigate = useNavigate();
 
   const gymOfferings: Training[] = [
@@ -43,6 +46,13 @@ export default function JoinUs() {
     const route = linkName ? routes[linkName] : null;
     if (route) navigate(route);
   };
+  const handleOnMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    const linkName = e.currentTarget.dataset.linkName;
+    if (linkName) setHoveredItem(linkName);
+  };
+  const handleOnMouseLeave = () => {
+    setHoveredItem(null);
+  };
 
   return (
     <Container>
@@ -65,10 +75,16 @@ export default function JoinUs() {
         </div>
         <div className="flex flex-col gap-3 px-9 lg:absolute lg:bottom-0 lg:flex-row">
           {gymOfferings.map((content: Training) => {
+            const buttonClasses = `font-semibold text-black underline underline-offset-8 transition-opacity duration-200 ${
+              hoveredItem === content.linkName ? "opacity-100" : "opacity-0"
+            }`;
             return (
               <div
                 key={content.heading}
                 className="flex-1 bg-white px-6 pt-0 pb-8 text-black lg:bg-transparent lg:text-white lg:hover:bg-white lg:hover:text-black"
+                onMouseEnter={handleOnMouseEnter}
+                onMouseLeave={handleOnMouseLeave}
+                data-link-name={content.linkName}
               >
                 <hr
                   aria-hidden="true"
@@ -82,7 +98,8 @@ export default function JoinUs() {
                   type="button"
                   data-link-name={content.linkName}
                   onClick={handleClick}
-                  className="font-semibold text-black underline underline-offset-8"
+                  className={buttonClasses}
+                  style={{ opacity: hoveredItem === content.linkName ? 1 : 0 }}
                 >
                   {content.linkName}
                 </button>
