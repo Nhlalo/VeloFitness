@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import Container from "../../components/shared/Container";
 import PeopleTraining from "../../assets/images/people-training.jpg";
 
@@ -6,6 +6,12 @@ type Training = {
   heading: string;
   description: string;
   linkName: string;
+};
+
+const routes: Record<string, string> = {
+  "Discover Classes": "/classes",
+  "Discover Personal Training": "/classes",
+  "Discover Clubs": "/clubs",
 };
 
 export default function JoinUs() {
@@ -32,16 +38,8 @@ export default function JoinUs() {
     },
   ];
 
-  const handleClick = (e: React.PointerEvent<HTMLAnchorElement>) => {
-    e.preventDefault(); // Prevents the "to" navigation
+  const handleClick = (e: React.PointerEvent<HTMLButtonElement>) => {
     const linkName = e.currentTarget.dataset.linkName;
-
-    const routes: Record<string, string> = {
-      "Discover Classes": "/classes",
-      "Discover Personal Training": "/classes",
-      "Discover Clubs": "/clubs",
-    };
-
     const route = linkName ? routes[linkName] : null;
     if (route) navigate(route);
   };
@@ -72,13 +70,13 @@ export default function JoinUs() {
                 <hr aria-hidden="true" />
                 <h3>{content.heading}</h3>
                 <p>{content.description}</p>
-                <Link
-                  to="/"
+                <button
+                  type="button"
                   data-link-name={content.linkName}
                   onClick={handleClick}
                 >
                   {content.linkName}
-                </Link>
+                </button>
               </div>
             );
           })}
