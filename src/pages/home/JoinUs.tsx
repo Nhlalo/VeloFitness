@@ -87,7 +87,7 @@ export default function JoinUs() {
           aria-hidden="true"
         />
       </div>
-      <div className="flex flex-col gap-3 px-9 lg:absolute lg:bottom-0 lg:z-3 lg:flex-row">
+      <div className="flex w-full flex-col gap-3 px-9 lg:absolute lg:top-[50%] lg:left-[50%] lg:z-3 lg:-translate-x-1/2 lg:-translate-y-1/2 lg:flex-row">
         {gymOfferings.map((content: Training) => {
           // Button visibility:
           // - Mobile: always visible
