@@ -9,6 +9,7 @@ type Training = {
   linkName: string;
 };
 
+// Navigation mapping - update when routes change
 const routes: Record<string, string> = {
   "Discover Classes": "/classes",
   "Discover Personal Training": "/classes",
@@ -16,7 +17,9 @@ const routes: Record<string, string> = {
 };
 
 export default function JoinUs() {
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(
+    "Signature Classes",
+  );
 
   const navigate = useNavigate();
 
@@ -50,6 +53,7 @@ export default function JoinUs() {
     const linkName = e.currentTarget.dataset.linkName;
     if (linkName) setHoveredItem(linkName);
   };
+
   const handleOnMouseLeave = () => {
     setHoveredItem(null);
   };
@@ -75,9 +79,11 @@ export default function JoinUs() {
         </div>
         <div className="flex flex-col gap-3 px-9 lg:absolute lg:bottom-0 lg:flex-row">
           {gymOfferings.map((content: Training) => {
-            const buttonClasses = `font-semibold text-black underline underline-offset-8 transition-opacity duration-200 ${
-              hoveredItem === content.linkName ? "opacity-100" : "opacity-0"
-            }`;
+            // Button visibility:
+            // - Mobile: always visible
+            // - Desktop: visible only on hover
+            const buttonClasses = `font-semibold text-black underline underline-offset-8 transition-opacity duration-200 
+  opacity-100 ${hoveredItem === content.linkName ? "lg:opacity-100" : "lg:opacity-0"}`;
             return (
               <div
                 key={content.heading}
@@ -99,7 +105,6 @@ export default function JoinUs() {
                   data-link-name={content.linkName}
                   onClick={handleClick}
                   className={buttonClasses}
-                  style={{ opacity: hoveredItem === content.linkName ? 1 : 0 }}
                 >
                   {content.linkName}
                 </button>
