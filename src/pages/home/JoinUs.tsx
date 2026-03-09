@@ -57,7 +57,7 @@ export default function JoinUs() {
 
   return (
     <Container>
-      <div>
+      <div className="lg:relative">
         <h2 className="mb-4 text-center text-4xl font-semibold">
           WHY JOIN US?
         </h2>
@@ -67,7 +67,7 @@ export default function JoinUs() {
           find mentorship, build valuable connections, and grow alongside
           motivated peers who share your ambition.
         </p>
-        <div className="mt-16 lg:relative">
+        <div className="mt-16">
           <img
             src={PeopleTraining}
             alt="Person training inside a gym"
@@ -87,7 +87,6 @@ export default function JoinUs() {
             const parentDivClasses = `flex-1 bg-white px-6 pt-0 pb-8 text-black 
   ${hoveredItem === content.linkName ? "lg:bg-white lg:text-black" : "lg:bg-transparent lg:text-white"}
   `;
-
             return (
               <div
                 key={content.heading}
