@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import Container from "../../components/shared/Container";
 import GroupTraining from "../../assets/images/group-training.jpg";
 import PersonalTraining from "../../assets/images/personal-training.jpg";
 import Club from "../../assets/images/gym-club.jpg";
@@ -55,83 +54,79 @@ export default function JoinUs() {
   };
 
   function imgClass(option: string): string {
-    return `rounded-xl object-cover  ${hoveredItem === option ? "opacity-100 z-2" : "opacity-0 z-1"}`;
+    return ` object-cover  ${hoveredItem === option ? "opacity-100 z-2" : "opacity-0 z-1"}`;
   }
 
   return (
-    <Container>
-      <div className="lg:relative">
-        <h2 className="mb-4 text-center text-4xl font-semibold">
-          WHY JOIN US?
-        </h2>
-        <p className="m-auto max-w-[75ch] text-gray-800">
-          Our community brings together professionals from diverse backgrounds,
-          fostering a collaborative environment where ideas flourish. You'll
-          find mentorship, build valuable connections, and grow alongside
-          motivated peers who share your ambition.
-        </p>
-        <div className="relative mt-16 overflow-hidden">
-          {/* Image is relative, while others are absoulte, as it will determine the size of div to avoid constant reflow */}
-          <img
-            src={GroupTraining}
-            alt="Group training inside a gym"
-            className={`${imgClass("Discover Classes")} static`}
-            aria-hidden="true"
-          />
-          <img
-            src={PersonalTraining}
-            alt="Personal training inside a gym"
-            className={`${imgClass("Discover Personal Training")} absolute top-0 left-0 h-full`}
-            aria-hidden="true"
-          />
-          <img
-            src={Club}
-            alt="Gym club"
-            className={`${imgClass("Discover Clubs")} absolute top-0 left-0 h-full`}
-            aria-hidden="true"
-          />
-        </div>
-        <div className="flex flex-col gap-3 px-9 lg:absolute lg:bottom-0 lg:z-3 lg:flex-row">
-          {gymOfferings.map((content: Training) => {
-            // Button visibility:
-            // - Mobile: always visible
-            // - Desktop: visible only on hover
-            const buttonClasses = `font-semibold text-black underline underline-offset-8 transition-opacity duration-200 
+    <section className="lg:relative">
+      <h2 className="mb-4 text-center text-4xl font-semibold">WHY JOIN US?</h2>
+      <p className="m-auto max-w-[75ch] text-gray-800">
+        Our community brings together professionals from diverse backgrounds,
+        fostering a collaborative environment where ideas flourish. You'll find
+        mentorship, build valuable connections, and grow alongside motivated
+        peers who share your ambition.
+      </p>
+      <div className="relative mt-16 overflow-hidden">
+        {/* Image is relative, while others are absoulte, as it will determine the size of div to avoid constant reflow */}
+        <img
+          src={GroupTraining}
+          alt="Group training inside a gym"
+          className={`${imgClass("Discover Classes")} static`}
+          aria-hidden="true"
+        />
+        <img
+          src={PersonalTraining}
+          alt="Personal training inside a gym"
+          className={`${imgClass("Discover Personal Training")} absolute top-0 left-0 h-full`}
+          aria-hidden="true"
+        />
+        <img
+          src={Club}
+          alt="Gym club"
+          className={`${imgClass("Discover Clubs")} absolute top-0 left-0 h-full`}
+          aria-hidden="true"
+        />
+      </div>
+      <div className="flex flex-col gap-3 px-9 lg:absolute lg:bottom-0 lg:z-3 lg:flex-row">
+        {gymOfferings.map((content: Training) => {
+          // Button visibility:
+          // - Mobile: always visible
+          // - Desktop: visible only on hover
+          const buttonClasses = `font-semibold text-black underline underline-offset-8 transition-opacity duration-200 
   opacity-100 ${hoveredItem === content.linkName ? "lg:opacity-100" : "lg:opacity-0"}`;
-            //Div appearance
-            // - Mobile: white background with black text
-            // - Desktop: transparent background with white text until hovered
-            const parentDivClasses = `flex-1 bg-white px-6 pt-0 pb-8 text-black 
+          //Div appearance
+          // - Mobile: white background with black text
+          // - Desktop: transparent background with white text until hovered
+          const parentDivClasses = `flex-1 bg-white px-6 pt-0 pb-8 text-black 
   ${hoveredItem === content.linkName ? "lg:bg-white lg:text-black" : "lg:bg-transparent lg:text-white"}
   `;
-            return (
-              <div
-                key={content.heading}
-                className={parentDivClasses}
-                onMouseEnter={handleOnMouseEnter}
+          return (
+            <div
+              key={content.heading}
+              className={parentDivClasses}
+              onMouseEnter={handleOnMouseEnter}
+              data-link-name={content.linkName}
+            >
+              <hr
+                aria-hidden="true"
+                className="text-white opacity-0 lg:opacity-100"
+              />
+              <h3 className="mb-6 pt-8 text-3xl font-semibold">
+                {content.heading}
+              </h3>
+              <p className="mb-6">{content.description}</p>
+              <button
+                type="button"
                 data-link-name={content.linkName}
+                onClick={handleClick}
+                className={buttonClasses}
               >
-                <hr
-                  aria-hidden="true"
-                  className="text-white opacity-0 lg:opacity-100"
-                />
-                <h3 className="mb-6 pt-8 text-3xl font-semibold">
-                  {content.heading}
-                </h3>
-                <p className="mb-6">{content.description}</p>
-                <button
-                  type="button"
-                  data-link-name={content.linkName}
-                  onClick={handleClick}
-                  className={buttonClasses}
-                >
-                  {content.linkName}
-                </button>
-              </div>
-            );
-          })}
-        </div>
+                {content.linkName}
+              </button>
+            </div>
+          );
+        })}
       </div>
-    </Container>
+    </section>
   );
 }
