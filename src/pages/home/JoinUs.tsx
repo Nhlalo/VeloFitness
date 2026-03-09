@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import Container from "../../components/shared/Container";
 import GroupTraining from "../../assets/images/group-training.jpg";
 import PersonalTraining from "../../assets/images/personal-training.jpg";
 import Club from "../../assets/images/gym-club.jpg";
-import { useState } from "react";
 
 type Training = {
   heading: string;
