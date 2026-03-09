@@ -12,11 +12,13 @@ export default function Classes() {
               src={TenseTraining}
               alt="tense training"
               className="w-full rounded-lg"
+              loading="lazy"
             />
             <img
               src={TenseTraining2}
               alt="tense training"
               className="absolute -bottom-[20%] -left-[5%] ml-2 max-h-43 max-w-[50%] rounded-lg"
+              loading="lazy"
             />
           </div>
         </div>

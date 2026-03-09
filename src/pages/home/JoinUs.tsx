@@ -75,18 +75,21 @@ export default function JoinUs() {
           alt="Group training inside a gym"
           className={`${imgClass("Discover Classes")} static`}
           aria-hidden="true"
+          loading="lazy"
         />
         <img
           src={PersonalTraining}
           alt="Personal training inside a gym"
           className={`${imgClass("Discover Personal Training")} absolute top-0 left-0 h-full`}
           aria-hidden="true"
+          loading="lazy"
         />
         <img
           src={Club}
           alt="Gym club"
           className={`${imgClass("Discover Clubs")} absolute top-0 left-0 h-full`}
           aria-hidden="true"
+          loading="lazy"
         />
       </div>
       <div className="flex w-full flex-col gap-3 px-9 lg:absolute lg:top-[50%] lg:left-[50%] lg:z-3 lg:-translate-x-1/2 lg:-translate-y-1/2 lg:flex-row">
