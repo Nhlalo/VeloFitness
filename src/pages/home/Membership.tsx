@@ -13,6 +13,7 @@ export default function Membership() {
         alt="Gym facility"
         aria-hidden="true"
         className="min-h-105"
+        loading="lazy"
       />
       <div className="absolute top-0 left-0 mx-8 mt-4 flex-1 bg-white px-6 py-10 text-black sm:m-9 md:px-14 md:py-16">
         <h2 className="mb-6 text-3xl font-semibold md:text-4xl">
