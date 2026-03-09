@@ -18,7 +18,7 @@ const routes: Record<string, string> = {
 
 export default function JoinUs() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(
-    "Signature Classes",
+    "Discover Classes",
   );
 
   const navigate = useNavigate();
@@ -51,11 +51,8 @@ export default function JoinUs() {
   };
   const handleOnMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
     const linkName = e.currentTarget.dataset.linkName;
-    if (linkName) setHoveredItem(linkName);
-  };
-
-  const handleOnMouseLeave = () => {
     setHoveredItem(null);
+    if (linkName) setHoveredItem(linkName);
   };
 
   return (
@@ -84,12 +81,18 @@ export default function JoinUs() {
             // - Desktop: visible only on hover
             const buttonClasses = `font-semibold text-black underline underline-offset-8 transition-opacity duration-200 
   opacity-100 ${hoveredItem === content.linkName ? "lg:opacity-100" : "lg:opacity-0"}`;
+            //Div appearance
+            // - Mobile: white background with black text
+            // - Desktop: transparent background with white text until hovered
+            const parentDivClasses = `flex-1 bg-white px-6 pt-0 pb-8 text-black 
+  ${hoveredItem === content.linkName ? "lg:bg-white lg:text-black" : "lg:bg-transparent lg:text-white"}
+  `;
+
             return (
               <div
                 key={content.heading}
-                className="flex-1 bg-white px-6 pt-0 pb-8 text-black lg:bg-transparent lg:text-white lg:hover:bg-white lg:hover:text-black"
+                className={parentDivClasses}
                 onMouseEnter={handleOnMouseEnter}
-                onMouseLeave={handleOnMouseLeave}
                 data-link-name={content.linkName}
               >
                 <hr
