@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import Container from "../../components/shared/Container";
+import Club from "../../assets/images/gym-club.jpg";
 
 export default function Membership() {
   const navigate = useNavigate();
@@ -7,19 +7,29 @@ export default function Membership() {
     navigate("/membership");
   }
   return (
-    <Container>
-      <div>
-        <h2>
+    <section className="relative">
+      <img
+        src={Club}
+        alt="Gym facility"
+        aria-hidden="true"
+        className="min-h-105"
+      />
+      <div className="absolute top-0 left-0 mx-8 mt-4 flex-1 bg-white px-6 py-10 text-black sm:m-9 md:px-14 md:py-16">
+        <h2 className="mb-6 text-3xl font-semibold md:text-4xl">
           One Membership. <br /> Limitless Potential.
         </h2>
-        <p>
+        <p className="mb-7 max-w-109 text-[#333]">
           Expert-led training sessions, personalized nutrition guidance, and
           relaxing spa facilities.
         </p>
-        <button type="button" onClick={handleClick}>
+        <button
+          type="button"
+          onClick={handleClick}
+          className="font-semibold text-black underline underline-offset-8"
+        >
           Explore Member Benefits
         </button>
       </div>
-    </Container>
+    </section>
   );
 }
