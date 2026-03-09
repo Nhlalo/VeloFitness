@@ -59,8 +59,10 @@ export default function JoinUs() {
 
   return (
     <section className="lg:relative">
-      <h2 className="mb-4 text-center text-4xl font-semibold">WHY JOIN US?</h2>
-      <p className="m-auto max-w-[75ch] text-gray-800">
+      <h2 className="mb-4 text-center font-semibold md:text-4xl">
+        WHY JOIN US?
+      </h2>
+      <p className="m-auto max-w-[75ch] py-1 text-gray-800">
         Our community brings together professionals from diverse backgrounds,
         fostering a collaborative environment where ideas flourish. You'll find
         mentorship, build valuable connections, and grow alongside motivated
