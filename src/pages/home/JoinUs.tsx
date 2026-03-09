@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router";
 import Container from "../../components/shared/Container";
-import PeopleTraining from "../../assets/images/people-training.jpg";
+import GroupTraining from "../../assets/images/group-training.jpg";
+import PersonalTraining from "../../assets/images/personal-training.jpg";
+import Club from "../../assets/images/gym-club.jpg";
 import { useState } from "react";
 
 type Training = {
@@ -17,9 +19,7 @@ const routes: Record<string, string> = {
 };
 
 export default function JoinUs() {
-  const [hoveredItem, setHoveredItem] = useState<string | null>(
-    "Discover Classes",
-  );
+  const [hoveredItem, setHoveredItem] = useState<string>("Discover Classes");
 
   const navigate = useNavigate();
 
@@ -51,9 +51,12 @@ export default function JoinUs() {
   };
   const handleOnMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
     const linkName = e.currentTarget.dataset.linkName;
-    setHoveredItem(null);
     if (linkName) setHoveredItem(linkName);
   };
+
+  function imgClass(option: string): string {
+    return `rounded-xl object-cover  ${hoveredItem === option ? "opacity-100 z-2" : "opacity-0 z-1"}`;
+  }
 
   return (
     <Container>
@@ -67,14 +70,25 @@ export default function JoinUs() {
           find mentorship, build valuable connections, and grow alongside
           motivated peers who share your ambition.
         </p>
-        <div className="mt-16">
+        <div className="relative mt-16 overflow-hidden">
+          {/* Image is relative, while others are absoulte, as it will determine the size of div to avoid constant reflow */}
           <img
-            src={PeopleTraining}
-            alt="Person training inside a gym"
-            className="rounded-xl object-cover md:aspect-2/1"
+            src={GroupTraining}
+            alt="Group training inside a gym"
+            className={`${imgClass("Discover Classes")} static`}
+          />
+          <img
+            src={PersonalTraining}
+            alt="Personal training inside a gym"
+            className={`${imgClass("Discover Personal Training")} absolute top-0 left-0 h-full`}
+          />
+          <img
+            src={Club}
+            alt="Gym club"
+            className={`${imgClass("Discover Clubs")} absolute top-0 left-0 h-full`}
           />
         </div>
-        <div className="flex flex-col gap-3 px-9 lg:absolute lg:bottom-0 lg:flex-row">
+        <div className="flex flex-col gap-3 px-9 lg:absolute lg:bottom-0 lg:z-3 lg:flex-row">
           {gymOfferings.map((content: Training) => {
             // Button visibility:
             // - Mobile: always visible
