@@ -60,3 +60,9 @@ function acquireLocalGyms(location: string): Gym[] | null {
 
   return null;
 }
+
+function acquireNumberGyms(): number {
+  return gymZipsPostals.size;
+}
+
+export { acquireLocalGyms, acquireNumberGyms };
