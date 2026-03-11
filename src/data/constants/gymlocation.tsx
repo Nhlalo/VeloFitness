@@ -1,4 +1,4 @@
-type City = "boston" | "johannesburg";
+type City = "boston" | "johannesburg" | "canada";
 
 const gymZipsPostals = new Map<string, City>([
   ["02108", "boston"],
@@ -8,6 +8,24 @@ const gymZipsPostals = new Map<string, City>([
   ["02110", "boston"],
   ["2196", "johannesburg"],
   ["2001", "johannesburg"],
+  ["M5L 1G9", "canada"],
+  ["M5R 0L2", "canada"],
+  ["M5V 0N8", "canada"],
+]);
+
+const gymDescription = new Map<string, string>([
+  [
+    "boston",
+    "From the heart of Back Bay to the tree-lined streets of Chestnut Hill, our Boston clubs are crafted for an unparalleled experience. Every location provides the essential elements of well-being, including innovative classes, expert trainers, and now The Stacked Studio, our dedicated space for strength training, only at Vélo Fitness Chestnut Hill.",
+  ],
+  [
+    "johannesburg",
+    "From the vibrant energy of Maboneng to the sophisticated heart of Sandton, our Johannesburg clubs are crafted for excellence. Every location delivers the key pillars of wellness, including dynamic group training, elite personal coaching, and now the Altitude Conditioning Zone, our exclusive high-performance training studio, only at Vélo Fitness Sandton.",
+  ],
+  [
+    "canada",
+    "From the waterfront energy of Vancouver to the sophisticated core of Toronto, our Canadian clubs are built for optimal performance. Every location provides the fundamental elements of fitness, including cutting-edge classes, world-class trainers, and now the Hot Yoga Sanctuary, our dedicated studio for heat-based practice, only at Vélo Fitness Toronto.",
+  ],
 ]);
 
 type Gym = {
@@ -16,6 +34,8 @@ type Gym = {
   neighborhood: string;
   zip?: string;
   postal?: string;
+  description?: string;
+  cellNumber: string;
 };
 
 const bostonGyms: Gym[] = [
@@ -24,12 +44,15 @@ const bostonGyms: Gym[] = [
     address: "300 Dartmouth St, Boston, MA 02116",
     neighborhood: "Back Bay",
     zip: "02116",
+    description: gymDescription.get("boston"),
+    cellNumber: "(647) 555-0167",
   },
   {
     name: "Financial District Fitness",
     address: "50 Franklin St, Boston, MA 02110",
     neighborhood: "Downtown",
     zip: "02110",
+    cellNumber: "(857) 555-0567",
   },
 ];
 
@@ -39,12 +62,40 @@ const johannesburgGyms: Gym[] = [
     address: "5th Street, Sandton, Johannesburg",
     postal: "2196",
     neighborhood: "Sandton",
+    description: gymDescription.get("johannesburg"),
+    cellNumber: "(011) 555-1234",
   },
   {
     name: "Maboneng Urban Fitness",
     address: "280 Fox Street, Maboneng Precinct",
     postal: "2001",
     neighborhood: "Johannesburg CBD/City Center",
+    cellNumber: "011) 555-2345",
+  },
+];
+
+const canadaGyms: Gym[] = [
+  {
+    name: "Bay Street Fitness",
+    address: "199 Bay Street, Commerce Court West",
+    postal: "M5L 1G9",
+    neighborhood: "Ontario",
+    description: gymDescription.get("canada"),
+    cellNumber: "(647) 555-0167",
+  },
+  {
+    name: "Yorkville Urban Fitness",
+    address: "55 Avenue Road",
+    postal: " M5R 0L2",
+    neighborhood: "Yorkville",
+    cellNumber: "(778) 555-0456",
+  },
+  {
+    name: "King West Fitness",
+    address: "70 Bathurst Street",
+    postal: "M5V 0N8",
+    neighborhood: "King West",
+    cellNumber: "(416) 555-0123",
   },
 ];
 
@@ -53,10 +104,12 @@ function acquireLocalGyms(location: string): Gym[] | null {
 
   if (locationLower === "boston") return bostonGyms;
   if (locationLower === "johannesburg") return johannesburgGyms;
+  if (locationLower === "canada") return canadaGyms;
 
   const cityFromZip = gymZipsPostals.get(location);
   if (cityFromZip === "boston") return bostonGyms;
   if (cityFromZip === "johannesburg") return johannesburgGyms;
+  if (cityFromZip === "canada") return canadaGyms;
 
   return null;
 }
