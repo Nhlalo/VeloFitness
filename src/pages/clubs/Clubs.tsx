@@ -1,12 +1,15 @@
 import { Search } from "lucide-react";
 import { acquireNumberGyms } from "../../data/constants/gymlocation";
+import { gymDescription } from "../../data/constants/gymlocation";
 
 function Header() {
   return (
     <header className="flex justify-center bg-black pb-22 text-white">
       <div className="flex w-[90%] flex-col justify-center">
-        <h1 className="text-semibold mb-6 flex items-center pt-22 text-4xl uppercase lg:text-6xl">
-          {acquireNumberGyms()} Clubs Worldwide: Find A Club Near You
+        <h1 className="mb-6 flex items-center pt-22 text-4xl font-semibold uppercase lg:text-[4rem]">
+          {acquireNumberGyms()} Clubs Worldwide:{" "}
+          <br aria-hidden="true" className="hidden lg:block" /> Find A Club Near
+          You
         </h1>
         <div className="relative">
           <Search
