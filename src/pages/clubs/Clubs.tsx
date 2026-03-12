@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Search, ArrowRight } from "lucide-react";
 import { acquireNumberGyms } from "../../data/constants/gymlocation";
 import { gymDescription } from "../../data/constants/gymlocation";
@@ -29,6 +29,17 @@ function Header() {
   );
 }
 function GymLocations() {
+  const navigate = useNavigate();
+
+  function determinePathRedirection(name: string): string {
+    if (name == "Boston") return "clubs/boston";
+    else if (name == "Johannesburg") return "clubs/johannesburg";
+    return "clubs/canada";
+  }
+
+  function handleClick(name: string) {
+    navigate(determinePathRedirection(name));
+  }
   return (
     <Container>
       <div className="pb-24">
@@ -36,7 +47,7 @@ function GymLocations() {
           const linkDescription = `view the information about the ${content.location} clubs`;
           return (
             <Link
-              to=""
+              to={determinePathRedirection(content.location)}
               aria-label={linkDescription}
               key={content.location}
               className="flex border-t border-solid border-white px-6 py-8 text-white hover:bg-white hover:text-black"
@@ -49,6 +60,7 @@ function GymLocations() {
                 <button
                   type="button"
                   className="flex items-center self-start pt-4 text-sm font-semibold"
+                  onClick={() => handleClick(content.location)}
                 >
                   View all {content.clubs.length} clubs{" "}
                   <ArrowRight aria-hidden="true" />
