@@ -34,23 +34,38 @@ function GymLocations() {
       {gymDescription.map((content) => {
         const linkDescription = `view the information about the ${content.location} clubs`;
         return (
-          <Link to="" aria-label={linkDescription} key={content.location}>
-            <div>
-              <h2>{content.location}</h2>
-              <p>{content.description}</p>
-              <div>
+          <Link
+            to=""
+            aria-label={linkDescription}
+            key={content.location}
+            className="flex py-8 text-black"
+          >
+            <div className="flex flex-1 flex-col items-center">
+              <span className="w-full text-xl lg:text-2xl">
+                {content.location}
+              </span>
+              <p className="pt-4 pr-6 text-sm">{content.description}</p>
+              <div className="flex items-center self-start pt-4 text-sm">
                 View all {content.clubs.length} clubs{" "}
                 <ArrowRight aria-hidden="true" />
               </div>
             </div>
-            <ul>
-              <span>Featured Clubs</span>
+            <ul className="flex flex-1 flex-col items-center">
+              <span className="text-sm">Featured Clubs</span>
               {content.clubs.map((clubs) => {
-                return <li key={clubs.name}>{clubs.name}</li>;
+                return (
+                  <li key={clubs.name} className="text-sm">
+                    {clubs.name}
+                  </li>
+                );
               })}
             </ul>
-            <div>
-              <img src={content.image} alt="Gym club" />
+            <div className="md::max-h-56 flex max-h-37 flex-1 flex-col items-center">
+              <img
+                src={content.image}
+                alt="Gym club"
+                className="h-full w-full object-cover"
+              />
             </div>
           </Link>
         );
