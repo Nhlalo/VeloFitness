@@ -13,7 +13,7 @@ export interface Gym {
 }
 
 export interface Description {
-  location: string;
+  country: string;
   description: string;
   image: string; //images are interpreted as strings by TypeScript
   clubs: Gym[];
