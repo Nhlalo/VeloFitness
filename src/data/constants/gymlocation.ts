@@ -113,7 +113,7 @@ function acquireLocalGyms(
 
   return new Promise((resolve, reject) => {
     if (typeof location !== "string") {
-      reject(new TypeError("Incorrect Datatype - location must be a string"));
+      reject("Incorrect Datatype - location must be a string");
       return; // Stop execution immediately
     }
 
