@@ -36,9 +36,9 @@ function GymLocations() {
   const navigate = useNavigate();
 
   function determinePathRedirection(name: string): string {
-    if (name == "Boston") return "clubs/boston";
-    else if (name == "Johannesburg") return "clubs/johannesburg";
-    return "clubs/canada";
+    if (name == "USA") return "clubs/USA";
+    else if (name == "South Africa") return "clubs/SouthAfrica";
+    return "clubs/Canada";
   }
 
   function handleClick(name: string) {
@@ -48,23 +48,22 @@ function GymLocations() {
     <Container>
       <div className="pb-24">
         {gymDescription.map((content) => {
-          const linkDescription = `view the information about the ${content.location} clubs`;
+          const country = content.country;
+          const linkDescription = `view the information about the ${country} clubs`;
           return (
             <Link
-              to={determinePathRedirection(content.location)}
+              to={determinePathRedirection(country)}
               aria-label={linkDescription}
-              key={content.location}
+              key={country}
               className="flex border-t border-solid border-white px-6 py-8 text-white hover:bg-white hover:text-black"
             >
               <div className="flex grow-2 flex-col items-center lg:flex-1">
-                <span className="w-full text-xl lg:text-2xl">
-                  {content.location}
-                </span>
+                <span className="w-full text-xl lg:text-2xl">{country}</span>
                 <p className="pt-4 pr-6 text-sm">{content.description}</p>
                 <button
                   type="button"
                   className="flex items-center self-start pt-4 text-sm font-semibold"
-                  onClick={() => handleClick(content.location)}
+                  onClick={() => handleClick(country)}
                 >
                   View all {content.clubs.length} clubs{" "}
                   <ArrowRight aria-hidden="true" />
