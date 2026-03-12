@@ -11,3 +11,10 @@ function Error() {
     </div>
   );
 }
+function Loading() {
+  return (
+    <div>
+      <LoaderCircle />
+    </div>
+  );
+}
