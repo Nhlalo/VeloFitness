@@ -9,21 +9,6 @@ import bayStreetImg from "../../assets/images/bay-street-fitness.jpg";
 import yorkvilleImg from "../../assets/images/yorkville-urban-fitness.jpg";
 import kingWestImg from "../../assets/images/king-west-fitness.jpg";
 
-type City = "boston" | "johannesburg" | "canada";
-
-const gymZipsPostals = new Map<string, City>([
-  ["02108", "boston"],
-  ["02116", "boston"],
-  ["02118", "boston"],
-  ["02135", "boston"],
-  ["02110", "boston"],
-  ["2196", "johannesburg"],
-  ["2001", "johannesburg"],
-  ["M5L 1G9", "canada"],
-  ["M5R 0L2", "canada"],
-  ["M5V 0N8", "canada"],
-]);
-
 type Gym = {
   name: string;
   address: string;
@@ -130,23 +115,33 @@ const gymDescription: Description[] = [
   },
 ];
 
-function acquireLocalGyms(location: string): Gym[] | null {
-  const locationLower = location.toLowerCase().trim();
+const gyms: Gym[] = [...bostonGyms, ...johannesburgGyms, ...canadaGyms];
 
-  if (locationLower === "boston") return bostonGyms;
-  if (locationLower === "johannesburg") return johannesburgGyms;
-  if (locationLower === "canada") return canadaGyms;
+function acquireLocalGyms(location: string): Description | Gym | null {
+  const locationLowerCase = location.toLowerCase().trim();
+  const match = gymDescription.find((gym) =>
+    gym.location.includes(locationLowerCase),
+  );
+  if (match) return match;
 
-  const cityFromZip = gymZipsPostals.get(location);
-  if (cityFromZip === "boston") return bostonGyms;
-  if (cityFromZip === "johannesburg") return johannesburgGyms;
-  if (cityFromZip === "canada") return canadaGyms;
+  //Find match according to matching zip, postal or name
+  const result = gyms.find(
+    (gym) =>
+      gym.name.includes(locationLowerCase) ||
+      gym.zip?.includes(locationLowerCase) ||
+      gym.zip?.includes(locationLowerCase),
+  );
+  if (result) return result;
 
   return null;
 }
 
 function acquireNumberGyms(): number {
-  return gymZipsPostals.size;
+  const numberOfClubs = gymDescription.reduce((acc, content) => {
+    acc += content.clubs.length;
+    return acc;
+  }, 0);
+  return numberOfClubs;
 }
 
 export { acquireLocalGyms, acquireNumberGyms, gymDescription };
