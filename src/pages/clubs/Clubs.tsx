@@ -1,6 +1,8 @@
-import { Search } from "lucide-react";
+import { Link } from "react-router";
+import { Search, ArrowRight } from "lucide-react";
 import { acquireNumberGyms } from "../../data/constants/gymlocation";
 import { gymDescription } from "../../data/constants/gymlocation";
+import Container from "../../components/shared/Container";
 
 function Header() {
   return (
@@ -26,10 +28,42 @@ function Header() {
     </header>
   );
 }
+function GymLocations() {
+  return (
+    <Container>
+      {gymDescription.map((content) => {
+        const linkDescription = `view the information about the ${content.location} clubs`;
+        return (
+          <Link to="" aria-label={linkDescription} key={content.location}>
+            <div>
+              <h2>{content.location}</h2>
+              <p>{content.description}</p>
+              <div>
+                View all {content.clubs.length} clubs{" "}
+                <ArrowRight aria-hidden="true" />
+              </div>
+            </div>
+            <ul>
+              <span>Featured Clubs</span>
+              {content.clubs.map((clubs) => {
+                return <li key={clubs.name}>{clubs.name}</li>;
+              })}
+            </ul>
+            <div>
+              <img src={content.image} alt="Gym club" />
+            </div>
+          </Link>
+        );
+      })}
+    </Container>
+  );
+}
+
 export default function Clubs() {
   return (
     <>
       <Header />
+      <GymLocations />
     </>
   );
 }
