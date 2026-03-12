@@ -30,7 +30,7 @@ const homeColors = selectColors(
   "#fff",
   "#000000",
   "#000000",
-  "#23aadc",
+  "transparent",
   "#242424",
   "#000",
   "#000",
