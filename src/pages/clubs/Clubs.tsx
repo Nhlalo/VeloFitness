@@ -50,16 +50,18 @@ function GymLocations() {
                 <ArrowRight aria-hidden="true" />
               </div>
             </div>
-            <ul className="flex flex-1 flex-col items-center">
+            <div className="flex flex-1 flex-col items-center">
               <span className="text-sm">Featured Clubs</span>
-              {content.clubs.map((clubs) => {
-                return (
-                  <li key={clubs.name} className="text-sm">
-                    {clubs.name}
-                  </li>
-                );
-              })}
-            </ul>
+              <ul className="list-disc">
+                {content.clubs.map((clubs) => {
+                  return (
+                    <li key={clubs.name} className="text-sm">
+                      {clubs.name}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
             <div className="md::max-h-56 flex max-h-37 flex-1 flex-col items-center">
               <img
                 src={content.image}
