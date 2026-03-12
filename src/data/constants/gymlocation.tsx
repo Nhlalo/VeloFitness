@@ -1,3 +1,7 @@
+import bostonGymImg from "../../assets/images/boston.jpg";
+import johannesburgGymImg from "../../assets/images/Johannesburg.jpg";
+import canadaGymImg from "../../assets/images/canada.jpg";
+
 type City = "boston" | "johannesburg" | "canada";
 
 const gymZipsPostals = new Map<string, City>([
@@ -83,6 +87,7 @@ const canadaGyms: Gym[] = [
 type Description = {
   location: string;
   description: string;
+  image: string; //images are interpreted as strings by TypeScript
   clubs: Gym[];
 };
 
@@ -91,18 +96,21 @@ const gymDescription: Description[] = [
     location: "Boston",
     description:
       "From the heart of Back Bay to the tree-lined streets of Chestnut Hill, our Boston clubs are crafted for an unparalleled experience. Every location provides the essential elements of well-being, including innovative classes, expert trainers, and now The Stacked Studio, our dedicated space for strength training, only at Vélo Fitness Chestnut Hill.",
+    image: bostonGymImg,
     clubs: bostonGyms,
   },
   {
     location: "Johannesburg",
     description:
       "From the vibrant energy of Maboneng to the sophisticated heart of Sandton, our Johannesburg clubs are crafted for excellence. Every location delivers the key pillars of wellness, including dynamic group training, elite personal coaching, and now the Altitude Conditioning Zone, our exclusive high-performance training studio, only at Vélo Fitness Sandton.",
+    image: johannesburgGymImg,
     clubs: johannesburgGyms,
   },
   {
     location: "Canada",
     description:
       "From the waterfront energy of Vancouver to the sophisticated core of Toronto, our Canadian clubs are built for optimal performance. Every location provides the fundamental elements of fitness, including cutting-edge classes, world-class trainers, and now the Hot Yoga Sanctuary, our dedicated studio for heat-based practice, only at Vélo Fitness Toronto.",
+    image: canadaGymImg,
     clubs: canadaGyms,
   },
 ];
