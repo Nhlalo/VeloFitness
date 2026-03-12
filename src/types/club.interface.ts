@@ -6,6 +6,8 @@ export interface Gym {
   neighborhood: string;
   zip?: string;
   postal?: string;
+  city?: string;
+  state?: string;
   cellNumber: string;
   image?: string;
 }
