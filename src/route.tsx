@@ -15,6 +15,36 @@ const router = createBrowserRouter([
           colors: { ...homeColors },
         },
       },
+      {
+        path: "clubs",
+        lazy: async () => {
+          const module = await import("./pages/clubs/Clubs.tsx");
+          return { Component: module.default };
+        },
+        handle: {
+          colors: { ...homeColors },
+        },
+      },
+      {
+        path: "classes",
+        lazy: async () => {
+          const module = await import("./pages/classes/Classes.tsx");
+          return { Component: module.default };
+        },
+        handle: {
+          colors: { ...homeColors },
+        },
+      },
+      {
+        path: "membership",
+        lazy: async () => {
+          const module = await import("./pages/membership/Membership.tsx");
+          return { Component: module.default };
+        },
+        handle: {
+          colors: { ...homeColors },
+        },
+      },
     ],
   },
 ]);
