@@ -38,9 +38,9 @@ function GymLocations() {
             to=""
             aria-label={linkDescription}
             key={content.location}
-            className="flex py-8 text-black"
+            className="flex px-6 py-8 text-white hover:bg-white hover:text-black"
           >
-            <div className="flex flex-1 flex-col items-center">
+            <div className="flex grow-2 flex-col items-center lg:flex-1">
               <span className="w-full text-xl lg:text-2xl">
                 {content.location}
               </span>
@@ -50,8 +50,8 @@ function GymLocations() {
                 <ArrowRight aria-hidden="true" />
               </div>
             </div>
-            <div className="flex flex-1 flex-col items-center">
-              <span className="text-sm">Featured Clubs</span>
+            <div className="hidden flex-1 flex-col items-center lg:flex">
+              <span className="mr-24 text-sm">Featured Clubs</span>
               <ul className="list-disc">
                 {content.clubs.map((clubs) => {
                   return (
@@ -62,7 +62,7 @@ function GymLocations() {
                 })}
               </ul>
             </div>
-            <div className="md::max-h-56 flex max-h-37 flex-1 flex-col items-center">
+            <div className="hidden aspect-3/2 grow flex-col items-center md:flex lg:flex-1">
               <img
                 src={content.image}
                 alt="Gym club"
@@ -80,7 +80,9 @@ export default function Clubs() {
   return (
     <>
       <Header />
-      <GymLocations />
+      <main className="bg-black">
+        <GymLocations />
+      </main>
     </>
   );
 }
