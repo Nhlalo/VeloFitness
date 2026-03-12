@@ -1,6 +1,13 @@
 import bostonGymImg from "../../assets/images/boston.jpg";
 import johannesburgGymImg from "../../assets/images/Johannesburg.jpg";
 import canadaGymImg from "../../assets/images/canada.jpg";
+import backBayImg from "../../assets/images/back-bay-gym.jpg";
+import financialDistrictImg from "../../assets/images/financial-district-fitness.jpg";
+import sandtonCityImg from "../../assets/images/sandton-city-fitness.jpg";
+import mabonengImg from "../../assets/images/maboneng-urban-fitness.jpg";
+import bayStreetImg from "../../assets/images/bay-street-fitness.jpg";
+import yorkvilleImg from "../../assets/images/yorkville-urban-fitness.jpg";
+import kingWestImg from "../../assets/images/king-west-fitness.jpg";
 
 type City = "boston" | "johannesburg" | "canada";
 
@@ -24,6 +31,7 @@ type Gym = {
   zip?: string;
   postal?: string;
   cellNumber: string;
+  image?: string;
 };
 
 const bostonGyms: Gym[] = [
@@ -33,6 +41,7 @@ const bostonGyms: Gym[] = [
     neighborhood: "Back Bay",
     zip: "02116",
     cellNumber: "(647) 555-0167",
+    image: backBayImg,
   },
   {
     name: "Financial District Fitness",
@@ -40,6 +49,7 @@ const bostonGyms: Gym[] = [
     neighborhood: "Downtown",
     zip: "02110",
     cellNumber: "(857) 555-0567",
+    image: financialDistrictImg,
   },
 ];
 
@@ -50,6 +60,7 @@ const johannesburgGyms: Gym[] = [
     postal: "2196",
     neighborhood: "Sandton",
     cellNumber: "(011) 555-1234",
+    image: sandtonCityImg,
   },
   {
     name: "Maboneng Urban Fitness",
@@ -57,6 +68,7 @@ const johannesburgGyms: Gym[] = [
     postal: "2001",
     neighborhood: "Johannesburg CBD/City Center",
     cellNumber: "011) 555-2345",
+    image: mabonengImg,
   },
 ];
 
@@ -67,6 +79,7 @@ const canadaGyms: Gym[] = [
     postal: "M5L 1G9",
     neighborhood: "Ontario",
     cellNumber: "(647) 555-0167",
+    image: bayStreetImg,
   },
   {
     name: "Yorkville Urban Fitness",
@@ -74,6 +87,7 @@ const canadaGyms: Gym[] = [
     postal: " M5R 0L2",
     neighborhood: "Yorkville",
     cellNumber: "(778) 555-0456",
+    image: yorkvilleImg,
   },
   {
     name: "King West Fitness",
@@ -81,6 +95,7 @@ const canadaGyms: Gym[] = [
     postal: "M5V 0N8",
     neighborhood: "King West",
     cellNumber: "(416) 555-0123",
+    image: kingWestImg,
   },
 ];
 
