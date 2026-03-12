@@ -4,10 +4,8 @@ import { Gym, Description } from "../../types/club.interface";
 
 export default function useFindClub(location: string) {
   const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<Gym[] | Description[] | string | boolean>(
-    false,
-  );
-  const [error, SetError] = useState<boolean>(false);
+  const [data, setData] = useState<Gym[] | Description[] | string | null>(null);
+  const [error, setError] = useState<null | string>(null);
 
   useEffect(() => {
     const fetchLocalClub = async () => {
@@ -16,8 +14,12 @@ export default function useFindClub(location: string) {
         const result = await acquireLocalGyms(location);
         setData(result);
       } catch (error) {
-        SetError(true);
-        setData(false);
+        if (error instanceof Error) {
+          setError(error.message);
+        } else if (typeof error === "string") {
+          setError(error);
+        }
+        setData(null);
       } finally {
         setLoading(false);
       }
