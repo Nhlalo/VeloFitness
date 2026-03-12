@@ -46,10 +46,13 @@ function GymLocations() {
                   {content.location}
                 </span>
                 <p className="pt-4 pr-6 text-sm">{content.description}</p>
-                <div className="flex items-center self-start pt-4 text-sm font-semibold">
+                <button
+                  type="button"
+                  className="flex items-center self-start pt-4 text-sm font-semibold"
+                >
                   View all {content.clubs.length} clubs{" "}
                   <ArrowRight aria-hidden="true" />
-                </div>
+                </button>
               </div>
               <div className="hidden flex-1 flex-col items-center lg:flex">
                 <span className="mr-24 text-sm">Featured Clubs</span>
