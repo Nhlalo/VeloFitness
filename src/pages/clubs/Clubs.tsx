@@ -1,40 +1,11 @@
 import { Link, useNavigate } from "react-router";
 import { Search, ArrowRight } from "lucide-react";
-import { acquireNumberGyms } from "../../data/constants/gymlocation";
-import { gymDescription } from "../../data/constants/gymlocation";
+import {
+  acquireNumberGyms,
+  gymDescription,
+} from "../../data/constants/gymlocation";
 import Container from "../../components/shared/Container";
-
-function Results() {
-  return (
-    <div>
-      {gymDescription.map((content) => {
-        return (
-          <>
-            <div key={content.description}>
-              {content.clubs.map((clubs) => {
-                const clubName = clubs.name;
-                return (
-                  <img
-                    src={clubs.image}
-                    alt={clubName}
-                    className="h-full w-full object-cover"
-                    key={clubName}
-                  />
-                );
-              })}
-            </div>
-            <dialog>
-              {content.clubs.map((clubs) => {
-                return <span key={clubs.name}>{clubs.name}</span>;
-              })}
-              <span>Club</span>
-            </dialog>
-          </>
-        );
-      })}
-    </div>
-  );
-}
+import Results from "./Result";
 
 function Header() {
   return (
@@ -55,6 +26,7 @@ function Header() {
             className="flex h-16 w-full min-w-9 items-center rounded-full border-2 border-solid border-white/50 px-14 text-base text-white lg:text-lg"
             placeholder="City, ZIP Code, or Postal Code"
           />
+          <Results />
         </div>
       </div>
     </header>
