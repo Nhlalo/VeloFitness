@@ -3,7 +3,7 @@ import { acquireLocalGyms } from "../../data/constants/gymlocation";
 import { Gym, Description } from "../../types/club.interface";
 
 export default function useFindClub(location: string) {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<Gym[] | Description[] | string | null>(null);
   const [error, setError] = useState<null | string>(null);
 
