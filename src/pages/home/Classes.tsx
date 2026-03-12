@@ -1,6 +1,6 @@
 import Container from "../../components/shared/Container";
-import TenseTraining from "../../assets/images/tensetraining.jpg";
-import TenseTraining2 from "../../assets/images/tenseTraining.jpg";
+import TenseTraining from "../../assets/images/tense-training.jpg";
+import TenseTraining2 from "../../assets/images/tense-training2.jpg";
 
 export default function Classes() {
   return (
