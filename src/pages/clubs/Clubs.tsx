@@ -4,6 +4,38 @@ import { acquireNumberGyms } from "../../data/constants/gymlocation";
 import { gymDescription } from "../../data/constants/gymlocation";
 import Container from "../../components/shared/Container";
 
+function Results() {
+  return (
+    <div>
+      {gymDescription.map((content) => {
+        return (
+          <>
+            <div key={content.description}>
+              {content.clubs.map((clubs) => {
+                const clubName = clubs.name;
+                return (
+                  <img
+                    src={clubs.image}
+                    alt={clubName}
+                    className="h-full w-full object-cover"
+                    key={clubName}
+                  />
+                );
+              })}
+            </div>
+            <dialog>
+              {content.clubs.map((clubs) => {
+                return <span key={clubs.name}>{clubs.name}</span>;
+              })}
+              <span>Club</span>
+            </dialog>
+          </>
+        );
+      })}
+    </div>
+  );
+}
+
 function Header() {
   return (
     <header className="flex justify-center bg-black pb-22 text-white">
