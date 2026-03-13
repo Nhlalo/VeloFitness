@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useMemo } from "react";
 import { Link, useNavigate } from "react-router";
 import { Search, ArrowRight } from "lucide-react";
 import {
@@ -12,15 +12,18 @@ import Results from "./Result";
 function Header() {
   const [inputValue, setInputValue] = useState<string>("");
 
+  const debouncedSetInput = useMemo(
+    () =>
+      debounce((value: string) => {
+        setInputValue(value);
+      }, 300),
+    [],
+  );
+
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const value = e.currentTarget.value;
-
-    //This ensures that the inputValue state is changed every 300ms to prevent rerendering due to every character change.
-    debounce(() => {
-      setInputValue(value);
-    }, 300);
+    debouncedSetInput(value);
   }
-
   return (
     <header className="flex justify-center bg-black pb-22 text-white">
       <div className="flex w-[90%] flex-col justify-center">
@@ -38,7 +41,7 @@ function Header() {
             type="text"
             className="flex h-16 w-full min-w-9 items-center rounded-full border-2 border-solid border-white/50 px-14 text-base text-white lg:text-lg"
             placeholder="City, ZIP Code, or Postal Code"
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
           <Results location={inputValue} />
           {/* {inputValue.trim().length > 0 && <Results location={inputValue} />} */}
