@@ -36,6 +36,16 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "clubs/:country/:club",
+        lazy: async () => {
+          const module = await import("./pages/clubs/Club.tsx");
+          return { Component: module.default };
+        },
+        handle: {
+          colors: { ...homeColors },
+        },
+      },
+      {
         path: "classes",
         lazy: async () => {
           const module = await import("./pages/classes/Classes.tsx");
