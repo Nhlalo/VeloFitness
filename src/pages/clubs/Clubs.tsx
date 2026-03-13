@@ -1,10 +1,8 @@
 import { useState, ChangeEvent, useMemo } from "react";
 import { Link, useNavigate } from "react-router";
 import { Search, ArrowRight } from "lucide-react";
-import {
-  acquireNumberGyms,
-  gymDescription,
-} from "../../data/constants/gymlocation";
+import { acquireNumberGyms } from "../../utils/acquireGymData";
+import { gymDescription } from "../../data/constants/gymlocation";
 import debounce from "../../utils/debounce";
 import Container from "../../components/shared/Container";
 import Results from "./Result";
