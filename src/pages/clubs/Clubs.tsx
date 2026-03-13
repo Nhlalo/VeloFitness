@@ -78,6 +78,7 @@ export default function Clubs() {
         heading={`${acquireNumberGyms()} Clubs Worldwide:`}
         extraHeading="Find A Club Near
           You"
+        showViewAll={false}
       />
       <main className="bg-black">
         <GymLocations />
