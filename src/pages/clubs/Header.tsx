@@ -1,16 +1,21 @@
 import { useState, ChangeEvent, useMemo } from "react";
-import { Search } from "lucide-react";
+import { useNavigate } from "react-router";
+import { Search, ArrowRight } from "lucide-react";
 import debounce from "../../utils/debounce";
 import Results from "./Result";
 
 export default function Header({
   heading,
   extraHeading,
+  showViewAll,
 }: {
   heading: string;
   extraHeading: string;
+  showViewAll: boolean;
 }) {
   const [inputValue, setInputValue] = useState<string>("");
+
+  const navigate = useNavigate();
 
   const debouncedSetInput = useMemo(
     () =>
@@ -24,6 +29,9 @@ export default function Header({
     const value = e.currentTarget.value;
     debouncedSetInput(value);
   }
+  function onClick() {
+    navigate("/clubs");
+  }
   return (
     <header className="flex justify-center bg-black pb-22 text-white">
       <div className="flex w-[90%] flex-col justify-center">
@@ -32,6 +40,15 @@ export default function Header({
           <br aria-hidden="true" className="hidden lg:block" />
           {extraHeading}
         </h1>
+        {showViewAll && (
+          <button
+            type="button"
+            onClick={onClick}
+            className="mb-8 flex items-center gap-2 text-sm text-white"
+          >
+            View all <ArrowRight aria-hidden="true" />
+          </button>
+        )}
         <div className="relative">
           <Search
             aria-hidden="true"
