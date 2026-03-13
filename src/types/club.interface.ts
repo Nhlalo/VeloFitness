@@ -1,4 +1,4 @@
-//Used within the gymlocation file and useFindClub file
+//Used in gymlocation, useFindClub and Resultfile
 
 export interface Gym {
   name: string;
@@ -7,6 +7,7 @@ export interface Gym {
   zip?: string;
   postal?: string;
   city?: string;
+  country: string;
   state?: string;
   cellNumber: string;
   image?: string;
