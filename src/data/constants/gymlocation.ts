@@ -124,7 +124,7 @@ function acquireLocalGyms(
 
         // Find match in gymDescription
         const match = gymDescription.filter((gym) =>
-          gym.country.includes(locationLowerCase),
+          gym.country.toLowerCase().includes(locationLowerCase),
         );
 
         if (match.length) {
