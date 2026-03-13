@@ -10,6 +10,7 @@ export default function useFindClub(location: string) {
   useEffect(() => {
     const fetchLocalClub = async () => {
       setLoading(true);
+      setData(null);
       try {
         const result = await acquireLocalGyms(location);
         setData(result);
