@@ -68,3 +68,14 @@ function Data({ data }: { data: Gym[] | Description[] | string }) {
     </>
   );
 }
+
+export default function Results({ location }: { location: string }) {
+  const { loading, data, error } = useFindClub(location);
+  return (
+    <div className="absolute max-h-80 w-full bg-[#222020]">
+      {loading && <Loading />}
+      {data && <Data data={data} />}
+      {error && <Error />}
+    </div>
+  );
+}
