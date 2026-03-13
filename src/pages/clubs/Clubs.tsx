@@ -43,8 +43,7 @@ function Header() {
             placeholder="City, ZIP Code, or Postal Code"
             onChange={handleChange}
           />
-          <Results location={inputValue} />
-          {/* {inputValue.trim().length > 0 && <Results location={inputValue} />} */}
+          {inputValue.trim().length > 0 && <Results location={inputValue} />}
         </div>
       </div>
     </header>
