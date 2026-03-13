@@ -50,9 +50,11 @@ function Header() {
 function GymLocations() {
   const navigate = useNavigate();
 
-  function determinePathRedirection(name: string): string {
-    if (name == "USA") return "clubs/USA";
-    else if (name == "South Africa") return "clubs/SouthAfrica";
+  function determinePathRedirection(country: string): string {
+    const lowercaseCountry = country.toLowerCase();
+
+    if (lowercaseCountry == "usa") return "clubs/USA";
+    else if (lowercaseCountry == "south africa") return "clubs/SouthAfrica";
     return "clubs/Canada";
   }
 
