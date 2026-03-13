@@ -10,6 +10,28 @@ import bayStreetImg from "../../assets/images/bay-street-fitness.jpg";
 import yorkvilleImg from "../../assets/images/yorkville-urban-fitness.jpg";
 import kingWestImg from "../../assets/images/king-west-fitness.jpg";
 
+const gymUSAAmenties: string[] = [
+  "Boxing Studio",
+  "Bodywork and Skincare Services at The Spa",
+  "Men's and Women's Executive Locker Rooms",
+  "Outdoor Fitness Terrace",
+  "Private Pilates Studio",
+];
+const gymSAAmenties: string[] = [
+  "Bodywork and Skincare Services at The Spa",
+  "Men's and Women's Executive Locker Rooms",
+  "The Shop by  Vélo",
+  "Indoor Lap Pool",
+  "Private Pilates Studio",
+];
+const gymCanadaAmenties: string[] = [
+  "Boxing Studio",
+  "Bodywork and Skincare Services at The Spa",
+  "Eucalyptus Steam Rooms",
+  "Heated Yoga Studio",
+  "Private Pilates Studio",
+];
+
 const USAGyms: Gym[] = [
   {
     name: "Back Bay Gym",
@@ -20,6 +42,7 @@ const USAGyms: Gym[] = [
     country: "USA",
     cellNumber: "(647) 555-0167",
     image: backBayImg,
+    amenties: gymUSAAmenties,
   },
   {
     name: "Financial District Fitness",
@@ -30,6 +53,7 @@ const USAGyms: Gym[] = [
     country: "USA",
     cellNumber: "(857) 555-0567",
     image: financialDistrictImg,
+    amenties: gymUSAAmenties,
   },
 ];
 
@@ -43,6 +67,7 @@ const SAGyms: Gym[] = [
     country: "South Africa",
     cellNumber: "(011) 555-1234",
     image: sandtonCityImg,
+    amenties: gymSAAmenties,
   },
   {
     name: "Maboneng Urban Fitness",
@@ -53,6 +78,7 @@ const SAGyms: Gym[] = [
     country: "South Africa",
     cellNumber: "011) 555-2345",
     image: mabonengImg,
+    amenties: gymSAAmenties,
   },
 ];
 
@@ -66,6 +92,7 @@ const canadaGyms: Gym[] = [
     country: "Canada",
     cellNumber: "(647) 555-0167",
     image: bayStreetImg,
+    amenties: gymCanadaAmenties,
   },
   {
     name: "Yorkville Urban Fitness",
@@ -76,6 +103,7 @@ const canadaGyms: Gym[] = [
     country: "Canada",
     city: "Toronto",
     image: yorkvilleImg,
+    amenties: gymCanadaAmenties,
   },
   {
     name: "King West Fitness",
@@ -86,6 +114,7 @@ const canadaGyms: Gym[] = [
     country: "Canada",
     cellNumber: "(416) 555-0123",
     image: kingWestImg,
+    amenties: gymCanadaAmenties,
   },
 ];
 
