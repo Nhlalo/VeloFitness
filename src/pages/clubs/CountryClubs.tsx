@@ -1,26 +1,19 @@
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router";
 import { ArrowRight } from "lucide-react";
-import { SAGyms, canadaGyms, USAGyms } from "../../data/constants/gymlocation";
 import { Gym } from "../../types/club.interface";
 import Header from "./Header";
 import Container from "../../components/shared/Container";
 import { useRef } from "react";
 
 export default function CountryClub() {
+  const [searchParams] = useSearchParams();
+
+  //Need to decode as the param was encoded to reduce the url length
+  const encodedData = searchParams.get("clubs") as string;
+
   const { country } = useParams() as { country: string };
 
-  // Calculate the value first
-  const Gym = (() => {
-    if (country.toLowerCase() === "usa") {
-      return USAGyms;
-    }
-    if (country.toLowerCase() === "south africa") {
-      return SAGyms;
-    }
-    return canadaGyms;
-  })();
-
-  const gymClubsRef = useRef<Gym[]>(Gym);
+  const gymClubsRef = useRef<Gym[]>(JSON.parse(atob(encodedData)));
 
   const navigate = useNavigate();
 
@@ -36,7 +29,7 @@ export default function CountryClub() {
       <Header heading={`${country} Clubs`} extraHeading="" showViewAll={true} />
       <Container>
         <div className="pb-24">
-          {gymClubsRef.current.map((content) => {
+          {gymClubsRef.current?.map((content) => {
             const clubName = content.name;
             const linkDescription = `view the information about the ${country} clubs`;
             return (
