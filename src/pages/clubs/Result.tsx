@@ -60,9 +60,7 @@ function Data({ data }: { data: Gym[] | Description[] | string }) {
           );
         })}
       {typeof data == "string" && (
-        <div>
-          <p>{data}</p>
-        </div>
+        <p className="flex items-center justify-center py-8">{data}</p>
       )}
     </>
   );
