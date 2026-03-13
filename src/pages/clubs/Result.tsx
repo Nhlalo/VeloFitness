@@ -1,4 +1,5 @@
 import { LoaderCircle } from "lucide-react";
+import useFindClub from "../../hooks/useFindClub";
 import { Gym, Description } from "../../types/club.interface";
 
 function Error() {
@@ -13,8 +14,8 @@ function Error() {
 }
 function Loading() {
   return (
-    <div>
-      <LoaderCircle />
+    <div className="flex items-center justify-center py-8">
+      <LoaderCircle className="animate-spin" aria-hidden="true" />
     </div>
   );
 }
@@ -42,7 +43,7 @@ function Data({ data }: { data: Gym[] | Description[] | string }) {
           return (
             <button
               type="button"
-              className="flex w-full gap-6 bg-[#282828] px-6 py-8"
+              className="flex w-full gap-6 px-6 py-8 hover:bg-[#282828]"
               key={key}
             >
               <div className="aspect-2/1 w-14" aria-hidden="true">
