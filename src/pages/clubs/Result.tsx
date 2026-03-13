@@ -4,14 +4,13 @@ import { Gym, Description } from "../../types/club.interface";
 
 function Error() {
   return (
-    <div>
-      <p>
-        An unexpected error occurred. Please refresh the page and try again. If
-        the problem persists, contact support.
-      </p>
-    </div>
+    <p className="flex items-center justify-center py-8">
+      An unexpected error occurred. Please refresh the page and try again. If
+      the problem persists, contact support.
+    </p>
   );
 }
+
 function Loading() {
   return (
     <div className="flex items-center justify-center py-8">
