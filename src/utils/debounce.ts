@@ -1,32 +1,20 @@
-import { useCallback, useRef } from "react";
-
 type AnyFunction = (...args: any[]) => void;
 
 //This ensures that a function is only executed after a certain amount of time has passed since it was last called.
+
 export default function debounce<T extends AnyFunction>(
   callback: T,
   delay: number,
 ): (...args: Parameters<T>) => void {
-  const timeoutRef = useRef<number | null>(null);
+  let timeoutId: ReturnType<typeof setTimeout>; // Better type than :number
 
-  return useCallback(
-    (...args: Parameters<T>) => {
-      // Clear existing timeout
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+  return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+    // Clear the previous timeout
+    clearTimeout(timeoutId);
 
-      timeoutRef.current = window.setTimeout(() => {
-        callback(...args);
-      }, delay);
-
-      // Cleanup on unmount
-      useCallback(() => {
-        if (timeoutRef.current) {
-          clearTimeout(timeoutRef.current);
-        }
-      }, []);
-    },
-    [callback, delay],
-  );
+    // Set a new timeout
+    timeoutId = setTimeout(() => {
+      callback.apply(this, args);
+    }, delay);
+  };
 }
