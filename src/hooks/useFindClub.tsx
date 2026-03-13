@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { acquireLocalGyms } from "../data/constants/gymlocation";
+import { acquireLocalGyms } from "../utils/acquireGymData";
 import { Gym, Description } from "../types/club.interface";
 
 export default function useFindClub(location: string) {
