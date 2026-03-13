@@ -53,9 +53,9 @@ function GymLocations() {
   function determinePathRedirection(country: string): string {
     const lowercaseCountry = country.toLowerCase();
 
-    if (lowercaseCountry == "usa") return "clubs/USA";
-    else if (lowercaseCountry == "south africa") return "clubs/SouthAfrica";
-    return "clubs/Canada";
+    if (lowercaseCountry == "usa") return "USA";
+    else if (lowercaseCountry == "south africa") return "SouthAfrica";
+    return "Canada";
   }
 
   function handleClick(name: string) {
