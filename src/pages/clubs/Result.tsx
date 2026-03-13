@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import { LoaderCircle } from "lucide-react";
 import useFindClub from "../../hooks/useFindClub";
 import { Gym, Description } from "../../types/club.interface";
@@ -20,6 +21,19 @@ function Loading() {
 }
 
 function Data({ data }: { data: Gym[] | Description[] | string }) {
+  const navigate = useNavigate();
+
+  function determinePathRedirection(country: string): string {
+    const lowercaseCountry = country.toLowerCase();
+
+    if (lowercaseCountry == "usa") return "USA";
+    else if (lowercaseCountry == "south africa") return "SouthAfrica";
+    return "Canada";
+  }
+
+  function handleClick(name: string) {
+    navigate(determinePathRedirection(name));
+  }
   return (
     <>
       {typeof data !== "string" &&
@@ -39,11 +53,14 @@ function Data({ data }: { data: Gym[] | Description[] | string }) {
               ? content.country
               : "unknown";
 
+          const country = content.country;
+
           return (
             <button
               type="button"
               className="flex w-full gap-6 px-6 py-8 hover:bg-[#282828]"
               key={key}
+              onClick={() => handleClick(country)}
             >
               <div className="aspect-2/1 w-14" aria-hidden="true">
                 <img
