@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { acquireLocalGyms } from "../../data/constants/gymlocation";
-import { Gym, Description } from "../../types/club.interface";
+import { acquireLocalGyms } from "../data/constants/gymlocation";
+import { Gym, Description } from "../types/club.interface";
 
 export default function useFindClub(location: string) {
   const [loading, setLoading] = useState<boolean>(true);
