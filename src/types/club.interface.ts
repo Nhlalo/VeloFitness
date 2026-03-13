@@ -11,6 +11,7 @@ export interface Gym {
   state?: string;
   cellNumber: string;
   image?: string;
+  amenties: string[];
 }
 
 export interface Description {
