@@ -127,7 +127,7 @@ function acquireLocalGyms(
           gym.country.includes(locationLowerCase),
         );
 
-        if (match) {
+        if (match.length) {
           resolve(match);
           return;
         }
@@ -135,16 +135,18 @@ function acquireLocalGyms(
         // Find match according to matching zip, postal or name
         const result = gyms.filter(
           (gym) =>
-            gym.name.includes(locationLowerCase) ||
-            gym.zip?.includes(locationLowerCase) ||
-            gym.postal?.includes(locationLowerCase) ||
-            gym.neighborhood.includes(locationLowerCase) ||
-            gym.city?.includes(locationLowerCase) ||
-            gym.state?.includes(locationLowerCase),
+            gym.name.toLowerCase().includes(locationLowerCase) ||
+            gym.zip?.toLowerCase().includes(locationLowerCase) ||
+            gym.postal?.toLowerCase().includes(locationLowerCase) ||
+            gym.neighborhood.toLowerCase().includes(locationLowerCase) ||
+            gym.city?.toLowerCase().includes(locationLowerCase) ||
+            gym.state?.toLowerCase().includes(locationLowerCase),
         );
 
         resolve(
-          result || "There are no gym facilities in the immediate vicinity.",
+          result.length
+            ? result
+            : "There are no gym facilities in the immediate vicinity.",
         );
       } catch (error) {
         reject(error);
