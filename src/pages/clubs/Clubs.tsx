@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router";
 import { ArrowRight } from "lucide-react";
+import { Gym } from "../../types/club.interface";
 import { gymDescription } from "../../data/constants/gymlocation";
 import { acquireNumberGyms } from "../../utils/acquireGymData";
 import Header from "./Header";
@@ -8,26 +9,27 @@ import Container from "../../components/shared/Container";
 function GymLocations() {
   const navigate = useNavigate();
 
-  function determinePathRedirection(country: string): string {
-    const lowercaseCountry = country.toLowerCase();
+  function determinePathRedirection(country: string, clubs: Gym[]): string {
+    // Encoded this way as the data contained is not sensitive
+    const encoded = btoa(JSON.stringify(clubs));
 
-    if (lowercaseCountry == "usa") return "/clubs/USA";
-    else if (lowercaseCountry == "south africa") return "/clubs/South Africa";
-    return "/clubs/Canada";
+    return `/clubs/${country}?clubs=${encoded}`;
   }
 
-  function handleClick(name: string) {
-    navigate(determinePathRedirection(name));
+  function handleClick(country: string, clubs: Gym[]) {
+    navigate(determinePathRedirection(country, clubs));
   }
   return (
     <Container>
       <div className="pb-24">
         {gymDescription.map((content) => {
           const country = content.country;
+          const clubs = content.clubs;
+
           const linkDescription = `view the information about the ${country} clubs`;
           return (
             <Link
-              to={determinePathRedirection(country)}
+              to={determinePathRedirection(country, clubs)}
               aria-label={linkDescription}
               key={country}
               className="flex border-t border-solid border-white px-6 py-8 text-white hover:bg-white hover:text-black"
@@ -38,7 +40,7 @@ function GymLocations() {
                 <button
                   type="button"
                   className="flex items-center self-start pt-4 text-sm font-semibold"
-                  onClick={() => handleClick(country)}
+                  onClick={() => handleClick(country, clubs)}
                 >
                   View all {content.clubs.length} clubs{" "}
                   <ArrowRight aria-hidden="true" />
