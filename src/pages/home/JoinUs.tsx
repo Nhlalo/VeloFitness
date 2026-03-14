@@ -54,7 +54,7 @@ export default function JoinUs() {
   };
 
   function imgClass(option: string): string {
-    return ` object-cover  ${hoveredItem === option ? "opacity-100 z-2" : "opacity-0 z-1"}`;
+    return ` w-full w-object-cover  ${hoveredItem === option ? "opacity-100 z-2" : "opacity-0 z-1"}`;
   }
 
   return (
@@ -62,7 +62,7 @@ export default function JoinUs() {
       <h2 className="mb-4 text-center font-semibold md:text-4xl">
         WHY JOIN US?
       </h2>
-      <p className="m-auto max-w-[75ch] py-1 text-gray-800">
+      <p className="m-auto max-w-[75ch] py-1 text-white">
         Our community brings together professionals from diverse backgrounds,
         fostering a collaborative environment where ideas flourish. You'll find
         mentorship, build valuable connections, and grow alongside motivated
