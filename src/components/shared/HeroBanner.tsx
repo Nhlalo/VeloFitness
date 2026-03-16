@@ -37,7 +37,7 @@ export default function HeroBanner({
         </h1>
         <button
           onClick={handleClick}
-          className="m-2 rounded-md bg-[#AAFF00] px-5 py-3 text-white hover:bg-[#9EF200] md:px-8 md:py-4"
+          className="mx-2 mt-6 rounded-md bg-[#AAFF00] px-5 py-3 text-white hover:bg-[#9EF200] md:px-8 md:py-4"
         >
           {buttonText}
         </button>
