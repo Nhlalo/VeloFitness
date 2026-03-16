@@ -14,7 +14,7 @@ export default function HeroBanner({
   }
 
   return (
-    <section className="relative h-screen overflow-hidden bg-black">
+    <header className="relative h-screen overflow-hidden bg-black">
       <video
         src={videoSource}
         autoPlay
@@ -42,6 +42,6 @@ export default function HeroBanner({
           {buttonText}
         </button>
       </div>
-    </section>
+    </header>
   );
 }
