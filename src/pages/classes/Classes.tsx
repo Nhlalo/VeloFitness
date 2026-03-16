@@ -1,6 +1,13 @@
+import { useNavigate } from "react-router";
 import WorkOutVideo from "../../assets/videos/class-herobanner.mp4";
 
 function HeroBanner() {
+  const navigate = useNavigate();
+
+  function handleClick() {
+    navigate("/jointoday");
+  }
+
   return (
     <section className="relative h-screen overflow-hidden bg-black">
       <video
@@ -23,7 +30,10 @@ function HeroBanner() {
             POWERED BY THE COLLECTIVE.
           </span>
         </h1>
-        <button className="m-2 rounded-md bg-[#AAFF00] px-5 py-3 text-white hover:bg-[#9EF200] md:px-8 md:py-4">
+        <button
+          onClick={handleClick}
+          className="m-2 rounded-md bg-[#AAFF00] px-5 py-3 text-white hover:bg-[#9EF200] md:px-8 md:py-4"
+        >
           BOOK A CLASS
         </button>
       </div>
