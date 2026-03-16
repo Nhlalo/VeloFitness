@@ -47,15 +47,24 @@ function HeroBanner() {
 function UnlimitedSignatureClasses() {
   return (
     <Container>
-      <div>
-        <h2>Unlimited Signature Classes</h2>
-        <p>
-          Science-backed classes developed by industry minds to maximize
-          transformation.
-        </p>
-      </div>
-      <div>
-        <img src={Training} alt="training" loading="lazy" />
+      <div className="m-auto flex max-w-285 flex-col py-18 lg:flex-row">
+        <div className="flex-1">
+          <h2 className="mt-5 mb-6 text-3xl font-bold uppercase lg:w-[50%] lg:text-4xl">
+            Unlimited Signature Classes
+          </h2>
+          <p className="line xl py- mb-6 text-base lg:w-[60%] lg:text-lg lg:leading-[1.4]">
+            Science-backed classes developed by industry minds to maximize
+            transformation.
+          </p>
+        </div>
+        <div className="flex-1 overflow-hidden lg:max-w-[43%]">
+          <img
+            src={Training}
+            alt="training"
+            loading="lazy"
+            className="w-full"
+          />
+        </div>
       </div>
     </Container>
   );
