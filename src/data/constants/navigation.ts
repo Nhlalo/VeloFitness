@@ -3,14 +3,12 @@ const listItemKeys = {
   concerts: crypto.randomUUID(),
   charts: crypto.randomUUID(),
   mymusic: crypto.randomUUID(),
-  contacts: crypto.randomUUID(),
 };
 //Array containing the content within the links and keys assigned to the list items
 const navLinksContent = [
   { content: "Clubs", key: listItemKeys.concerts },
   { content: "Membership", key: listItemKeys.charts },
   { content: "Classes", key: listItemKeys.mymusic },
-  { content: "Join Today", key: listItemKeys.contacts },
 ];
 
 type Prop = {
