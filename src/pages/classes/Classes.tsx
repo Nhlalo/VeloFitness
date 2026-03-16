@@ -1,8 +1,25 @@
 import { useNavigate } from "react-router";
+import { Props } from "../../types/classes.interface";
 import Container from "../../components/shared/Container";
+import SubClasses from "../../components/shared/SubClasses";
 import WorkOutVideo from "../../assets/videos/class-herobanner.mp4";
 import PersonalTraining from "../../assets/images/classes-personalTraining.jpg";
 import Training from "../../assets/images/classes-training.jpg";
+
+const classesDescription: Props[] = [
+  {
+    heading: "Unlimited Signature Classes",
+    description:
+      "Science-backed classes developed by industry minds to maximize transformation.",
+    imageSource: Training,
+  },
+  {
+    heading: " Expert Instructors",
+    description:
+      "  Renowned Instructors build community and ignite Members to push past their limits",
+    imageSource: PersonalTraining,
+  },
+];
 
 function HeroBanner() {
   const navigate = useNavigate();
@@ -44,84 +61,20 @@ function HeroBanner() {
   );
 }
 
-function UnlimitedSignatureClasses() {
-  return (
-    <Container>
-      <div className="m-auto flex max-w-285 flex-col py-18 lg:flex-row">
-        <div className="flex-1">
-          <h2 className="mt-5 mb-6 text-3xl font-bold uppercase lg:w-[50%] lg:text-4xl">
-            Unlimited Signature Classes
-          </h2>
-          <p className="mb-6 hidden w-[60%] py-3 text-lg leading-[1.4] lg:block">
-            Science-backed classes developed by industry minds to maximize
-            transformation.
-          </p>
-          <button className="m-2 hidden rounded-md border-2 border-white bg-transparent px-8 py-4 text-white hover:bg-gray-400 lg:inline">
-            BOOK A CLASS
-          </button>
-        </div>
-        <div className="flex-1 overflow-hidden lg:max-w-[43%]">
-          <img
-            src={Training}
-            alt="training"
-            loading="lazy"
-            className="w-full"
-          />
-          <p className="mb-6 py-5 lg:hidden">
-            Science-backed classes developed by industry minds to maximize
-            transformation.
-          </p>
-          <button className="m-2 rounded-md border-2 border-white bg-transparent px-5 py-3 text-white hover:bg-gray-400 lg:hidden">
-            BOOK A CLASS
-          </button>
-        </div>
-      </div>
-    </Container>
-  );
-}
-function ExpertInstructors() {
-  return (
-    <Container>
-      <div className="m-auto flex max-w-285 flex-col py-18 lg:flex-row">
-        <div className="flex-1">
-          <h2 className="mt-5 mb-6 text-3xl font-bold uppercase lg:w-[50%] lg:text-4xl">
-            Expert Instructors
-          </h2>
-          <p className="mb-6 hidden w-[60%] py-3 text-lg leading-[1.4] lg:block">
-            Renowned Instructors build community and ignite Members to push past
-            their limits
-          </p>
-          <button className="m-2 hidden rounded-md border-2 border-white bg-transparent px-8 py-4 text-white hover:bg-gray-400 lg:inline">
-            BOOK A CLASS
-          </button>
-        </div>
-        <div className="flex-1 overflow-hidden lg:max-w-[43%]">
-          <img
-            src={PersonalTraining}
-            alt="training"
-            loading="lazy"
-            className="w-full"
-          />
-          <p className="mb-6 py-5 lg:hidden">
-            Science-backed classes developed by industry minds to maximize
-            transformation.
-          </p>
-          <button className="m-2 rounded-md border-2 border-white bg-transparent px-5 py-3 text-white hover:bg-gray-400 lg:hidden">
-            Take A CLASS
-          </button>
-        </div>
-      </div>
-    </Container>
-  );
-}
-
 export default function Classes() {
   return (
     <>
       <HeroBanner />
       <main className="bg-black text-white">
-        <UnlimitedSignatureClasses />
-        <ExpertInstructors />
+        {classesDescription.map((content) => {
+          return (
+            <SubClasses
+              heading={content.heading}
+              description={content.description}
+              imageSource={content.imageSource}
+            />
+          );
+        })}
       </main>
     </>
   );
