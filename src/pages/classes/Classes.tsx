@@ -56,6 +56,9 @@ function UnlimitedSignatureClasses() {
             Science-backed classes developed by industry minds to maximize
             transformation.
           </p>
+          <button className="m-2 rounded-md border-2 border-white bg-transparent px-5 py-3 text-white hover:bg-gray-400 md:px-8 md:py-4">
+            BOOK A CLASS
+          </button>
         </div>
         <div className="flex-1 overflow-hidden lg:max-w-[43%]">
           <img
