@@ -52,11 +52,11 @@ function UnlimitedSignatureClasses() {
           <h2 className="mt-5 mb-6 text-3xl font-bold uppercase lg:w-[50%] lg:text-4xl">
             Unlimited Signature Classes
           </h2>
-          <p className="line xl py- mb-6 text-base lg:w-[60%] lg:text-lg lg:leading-[1.4]">
+          <p className="mb-6 hidden w-[60%] py-5 text-lg leading-[1.4] lg:block">
             Science-backed classes developed by industry minds to maximize
             transformation.
           </p>
-          <button className="m-2 rounded-md border-2 border-white bg-transparent px-5 py-3 text-white hover:bg-gray-400 md:px-8 md:py-4">
+          <button className="m-2 hidden rounded-md border-2 border-white bg-transparent px-8 py-4 text-white hover:bg-gray-400 lg:inline">
             BOOK A CLASS
           </button>
         </div>
@@ -67,6 +67,13 @@ function UnlimitedSignatureClasses() {
             loading="lazy"
             className="w-full"
           />
+          <p className="mb-6 py-5">
+            Science-backed classes developed by industry minds to maximize
+            transformation.
+          </p>
+          <button className="m-2 rounded-md border-2 border-white bg-transparent px-5 py-3 text-white hover:bg-gray-400">
+            BOOK A CLASS
+          </button>
         </div>
       </div>
     </Container>
