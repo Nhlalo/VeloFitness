@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router";
+import Container from "../../components/shared/Container";
 import WorkOutVideo from "../../assets/videos/class-herobanner.mp4";
+import PersonalTraining from "../../assets/images/classes-personalTraining.jpg";
+import Training from "../../assets/images/classes-training.jpg";
 
 function HeroBanner() {
   const navigate = useNavigate();
@@ -41,6 +44,30 @@ function HeroBanner() {
   );
 }
 
+function UnlimitedSignatureClasses() {
+  return (
+    <Container>
+      <div>
+        <h2>Unlimited Signature Classes</h2>
+        <p>
+          Science-backed classes developed by industry minds to maximize
+          transformation.
+        </p>
+      </div>
+      <div>
+        <img src={Training} alt="training" loading="lazy" />
+      </div>
+    </Container>
+  );
+}
+
 export default function Classes() {
-  return <HeroBanner />;
+  return (
+    <>
+      <HeroBanner />
+      <main className="bg-black text-white">
+        <UnlimitedSignatureClasses />
+      </main>
+    </>
+  );
 }
