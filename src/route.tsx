@@ -65,6 +65,16 @@ const router = createBrowserRouter([
           colors: { ...homeColors },
         },
       },
+      {
+        path: "jointoday",
+        lazy: async () => {
+          const module = await import("./pages/join/JoinToday.tsx");
+          return { Component: module.default };
+        },
+        handle: {
+          colors: { ...homeColors },
+        },
+      },
     ],
   },
 ]);
