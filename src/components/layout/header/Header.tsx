@@ -63,7 +63,7 @@ export default function Header({}) {
           backgroundColor: currentColors?.bg,
           color: currentColors?.color,
         }}
-        className="fixed top-0 z-1000 flex w-full justify-center py-3"
+        className="fixed top-0 z-1000 flex h-20 w-full justify-center py-3"
       >
         <div className="flex w-[95%] max-w-335 items-center justify-between">
           <button
