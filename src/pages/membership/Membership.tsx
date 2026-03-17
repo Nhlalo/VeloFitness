@@ -1,4 +1,30 @@
+import { Props } from "../../types/classes.interface";
+import SubClasses from "../../components/shared/SubClasses";
 import HeroBanner from "../../assets/images/membership-herobanner.jpg";
+import PilatesImg from "../../assets/images/membership-pilate.jpg";
+import UpcloseImg from "../../assets/images/membership-upclose.jpg";
+import ClassesImg from "../../assets/images/membership-class.jpg";
+
+const classesDescription: Props[] = [
+  {
+    heading: "Unlimited Signature Classes",
+    description:
+      "Science-backed classes developed by the industry's best minds to maximize transformation.",
+    imageSource: ClassesImg,
+  },
+  {
+    heading: "Expert Coaching ",
+    description:
+      "One-on-One training at Vélo is backed by our Health Advisory Board, and the Vél OS. This proprietary operating system, built to advance full health optimization, decodes and unlocks the peak of your potential, redefining High-Performance Living on a whole new scale. This is more than training, it’s the first-of-its-kind, data-driven and expert led path to unlocking your absolute best and achieving extraordinary results.",
+    imageSource: UpcloseImg,
+  },
+  {
+    heading: "Pilates Evolved",
+    description:
+      "Improve your strength, mobility, and flexibility with guidance in our studios or at home. Our certified Pilates instructors with over 400 hours of experience will help you tighten what’s loose and loosen what’s tight with touchless adjustments.",
+    imageSource: PilatesImg,
+  },
+];
 
 function Header() {
   return (
@@ -25,10 +51,20 @@ function Header() {
     </header>
   );
 }
+
 export default function Membership() {
   return (
     <>
       <Header />
+      {classesDescription.map((content) => {
+        return (
+          <SubClasses
+            heading={content.heading}
+            description={content.description}
+            imageSource={content.imageSource}
+          />
+        );
+      })}
     </>
   );
 }
