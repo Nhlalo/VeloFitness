@@ -46,7 +46,7 @@ function Exlusives() {
 
   return (
     <Container>
-      <div className="mx-3 mt-8 mb-8 flex flex-col lg:flex-row">
+      <div className="relative mx-3 mt-8 mb-8 flex flex-col lg:flex-row">
         <h2 className="pb-6 text-3xl font-semibold uppercase lg:w-[25%] lg:px-6 lg:text-[2.625rem]">
           New Vélo Exclusives
         </h2>
@@ -66,11 +66,19 @@ function Exlusives() {
             );
           })}
         </div>
-        <div>
-          <button type="button">
+        <div className="absolute right-[17%] bottom-[12%] hidden gap-4 lg:flex">
+          <button
+            type="button"
+            className="flex h-10 w-10 items-center justify-center bg-white text-black"
+            aria-label="View previous slide w-10 h-10"
+          >
             <ArrowLeft aria-hidden />
           </button>
-          <button type="button">
+          <button
+            type="button"
+            aria-label="View next slide "
+            className="flex h-10 w-10 items-center justify-center bg-white text-black"
+          >
             <ArrowRight aria-hidden />
           </button>
         </div>
