@@ -26,6 +26,14 @@ const classesDescription: Props[] = [
   },
 ];
 
+const newMemberBenefits: string[] = [
+  " Complimentary Equifit Assessment",
+  "Complimentary Personal Training session",
+  " Complimentary Studio Pilates session ",
+  "25% off your first session at The Spa at Vélo",
+  "2 annual guest passes",
+  "Referral rewards when your friends join Vélo",
+];
 function Header() {
   return (
     <header className="relative h-[88vh] overflow-hidden bg-black">
@@ -52,11 +60,30 @@ function Header() {
   );
 }
 
+function NewMembership() {
+  return (
+    <section>
+      <div>
+        <h2>New members benefits when you join</h2>
+        <div>
+          <h3>Join Vélo today to unlock exclusive member benefits:</h3>
+          <ul>
+            {newMemberBenefits.map((content) => {
+              return <li key={content}>{content}</li>;
+            })}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Membership() {
   return (
     <>
       <Header />
       <main className="bg-black text-white">
+        <NewMembership />
         {classesDescription.map((content) => {
           return (
             <SubClasses
