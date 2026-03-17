@@ -11,12 +11,3 @@ const getStripe = (key: string) => {
 };
 
 export { getStripe };
-
-/* const CheckoutPage = () => {
-  const handlePayment = async () => {
-    const stripe = await getStripe('pk_test_KEY'); // ← Just waiting for promise
-    await stripe.redirectToCheckout({...});
-  };
-  
-  return <button onClick={handlePayment}>Join Now</button>;
-};*/

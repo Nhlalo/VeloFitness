@@ -1,5 +1,10 @@
 import Container from "./Container";
-import { Props } from "../../types/classes.interface";
+
+interface Props {
+  heading: string;
+  description: string;
+  imageSource: string;
+}
 
 export default function Classes({ heading, description, imageSource }: Props) {
   return (
