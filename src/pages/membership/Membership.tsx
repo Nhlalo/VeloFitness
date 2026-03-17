@@ -32,6 +32,7 @@ const newMemberBenefits: string[] = [
   "Complimentary Personal Training session",
   " Complimentary Studio Pilates session ",
   "25% off your first session at The Spa at Vélo",
+  "Complimentary Fit Session and 15% off your first in-store purchase at The Shop",
   "2 annual guest passes",
   "Referral rewards when your friends join Vélo",
 ];
@@ -64,14 +65,20 @@ function Header() {
 function NewMembership() {
   return (
     <Container>
-      <h2>New members benefits when you join</h2>
-      <div>
-        <h3>Join Vélo today to unlock exclusive member benefits:</h3>
-        <ul>
-          {newMemberBenefits.map((content) => {
-            return <li key={content}>{content}</li>;
-          })}
-        </ul>
+      <div className="m-auto mt-8 mb-8 flex max-w-285 flex-col lg:flex-row">
+        <h2 className="pb-6 text-3xl font-semibold uppercase lg:w-[25%] lg:px-3 lg:text-[2.625rem]">
+          New members benefits when you join
+        </h2>
+        <div className="grow lg:text-lg">
+          <h3 className="lg:ml-[6.25%]">
+            Join Vélo today to unlock exclusive member benefits:
+          </h3>
+          <ul className="ml-5 list-disc lg:ml-[8.25%]">
+            {newMemberBenefits.map((content) => {
+              return <li key={content}>{content}</li>;
+            })}
+          </ul>
+        </div>
       </div>
     </Container>
   );
