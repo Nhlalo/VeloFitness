@@ -26,14 +26,14 @@ function selectColors(
 }
 
 const homeColors = selectColors(
-  "transparent",
+  "#000",
+  "#000",
   "#fff",
-  "#000000",
-  "#000000",
-  "transparent",
-  "#242424",
-  "#000",
-  "#000",
+  "#fff",
+  "#fff",
+  "#fff",
+  "#fff",
+  "#fff",
 );
 
 export { homeColors };
