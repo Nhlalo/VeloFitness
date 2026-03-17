@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Props } from "../../types/classes.interface";
 import { HeroBannerProps } from "../../types/herobanner.interface";
@@ -40,9 +40,56 @@ const exclusivesDescription: { imageSrc: string; alt: string }[] = [
 ];
 
 function Exlusives() {
-  // const containerRef = useRef<HTMLDivElement | null>(null)
-  // const containerRef = useRef<HTMLDivElement | null>(null)
-  // const containerRef = useRef<HTMLDivElement | null>(null)
+  const [isPreviousScrollable, setPreviousScrollable] =
+    useState<boolean>(false);
+  const [isNextScrollable, setNextScrollable] = useState<boolean>(true);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const imgContainerRef = useRef<HTMLDivElement | null>(null);
+  const leftButtonRef = useRef<HTMLButtonElement | null>(null);
+  const rightButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  function updateButtonStates() {
+    const scrollLeft = containerRef.current!.scrollLeft;
+    const maxScroll =
+      (containerRef.current?.scrollWidth ?? 0) -
+      (containerRef.current?.clientWidth ?? 0);
+
+    const isAtStart = scrollLeft <= 0;
+    const isAtEnd = Math.abs(scrollLeft - maxScroll) < 1;
+    console.log(isAtStart);
+    console.log(isAtEnd);
+    // Can scroll previous if NOT at start
+
+    setPreviousScrollable(!isAtStart);
+
+    // Can scroll next if NOT at end
+    setNextScrollable(!isAtEnd);
+  }
+
+  function handlePrevious() {
+    if (!containerRef.current) return;
+
+    containerRef.current.scrollBy({
+      left: -imgContainerRef.current!.clientWidth,
+      behavior: "smooth",
+    });
+
+    updateButtonStates();
+  }
+
+  function handleNext() {
+    if (!containerRef.current) return;
+
+    containerRef.current.scrollBy({
+      left: imgContainerRef.current?.clientWidth,
+      behavior: "smooth",
+    });
+
+    //Smooth scroll animation takes time, without a slight delay the leftScroll value will still be zero, making previous slide button still disabled.
+    setTimeout(() => {
+      updateButtonStates();
+    }, 20);
+  }
 
   return (
     <Container>
@@ -50,12 +97,16 @@ function Exlusives() {
         <h2 className="pb-6 text-3xl font-semibold uppercase lg:w-[25%] lg:px-6 lg:text-[2.625rem]">
           New Vélo Exclusives
         </h2>
-        <div className="no-scrollbar mb-25 flex overflow-x-auto">
+        <div
+          className="no-scrollbar mb-25 flex snap-x snap-mandatory overflow-x-auto"
+          ref={containerRef}
+        >
           {exclusivesDescription.map((content) => {
             return (
               <div
-                className="aspect-square w-[80%] shrink-0 px-3 md:w-[65%] lg:w-118"
+                className="aspect-square w-[80%] shrink-0 snap-start px-3 md:w-[65%] lg:w-118"
                 key={content.alt}
+                ref={imgContainerRef}
               >
                 <img
                   src={content.imageSrc}
@@ -71,6 +122,9 @@ function Exlusives() {
             type="button"
             className="flex h-10 w-10 items-center justify-center bg-white text-black"
             aria-label="View previous slide w-10 h-10"
+            ref={leftButtonRef}
+            disabled={!isPreviousScrollable}
+            onClick={handlePrevious}
           >
             <ArrowLeft aria-hidden />
           </button>
@@ -78,6 +132,9 @@ function Exlusives() {
             type="button"
             aria-label="View next slide "
             className="flex h-10 w-10 items-center justify-center bg-white text-black"
+            ref={rightButtonRef}
+            disabled={!isNextScrollable}
+            onClick={handleNext}
           >
             <ArrowRight aria-hidden />
           </button>
@@ -104,6 +161,7 @@ export default function Classes() {
               heading={content.heading}
               description={content.description}
               imageSource={content.imageSource}
+              key={content.heading}
             />
           );
         })}
