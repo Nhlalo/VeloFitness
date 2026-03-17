@@ -1,4 +1,5 @@
 import { Props } from "../../types/classes.interface";
+import Container from "../../components/shared/Container";
 import SubClasses from "../../components/shared/SubClasses";
 import HeroBanner from "../../assets/images/membership-herobanner.jpg";
 import PilatesImg from "../../assets/images/membership-pilate.jpg";
@@ -62,19 +63,17 @@ function Header() {
 
 function NewMembership() {
   return (
-    <section>
+    <Container>
+      <h2>New members benefits when you join</h2>
       <div>
-        <h2>New members benefits when you join</h2>
-        <div>
-          <h3>Join Vélo today to unlock exclusive member benefits:</h3>
-          <ul>
-            {newMemberBenefits.map((content) => {
-              return <li key={content}>{content}</li>;
-            })}
-          </ul>
-        </div>
+        <h3>Join Vélo today to unlock exclusive member benefits:</h3>
+        <ul>
+          {newMemberBenefits.map((content) => {
+            return <li key={content}>{content}</li>;
+          })}
+        </ul>
       </div>
-    </section>
+    </Container>
   );
 }
 
