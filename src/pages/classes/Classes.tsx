@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Props } from "../../types/classes.interface";
 import { HeroBannerProps } from "../../types/herobanner.interface";
 import Container from "../../components/shared/Container";
@@ -38,6 +40,10 @@ const exclusivesDescription: { imageSrc: string; alt: string }[] = [
 ];
 
 function Exlusives() {
+  // const containerRef = useRef<HTMLDivElement | null>(null)
+  // const containerRef = useRef<HTMLDivElement | null>(null)
+  // const containerRef = useRef<HTMLDivElement | null>(null)
+
   return (
     <Container>
       <div className="mx-3 mt-8 mb-8 flex flex-col lg:flex-row">
@@ -59,6 +65,14 @@ function Exlusives() {
               </div>
             );
           })}
+        </div>
+        <div>
+          <button type="button">
+            <ArrowLeft aria-hidden />
+          </button>
+          <button type="button">
+            <ArrowRight aria-hidden />
+          </button>
         </div>
       </div>
     </Container>
