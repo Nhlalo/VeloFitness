@@ -56,15 +56,17 @@ export default function Membership() {
   return (
     <>
       <Header />
-      {classesDescription.map((content) => {
-        return (
-          <SubClasses
-            heading={content.heading}
-            description={content.description}
-            imageSource={content.imageSource}
-          />
-        );
-      })}
+      <main className="bg-black text-white">
+        {classesDescription.map((content) => {
+          return (
+            <SubClasses
+              heading={content.heading}
+              description={content.description}
+              imageSource={content.imageSource}
+            />
+          );
+        })}
+      </main>
     </>
   );
 }
