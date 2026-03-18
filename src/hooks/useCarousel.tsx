@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 // ===== SEPARATE HANDLER FUNCTIONS =====
 
@@ -146,3 +146,61 @@ const KeyboardHandlers = (
 
   return { onKeyDown };
 };
+
+export default function useCarousel(
+  containerRef: React.RefObject<HTMLDivElement>,
+  imgContainerRef: React.RefObject<HTMLDivElement>,
+) {
+  const [isPreviousScrollable, setPreviousScrollable] =
+    useState<boolean>(false);
+  const [isNextScrollable, setNextScrollable] = useState<boolean>(true);
+
+  // ===== UTILITIES =====
+  const updateButtonStates = () => {
+    if (!containerRef.current) return;
+
+    const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+    const maxScroll = scrollWidth - clientWidth;
+
+    setPreviousScrollable(scrollLeft > 0);
+    setNextScrollable(Math.abs(scrollLeft - maxScroll) >= 1);
+  };
+
+  const getScrollAmount = () => imgContainerRef.current?.clientWidth ?? 0;
+
+  const smoothScroll = (direction: "left" | "right") => {
+    if (!containerRef.current) return;
+
+    containerRef.current.scrollBy({
+      left: direction === "left" ? -getScrollAmount() : getScrollAmount(),
+      behavior: "smooth",
+    });
+
+    setTimeout(updateButtonStates, 200);
+  };
+
+  // ===== TOUCH HANDLERS =====
+  const touchHandlers = TouchHandlers(containerRef, updateButtonStates);
+
+  // ===== MOUSE HANDLERS =====
+  const mouseHandlers = MouseHandlers(containerRef, updateButtonStates);
+
+  // ===== KEYBOARD HANDLERS =====
+  const keyboardHandlers = KeyboardHandlers(
+    containerRef,
+    smoothScroll,
+    updateButtonStates,
+  );
+
+  return {
+    isPreviousScrollable,
+    isNextScrollable,
+    eventHandlers: {
+      ...touchHandlers,
+      ...mouseHandlers,
+      ...keyboardHandlers,
+    },
+    handlePrevious: () => smoothScroll("left"),
+    handleNext: () => smoothScroll("right"),
+  };
+}
