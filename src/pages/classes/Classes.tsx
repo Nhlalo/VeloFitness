@@ -112,6 +112,10 @@ function Exlusives() {
                   }}
                   data-index={index}
                 />
+                <div>
+                  <h3>{content.heading}</h3>
+                  <p>{content.description}</p>
+                </div>
               </div>
             );
           })}
