@@ -74,6 +74,7 @@ function Exlusives() {
   // Create refs array for images
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  //This returns the event handler function
   const {
     isPreviousScrollable,
     isNextScrollable,
@@ -83,6 +84,7 @@ function Exlusives() {
     handleNext,
   } = useCarousel(containerRef, imgContainerRef);
 
+  //This returns an element or elements that are fully visible within a specific container
   const activeIndex = useActiveIndexFullVisible(containerRef, itemRefs);
 
   return (
