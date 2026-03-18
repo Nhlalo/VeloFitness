@@ -5,7 +5,7 @@ import TenseTraining2 from "../../assets/images/tense-training2.jpg";
 export default function Classes() {
   return (
     <Container>
-      <div className="flex flex-col gap-8 py-20 lg:flex-row">
+      <div className="flex flex-col items-center gap-8 py-20 lg:flex-row lg:items-stretch">
         <div className="max-w-125 flex-1 items-center justify-center py-9 lg:max-w-full">
           <div className="relative">
             <img
@@ -17,12 +17,12 @@ export default function Classes() {
             <img
               src={TenseTraining2}
               alt="tense training"
-              className="absolute -bottom-18 -left-9 ml-2 max-h-43 max-w-[50%] rounded-lg"
+              className="absolute -bottom-18 -left-9 ml-2 w-[50%] rounded-lg"
               loading="lazy"
             />
           </div>
         </div>
-        <div className="relative flex max-w-125 flex-1 flex-col items-center py-9 lg:max-w-full">
+        <div className="relative flex max-w-125 flex-col items-center py-9 lg:max-w-full">
           <h2 className="mb-4 w-full text-left text-3xl font-semibold md:text-4xl">
             THE CLASS YOU WILL GET HERE
           </h2>
