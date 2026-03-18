@@ -99,22 +99,28 @@ function Exlusives() {
           {exclusivesDescription.map((content, index) => {
             return (
               <div
-                className={`${activeIndex == index ? "lg:scale-100" : "lg:scale-70"} aspect-square w-[80%] shrink-0 snap-start px-3 duration-200 ease-in-out md:w-[65%] lg:w-[35vw]`}
+                className="relative aspect-square w-[80%] shrink-0 px-3 md:w-[65%] lg:w-[35vw]"
                 key={content.alt}
                 ref={imgContainerRef}
               >
                 <img
                   src={content.imageSrc}
                   alt={content.alt}
-                  className="h-full w-full object-cover"
+                  className={`${activeIndex == index ? "lg:scale-100" : "lg:scale-70"} h-full w-full object-cover`}
                   ref={(el) => {
                     itemRefs.current[index] = el;
                   }}
                   data-index={index}
                 />
-                <div>
-                  <h3>{content.heading}</h3>
-                  <p>{content.description}</p>
+                <div
+                  className={`${activeIndex == index ? "lg:scale-x-105 lg:opacity-100" : "lg:scale-x-100 lg:opacity-0"} bottom-0 bg-white p-3 transition-all duration-300 ease-in-out lg:absolute`}
+                >
+                  <h3 className="text-[1.75rem] font-semibold text-black lg:text-3xl">
+                    {content.heading}
+                  </h3>
+                  <p className="text-gray-800 lg:text-lg">
+                    {content.description}
+                  </p>
                 </div>
               </div>
             );
