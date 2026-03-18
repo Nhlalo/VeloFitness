@@ -3,8 +3,9 @@ import { useRef, useState } from "react";
 // ===== SEPARATE HANDLER FUNCTIONS =====
 
 const TouchHandlers = (
-  containerRef: React.RefObject<HTMLDivElement>,
+  containerRef: React.RefObject<HTMLDivElement | null>,
   onDragEnd: () => void,
+  setIsDragging: (isDragging: boolean) => void,
 ) => {
   const dragState = useRef({
     isActive: false,
@@ -20,12 +21,11 @@ const TouchHandlers = (
       startX: e.touches[0].clientX,
       startScrollLeft: containerRef.current.scrollLeft,
     };
-
-    containerRef.current.style.scrollBehavior = "auto";
+    setIsDragging(true);
   };
 
   const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!dragState.current.isActive || !containerRef.current) return;
+    if (!containerRef.current || !dragState.current) return;
 
     const deltaX = dragState.current.startX - e.touches[0].clientX;
     containerRef.current.scrollLeft =
@@ -35,10 +35,9 @@ const TouchHandlers = (
   };
 
   const onTouchEnd = () => {
-    if (!dragState.current.isActive || !containerRef.current) return;
+    if (!containerRef.current) return;
 
-    dragState.current.isActive = false;
-    containerRef.current.style.scrollBehavior = "smooth";
+    setIsDragging(false);
     onDragEnd();
   };
 
@@ -46,8 +45,9 @@ const TouchHandlers = (
 };
 
 const MouseHandlers = (
-  containerRef: React.RefObject<HTMLDivElement>,
+  containerRef: React.RefObject<HTMLDivElement | null>,
   onDragEnd: () => void,
+  setIsDragging: (isDragging: boolean) => void,
 ) => {
   const dragState = useRef({
     isActive: false,
@@ -64,16 +64,13 @@ const MouseHandlers = (
       startScrollLeft: containerRef.current.scrollLeft,
     };
 
-    const el = containerRef.current;
-    el.style.scrollBehavior = "auto";
-    el.style.cursor = "grabbing";
-    el.style.userSelect = "none";
+    setIsDragging(true);
 
     e.preventDefault();
   };
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!dragState.current.isActive || !containerRef.current) return;
+    if (!containerRef.current || !dragState.current) return;
 
     e.preventDefault();
     const deltaX = dragState.current.startX - e.clientX;
@@ -82,27 +79,16 @@ const MouseHandlers = (
   };
 
   const onMouseUp = () => {
-    if (!dragState.current.isActive || !containerRef.current) return;
+    if (!containerRef.current) return;
 
-    dragState.current.isActive = false;
-
-    const el = containerRef.current;
-    el.style.scrollBehavior = "smooth";
-    el.style.cursor = "grab";
-    el.style.userSelect = "auto";
+    setIsDragging(false);
 
     onDragEnd();
   };
 
   const onMouseLeave = () => {
-    if (dragState.current.isActive && containerRef.current) {
-      dragState.current.isActive = false;
-
-      const el = containerRef.current;
-      el.style.scrollBehavior = "smooth";
-      el.style.cursor = "grab";
-      el.style.userSelect = "auto";
-
+    if (!containerRef.current) {
+      setIsDragging(false);
       onDragEnd();
     }
   };
@@ -111,7 +97,7 @@ const MouseHandlers = (
 };
 
 const KeyboardHandlers = (
-  containerRef: React.RefObject<HTMLDivElement>,
+  containerRef: React.RefObject<HTMLDivElement | null>,
   smoothScroll: (direction: "left" | "right") => void,
   updateButtonStates: () => void,
 ) => {
@@ -148,12 +134,13 @@ const KeyboardHandlers = (
 };
 
 export default function useCarousel(
-  containerRef: React.RefObject<HTMLDivElement>,
-  imgContainerRef: React.RefObject<HTMLDivElement>,
+  containerRef: React.RefObject<HTMLDivElement | null>,
+  imgContainerRef: React.RefObject<HTMLDivElement | null>,
 ) {
   const [isPreviousScrollable, setPreviousScrollable] =
     useState<boolean>(false);
   const [isNextScrollable, setNextScrollable] = useState<boolean>(true);
+  const [isDragging, setIsDragging] = useState(false);
 
   // ===== UTILITIES =====
   const updateButtonStates = () => {
@@ -166,10 +153,11 @@ export default function useCarousel(
     setNextScrollable(Math.abs(scrollLeft - maxScroll) >= 1);
   };
 
-  const getScrollAmount = () => imgContainerRef.current?.clientWidth ?? 0;
+  const getScrollAmount = () =>
+    !imgContainerRef.current ? 0 : imgContainerRef.current?.clientWidth;
 
   const smoothScroll = (direction: "left" | "right") => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || isDragging) return;
 
     containerRef.current.scrollBy({
       left: direction === "left" ? -getScrollAmount() : getScrollAmount(),
@@ -180,10 +168,18 @@ export default function useCarousel(
   };
 
   // ===== TOUCH HANDLERS =====
-  const touchHandlers = TouchHandlers(containerRef, updateButtonStates);
+  const touchHandlers = TouchHandlers(
+    containerRef,
+    updateButtonStates,
+    setIsDragging,
+  );
 
   // ===== MOUSE HANDLERS =====
-  const mouseHandlers = MouseHandlers(containerRef, updateButtonStates);
+  const mouseHandlers = MouseHandlers(
+    containerRef,
+    updateButtonStates,
+    setIsDragging,
+  );
 
   // ===== KEYBOARD HANDLERS =====
   const keyboardHandlers = KeyboardHandlers(
@@ -195,6 +191,7 @@ export default function useCarousel(
   return {
     isPreviousScrollable,
     isNextScrollable,
+    isDragging,
     eventHandlers: {
       ...touchHandlers,
       ...mouseHandlers,
