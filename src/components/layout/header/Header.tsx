@@ -65,7 +65,7 @@ export default function Header({}) {
         }}
         className="fixed top-0 z-1000 flex h-20 w-full justify-center py-3"
       >
-        <div className="flex w-[95%] max-w-335 items-center justify-between">
+        <div className="flex w-[95%] items-center justify-between">
           <button
             onClick={handleClick}
             aria-label="Scroll to the top"
