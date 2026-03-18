@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import useCarousel from "../../hooks/useCarousel";
+import useActiveIndexFullVisible from "../../hooks/useActiveIndexFullyVisible";
 import { Props } from "../../types/classes.interface";
 import { HeroBannerProps } from "../../types/herobanner.interface";
 import Container from "../../components/shared/Container";
@@ -11,6 +12,13 @@ import PersonalTraining from "../../assets/images/classes-personalTraining.jpg";
 import Training from "../../assets/images/classes-training.jpg";
 import BikeRiding from "../../assets/images/classes-bikeriding.jpg";
 import Yoga from "../../assets/images/classes-yoga.jpg";
+
+interface ExclusiveDescription {
+  heading: string;
+  description: string;
+  imageSrc: string;
+  alt: string;
+}
 
 const classesDescription: Props[] = [
   {
@@ -34,10 +42,28 @@ const herobannerProps: HeroBannerProps = {
   buttonText: "BOOK A CLASS",
 };
 
-const exclusivesDescription: { imageSrc: string; alt: string }[] = [
-  { imageSrc: BikeRiding, alt: "Person riding a bike" },
-  { imageSrc: Yoga, alt: "Two people practicing yoga" },
-  { imageSrc: Yoga, alt: "A person stretching " },
+const exclusivesDescription: ExclusiveDescription[] = [
+  {
+    heading: "PRECISION RIDE ™",
+    description:
+      "A performance-based cycling experience exclusive to Equinox. This class uses precision metrics to monitor your power and quantify your progress over time. Build endurance, increase aerobic capacity, and discover your reason to ride.",
+    imageSrc: BikeRiding,
+    alt: "Person riding a bike",
+  },
+  {
+    heading: "SCULPTED YOGA™",
+    description:
+      "Take Vinyasa up a notch with a challenging class that combines yoga with lightweight sculpting. Incorporating Bala Bangles and hand weights, this class merges Vinyasa flow with low-impact toning exercises to enhance strength, mobility, and balance.",
+    imageSrc: Yoga,
+    alt: "Two people practicing yoga",
+  },
+  {
+    heading: "PILATES RISE",
+    description:
+      "Evolve your Pilates practice with our contemporary approach that sculpts your core, glutes, and full body. Start with classical Pilates movements, then intensify, build, and burn for a transformative Pilates experience.",
+    imageSrc: Yoga,
+    alt: "A person stretching ",
+  },
 ];
 
 function Exlusives() {
@@ -45,6 +71,8 @@ function Exlusives() {
   const imgContainerRef = useRef<HTMLDivElement | null>(null);
   const leftButtonRef = useRef<HTMLButtonElement | null>(null);
   const rightButtonRef = useRef<HTMLButtonElement | null>(null);
+  // Create refs array for images
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const {
     isPreviousScrollable,
@@ -55,10 +83,12 @@ function Exlusives() {
     handleNext,
   } = useCarousel(containerRef, imgContainerRef);
 
+  const activeIndex = useActiveIndexFullVisible(containerRef, itemRefs);
+
   return (
     <Container>
-      <div className="relative mx-3 mt-8 mb-8 flex flex-col lg:flex-row">
-        <h2 className="pb-6 text-3xl font-semibold uppercase lg:w-[25%] lg:px-6 lg:text-[2.625rem]">
+      <div className="relative mx-3 mt-8 flex flex-col gap-4 lg:flex-row">
+        <h2 className="mr-6 shrink-0 pb-6 text-3xl font-semibold uppercase lg:w-[25%] lg:px-6 lg:text-[2.625rem]">
           New Vélo Exclusives
         </h2>
         <div
@@ -66,10 +96,10 @@ function Exlusives() {
           ref={containerRef}
           {...eventHandlers}
         >
-          {exclusivesDescription.map((content) => {
+          {exclusivesDescription.map((content, index) => {
             return (
               <div
-                className="aspect-square w-[80%] shrink-0 snap-start px-3 md:w-[65%] lg:w-118"
+                className={`${activeIndex == index ? "lg:scale-100" : "lg:scale-70"} aspect-square w-[80%] shrink-0 snap-start px-3 duration-200 ease-in-out md:w-[65%] lg:w-[35vw]`}
                 key={content.alt}
                 ref={imgContainerRef}
               >
@@ -77,15 +107,19 @@ function Exlusives() {
                   src={content.imageSrc}
                   alt={content.alt}
                   className="h-full w-full object-cover"
+                  ref={(el) => {
+                    itemRefs.current[index] = el;
+                  }}
+                  data-index={index}
                 />
               </div>
             );
           })}
         </div>
-        <div className="absolute right-[17%] bottom-[12%] hidden gap-4 lg:flex">
+        <div className="absolute right-[17%] bottom-22 hidden gap-4 lg:flex">
           <button
             type="button"
-            className={`flex h-10 w-10 items-center justify-center bg-white opacity-0 lg:opacity-100 ${!isPreviousScrollable ? "text-gray-500" : "text-black"}`}
+            className={`flex h-10 w-10 items-center justify-center bg-white opacity-0 lg:opacity-100 ${!isPreviousScrollable ? "scale-80 text-gray-500" : "scale-100 text-black"}`}
             aria-label="View previous slide w-10 h-10"
             ref={leftButtonRef}
             disabled={!isPreviousScrollable}
@@ -96,7 +130,7 @@ function Exlusives() {
           <button
             type="button"
             aria-label="View next slide "
-            className={`flex h-10 w-10 items-center justify-center bg-white opacity-0 lg:opacity-100 ${!isNextScrollable ? "text-gray-500" : "text-black"}`}
+            className={`flex h-10 w-10 items-center justify-center bg-white opacity-0 lg:opacity-100 ${!isNextScrollable ? "scale-80 text-gray-500" : "scale-100 text-black"}`}
             ref={rightButtonRef}
             disabled={!isNextScrollable}
             onClick={handleNext}
