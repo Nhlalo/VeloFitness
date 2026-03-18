@@ -40,56 +40,181 @@ const exclusivesDescription: { imageSrc: string; alt: string }[] = [
 ];
 
 function Exlusives() {
-  const [isPreviousScrollable, setPreviousScrollable] =
-    useState<boolean>(false);
-  const [isNextScrollable, setNextScrollable] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const imgContainerRef = useRef<HTMLDivElement | null>(null);
   const leftButtonRef = useRef<HTMLButtonElement | null>(null);
   const rightButtonRef = useRef<HTMLButtonElement | null>(null);
 
+  // Touch and drag state
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const dragStartX = useRef<number>(0);
+  const dragStartScrollLeft = useRef<number>(0);
+  const isMouseDown = useRef<boolean>(false);
+
   function updateButtonStates() {
-    const scrollLeft = containerRef.current!.scrollLeft;
+    if (!containerRef.current) return;
+
+    const scrollLeft = containerRef.current.scrollLeft;
     const maxScroll =
-      (containerRef.current?.scrollWidth ?? 0) -
-      (containerRef.current?.clientWidth ?? 0);
+      containerRef.current.scrollWidth - containerRef.current.clientWidth;
 
     const isAtStart = scrollLeft <= 0;
     const isAtEnd = Math.abs(scrollLeft - maxScroll) < 1;
-    console.log(isAtStart);
-    console.log(isAtEnd);
-    // Can scroll previous if NOT at start
 
     setPreviousScrollable(!isAtStart);
-
-    // Can scroll next if NOT at end
     setNextScrollable(!isAtEnd);
   }
 
   function handlePrevious() {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !imgContainerRef.current) return;
 
     containerRef.current.scrollBy({
-      left: -imgContainerRef.current!.clientWidth,
+      left: -imgContainerRef.current.clientWidth,
       behavior: "smooth",
     });
 
-    updateButtonStates();
+    // Update after scroll animation
+    setTimeout(updateButtonStates, 200);
   }
 
   function handleNext() {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !imgContainerRef.current) return;
 
     containerRef.current.scrollBy({
-      left: imgContainerRef.current?.clientWidth,
+      left: imgContainerRef.current.clientWidth,
       behavior: "smooth",
     });
 
-    //Smooth scroll animation takes time, without a slight delay the leftScroll value will still be zero, making previous slide button still disabled.
-    setTimeout(() => {
-      updateButtonStates();
-    }, 20);
+    setTimeout(updateButtonStates, 200);
   }
+
+  // TOUCH EVENTS (Mobile)
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+
+    setIsDragging(true);
+    dragStartX.current = e.touches[0].clientX;
+    dragStartScrollLeft.current = containerRef.current.scrollLeft;
+
+    // Disable smooth scrolling during drag for better performance
+    containerRef.current.style.scrollBehavior = "auto";
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging || !containerRef.current) return;
+
+    const touchX = e.touches[0].clientX;
+    const deltaX = dragStartX.current - touchX;
+
+    // Manual scroll while dragging
+    containerRef.current.scrollLeft = dragStartScrollLeft.current + deltaX;
+
+    // Prevent page scroll when dragging horizontally
+    if (Math.abs(deltaX) > 10) {
+      e.preventDefault();
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging || !containerRef.current) return;
+
+    setIsDragging(false);
+    containerRef.current.style.scrollBehavior = "smooth";
+
+    // Update button states after touch
+    updateButtonStates();
+  };
+
+  // MOUSE DRAG (Desktop)
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+
+    isMouseDown.current = true;
+    dragStartX.current = e.clientX;
+    dragStartScrollLeft.current = containerRef.current.scrollLeft;
+
+    // Disable smooth scrolling during drag
+    containerRef.current.style.scrollBehavior = "auto";
+    containerRef.current.style.cursor = "grabbing";
+    containerRef.current.style.userSelect = "none";
+
+    e.preventDefault();
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isMouseDown.current || !containerRef.current) return;
+
+    e.preventDefault();
+    const deltaX = dragStartX.current - e.clientX;
+    containerRef.current.scrollLeft = dragStartScrollLeft.current + deltaX;
+  };
+
+  const handleMouseUp = () => {
+    if (!isMouseDown.current || !containerRef.current) return;
+
+    isMouseDown.current = false;
+    containerRef.current.style.scrollBehavior = "smooth";
+    containerRef.current.style.cursor = "grab";
+    containerRef.current.style.userSelect = "auto";
+
+    updateButtonStates();
+  };
+
+  const handleMouseLeave = () => {
+    if (isMouseDown.current && containerRef.current) {
+      isMouseDown.current = false;
+      containerRef.current.style.scrollBehavior = "smooth";
+      containerRef.current.style.cursor = "grab";
+      containerRef.current.style.userSelect = "auto";
+
+      updateButtonStates();
+    }
+  };
+
+  // KEYBOARD NAVIGATION
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!containerRef.current || !imgContainerRef.current) return;
+
+    switch (e.key) {
+      case "ArrowLeft":
+        handlePrevious();
+        e.preventDefault();
+        break;
+      case "ArrowRight":
+        handleNext();
+        e.preventDefault();
+        break;
+      case "Home":
+        containerRef.current.scrollTo({ left: 0, behavior: "smooth" });
+        setTimeout(updateButtonStates, 200);
+        e.preventDefault();
+        break;
+      case "End":
+        containerRef.current.scrollTo({
+          left:
+            containerRef.current.scrollWidth - containerRef.current.clientWidth,
+          behavior: "smooth",
+        });
+        setTimeout(updateButtonStates, 200);
+        e.preventDefault();
+        break;
+    }
+  };
+
+  // SCROLL EVENT FOR BUTTON UPDATES
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.addEventListener("scroll", updateButtonStates);
+
+    // Initial check
+    updateButtonStates();
+
+    return () => {
+      container.removeEventListener("scroll", updateButtonStates);
+    };
+  }, []);
 
   return (
     <Container>
@@ -98,8 +223,16 @@ function Exlusives() {
           New Vélo Exclusives
         </h2>
         <div
-          className="no-scrollbar mb-25 flex snap-x snap-mandatory overflow-x-auto"
+          className="no-scrollbar mb-25 flex overflow-x-auto"
           ref={containerRef}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+          onKeyDown={handleKeyDown}
         >
           {exclusivesDescription.map((content) => {
             return (
