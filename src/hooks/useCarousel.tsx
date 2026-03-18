@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import useWindowWidth from "./useWindowWidth";
 
 // ===== SEPARATE HANDLER FUNCTIONS =====
 
@@ -6,7 +7,10 @@ const TouchHandlers = (
   containerRef: React.RefObject<HTMLDivElement | null>,
   onDragEnd: () => void,
   setIsDragging: (isDragging: boolean) => void,
+  windowWidth: number,
 ) => {
+  //Disable mouse handle at desktop view
+
   const dragState = useRef({
     isActive: false,
     startX: 0,
@@ -14,7 +18,7 @@ const TouchHandlers = (
   });
 
   const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || windowWidth >= 1024) return;
 
     dragState.current = {
       isActive: true,
@@ -25,7 +29,8 @@ const TouchHandlers = (
   };
 
   const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!containerRef.current || !dragState.current) return;
+    if (!containerRef.current || !dragState.current || windowWidth >= 1024)
+      return;
 
     const deltaX = dragState.current.startX - e.touches[0].clientX;
     containerRef.current.scrollLeft =
@@ -35,7 +40,7 @@ const TouchHandlers = (
   };
 
   const onTouchEnd = () => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || windowWidth >= 1024) return;
 
     setIsDragging(false);
     onDragEnd();
@@ -48,7 +53,10 @@ const MouseHandlers = (
   containerRef: React.RefObject<HTMLDivElement | null>,
   onDragEnd: () => void,
   setIsDragging: (isDragging: boolean) => void,
+  windowWidth: number,
 ) => {
+  //Disable mouse handle at desktop view
+
   const dragState = useRef({
     isActive: false,
     startX: 0,
@@ -56,7 +64,7 @@ const MouseHandlers = (
   });
 
   const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || windowWidth >= 1024) return;
 
     dragState.current = {
       isActive: true,
@@ -70,7 +78,8 @@ const MouseHandlers = (
   };
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current || !dragState.current) return;
+    if (!containerRef.current || !dragState.current || windowWidth >= 1024)
+      return;
 
     e.preventDefault();
     const deltaX = dragState.current.startX - e.clientX;
@@ -79,7 +88,7 @@ const MouseHandlers = (
   };
 
   const onMouseUp = () => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || windowWidth >= 1024) return;
 
     setIsDragging(false);
 
@@ -87,7 +96,7 @@ const MouseHandlers = (
   };
 
   const onMouseLeave = () => {
-    if (!containerRef.current) {
+    if (!containerRef.current || windowWidth >= 1024) {
       setIsDragging(false);
       onDragEnd();
     }
@@ -141,6 +150,7 @@ export default function useCarousel(
     useState<boolean>(false);
   const [isNextScrollable, setNextScrollable] = useState<boolean>(true);
   const [isDragging, setIsDragging] = useState(false);
+  const windowWidth = useWindowWidth();
 
   // ===== UTILITIES =====
   const updateButtonStates = () => {
@@ -172,6 +182,7 @@ export default function useCarousel(
     containerRef,
     updateButtonStates,
     setIsDragging,
+    windowWidth,
   );
 
   // ===== MOUSE HANDLERS =====
@@ -179,6 +190,7 @@ export default function useCarousel(
     containerRef,
     updateButtonStates,
     setIsDragging,
+    windowWidth,
   );
 
   // ===== KEYBOARD HANDLERS =====
