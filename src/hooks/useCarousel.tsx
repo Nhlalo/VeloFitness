@@ -109,3 +109,40 @@ const MouseHandlers = (
 
   return { onMouseDown, onMouseMove, onMouseUp, onMouseLeave };
 };
+
+const KeyboardHandlers = (
+  containerRef: React.RefObject<HTMLDivElement>,
+  smoothScroll: (direction: "left" | "right") => void,
+  updateButtonStates: () => void,
+) => {
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+
+    switch (e.key) {
+      case "ArrowLeft":
+        smoothScroll("left");
+        e.preventDefault();
+        break;
+      case "ArrowRight":
+        smoothScroll("right");
+        e.preventDefault();
+        break;
+      case "Home":
+        containerRef.current.scrollTo({ left: 0, behavior: "smooth" });
+        setTimeout(updateButtonStates, 200);
+        e.preventDefault();
+        break;
+      case "End":
+        containerRef.current.scrollTo({
+          left:
+            containerRef.current.scrollWidth - containerRef.current.clientWidth,
+          behavior: "smooth",
+        });
+        setTimeout(updateButtonStates, 200);
+        e.preventDefault();
+        break;
+    }
+  };
+
+  return { onKeyDown };
+};
