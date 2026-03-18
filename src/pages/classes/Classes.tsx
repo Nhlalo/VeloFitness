@@ -85,7 +85,7 @@ function Exlusives() {
         <div className="absolute right-[17%] bottom-[12%] hidden gap-4 lg:flex">
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center bg-white text-black"
+            className={`flex h-10 w-10 items-center justify-center bg-white opacity-0 lg:opacity-100 ${!isPreviousScrollable ? "text-gray-500" : "text-black"}`}
             aria-label="View previous slide w-10 h-10"
             ref={leftButtonRef}
             disabled={!isPreviousScrollable}
@@ -96,7 +96,7 @@ function Exlusives() {
           <button
             type="button"
             aria-label="View next slide "
-            className="flex h-10 w-10 items-center justify-center bg-white text-black"
+            className={`flex h-10 w-10 items-center justify-center bg-white opacity-0 lg:opacity-100 ${!isNextScrollable ? "text-gray-500" : "text-black"}`}
             ref={rightButtonRef}
             disabled={!isNextScrollable}
             onClick={handleNext}
