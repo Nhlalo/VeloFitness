@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import useCarousel from "../../hooks/useCarousel";
 import { Props } from "../../types/classes.interface";
