@@ -54,21 +54,21 @@ export default function JoinUs() {
   };
 
   function imgClass(option: string): string {
-    return ` w-full w-object-cover  ${hoveredItem === option ? "opacity-100 z-2" : "opacity-0 z-1"}`;
+    return `min-h-105 w-full w-object-cover  ${hoveredItem === option ? "opacity-100 z-2" : "opacity-0 z-1"}`;
   }
 
   return (
-    <section className="lg:relative">
-      <h2 className="mb-4 text-center font-semibold md:text-4xl">
+    <section>
+      <h2 className="mb-4 text-center text-3xl font-semibold md:text-4xl">
         WHY JOIN US?
       </h2>
-      <p className="m-auto max-w-[75ch] py-1 text-white">
+      <p className="m-auto max-w-[75ch] pt-1 pb-8 text-center text-white">
         Our community brings together professionals from diverse backgrounds,
         fostering a collaborative environment where ideas flourish. You'll find
         mentorship, build valuable connections, and grow alongside motivated
         peers who share your ambition.
       </p>
-      <div className="relative mt-16 overflow-hidden">
+      <div className="relative">
         {/* Image is relative, while others are absoulte, as it will determine the size of div to avoid constant reflow */}
         <img
           src={GroupTraining}
@@ -91,46 +91,46 @@ export default function JoinUs() {
           aria-hidden="true"
           loading="lazy"
         />
-      </div>
-      <div className="flex w-full flex-col gap-3 px-9 lg:absolute lg:top-[50%] lg:left-[50%] lg:z-3 lg:-translate-x-1/2 lg:-translate-y-1/2 lg:flex-row">
-        {gymOfferings.map((content: Training) => {
-          // Button visibility:
-          // - Mobile: always visible
-          // - Desktop: visible only on hover
-          const buttonClasses = `font-semibold text-black underline underline-offset-8 transition-opacity duration-200 
+        <div className="absolute top-[50%] left-[50%] z-3 flex w-full -translate-x-1/2 -translate-y-1/2 flex-row gap-3 overflow-hidden px-9">
+          {gymOfferings.map((content: Training) => {
+            // Button visibility:
+            // - Mobile: always visible
+            // - Desktop: visible only on hover
+            const buttonClasses = `font-semibold text-black underline underline-offset-8 transition-opacity duration-200 
   opacity-100 ${hoveredItem === content.linkName ? "lg:opacity-100" : "lg:opacity-0"}`;
-          //Div appearance
-          // - Mobile: white background with black text
-          // - Desktop: transparent background with white text until hovered
-          const parentDivClasses = `flex-1 bg-white px-6 pt-0 pb-8 text-black 
+            //Div appearance
+            // - Mobile: white background with black text
+            // - Desktop: transparent background with white text until hovered
+            const parentDivClasses = `min-w-[17.5rem] flex-1 bg-white px-6 pt-0 pb-8 text-black 
   ${hoveredItem === content.linkName ? "lg:bg-white lg:text-black" : "lg:bg-transparent lg:text-white"}
   `;
-          return (
-            <div
-              key={content.heading}
-              className={parentDivClasses}
-              onMouseEnter={handleOnMouseEnter}
-              data-link-name={content.linkName}
-            >
-              <hr
-                aria-hidden="true"
-                className="text-white opacity-0 lg:opacity-100"
-              />
-              <h3 className="mb-6 pt-8 text-3xl font-semibold">
-                {content.heading}
-              </h3>
-              <p className="mb-6">{content.description}</p>
-              <button
-                type="button"
+            return (
+              <div
+                key={content.heading}
+                className={parentDivClasses}
+                onMouseEnter={handleOnMouseEnter}
                 data-link-name={content.linkName}
-                onClick={handleClick}
-                className={buttonClasses}
               >
-                {content.linkName}
-              </button>
-            </div>
-          );
-        })}
+                <hr
+                  aria-hidden="true"
+                  className="text-white opacity-0 lg:opacity-100"
+                />
+                <h3 className="mb-6 pt-8 text-[1.75rem] font-semibold lg:text-3xl">
+                  {content.heading}
+                </h3>
+                <p className="mb-6">{content.description}</p>
+                <button
+                  type="button"
+                  data-link-name={content.linkName}
+                  onClick={handleClick}
+                  className={buttonClasses}
+                >
+                  {content.linkName}
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

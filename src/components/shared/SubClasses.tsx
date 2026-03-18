@@ -8,9 +8,9 @@ export default function SubClasses({
 }: Props) {
   return (
     <Container>
-      <div className="m-auto flex max-w-285 flex-col py-18 lg:flex-row">
-        <div className="flex-1">
-          <h2 className="mt-5 mb-6 text-3xl font-bold uppercase lg:w-[50%] lg:text-4xl">
+      <div className="m-auto flex flex-col py-18 lg:flex-row">
+        <div>
+          <h2 className="mt-5 mb-6 text-3xl font-bold uppercase lg:text-4xl">
             {heading}
           </h2>
           <p className="mb-6 hidden w-[60%] py-3 text-lg leading-[1.4] lg:block">
@@ -20,7 +20,7 @@ export default function SubClasses({
             BOOK A CLASS
           </button>
         </div>
-        <div className="flex-1 overflow-hidden lg:max-w-[43%]">
+        <div className="flex-1 overflow-hidden lg:max-w-[80%]">
           <img
             src={imageSource}
             alt="training"

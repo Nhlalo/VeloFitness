@@ -38,12 +38,12 @@ const newMemberBenefits: string[] = [
 ];
 function Header() {
   return (
-    <header className="relative h-[88vh] overflow-hidden bg-black">
+    <header className="relative h-screen overflow-hidden bg-black">
       <img
         src={HeroBanner}
         alt="Group training"
         aria-hidden="true"
-        className="pointer-events-none h-full w-full scale-x-[-1] object-cover lg:h-auto"
+        className="pointer-events-none h-full w-full scale-x-[-1] object-cover"
       />
 
       <div className="w-90% absolute top-[50%] m-auto -translate-y-1/2 pl-8">
