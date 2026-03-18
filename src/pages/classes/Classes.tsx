@@ -106,14 +106,14 @@ function Exlusives() {
                 <img
                   src={content.imageSrc}
                   alt={content.alt}
-                  className={`${activeIndex == index ? "lg:scale-100" : "lg:scale-70"} h-full w-full object-cover`}
+                  className={`${activeIndex == index ? "lg:scale-100" : "lg:scale-75"} h-full w-full object-cover`}
                   ref={(el) => {
                     itemRefs.current[index] = el;
                   }}
                   data-index={index}
                 />
                 <div
-                  className={`${activeIndex == index ? "lg:scale-x-105 lg:opacity-100" : "lg:scale-x-100 lg:opacity-0"} bottom-0 bg-white p-3 transition-all duration-300 ease-in-out lg:absolute`}
+                  className={`${activeIndex == index ? "lg:scale-x-105 lg:opacity-100" : "lg:scale-x-50 lg:opacity-0"} bottom-0 bg-white p-3 transition-all duration-300 ease-in-out lg:absolute`}
                 >
                   <h3 className="text-[1.75rem] font-semibold text-black lg:text-3xl">
                     {content.heading}
