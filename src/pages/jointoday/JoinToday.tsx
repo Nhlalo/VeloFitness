@@ -51,25 +51,43 @@ function SelectClub() {
     </div>
   );
 }
-
 function JoinToday() {
   return (
-    <div>
-      <div>
-        <div>
+    <div className="h-screen w-full overflow-hidden bg-white">
+      <div className="mx-auto h-full max-w-7xl px-4 sm:px-6 lg:px-8 lg:py-6">
+        <div className="flex h-full flex-col lg:flex-row lg:gap-8">
           {/* Left column - Fixed image column */}
-          <div>
-            <div>
-              <div>
-                <div>
-                  <div>
-                    <h1>Vélo Fitness Discount</h1>
-                    <p>
+          <div className="lg:w-1/2">
+            <div className="h-full lg:sticky lg:top-6 lg:flex lg:h-[calc(100vh-3rem)] lg:items-center">
+              <div
+                className="relative w-full overflow-hidden rounded-lg"
+                style={{ height: "min(100%, calc(100vh - 3rem))" }}
+              >
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{
+                    backgroundImage:
+                      "url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')",
+                  }}
+                >
+                  <div className="absolute inset-0 bg-black/40" />
+
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center text-white">
+                    <h1 className="mb-4 text-4xl font-bold md:text-5xl">
+                      Vélo Fitness Discount
+                    </h1>
+                    <p className="mb-6 max-w-md text-lg">
                       Join now and receive a complementary suite of services.
                     </p>
-                    <ul>
-                      <li>1 Vélo Assessment</li>
-                      <li>2 Personal Training r 2 Pilate Sessions</li>
+                    <ul className="space-y-2 text-left">
+                      <li className="flex items-start">
+                        <span className="mr-2 text-xl">•</span>
+                        <span>1 Vélo Assessment</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 text-xl">•</span>
+                        <span>2 Personal Training r 2 Pilate Sessions</span>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -78,35 +96,39 @@ function JoinToday() {
           </div>
 
           {/* Right column - Scrollable content */}
-          <div>
-            <div>
+          <div className="mt-6 lg:mt-0 lg:w-1/2 lg:overflow-y-auto">
+            <div className="space-y-6 lg:pr-4">
               <div>
-                <div>
-                  <button>
-                    <span>01</span>
-                    <span>Select Club</span>
+                <div className="flex w-full">
+                  <button className="group relative flex-1 px-2 py-4 transition-colors hover:bg-gray-50">
+                    <span className="absolute top-1 left-1 text-xs text-gray-400">
+                      01
+                    </span>
+                    <span className="block font-medium">Select Club</span>
                   </button>
 
-                  <div></div>
+                  <div className="my-2 w-px bg-gray-300"></div>
 
-                  <button>
-                    <span>02</span>
-                    <span>Choose Membership</span>
+                  <button className="group relative flex-1 px-2 py-4 transition-colors hover:bg-gray-50">
+                    <span className="absolute top-1 left-1 text-xs text-gray-400">
+                      02
+                    </span>
+                    <span className="block font-medium">Choose Membership</span>
                   </button>
 
-                  <div></div>
+                  <div className="my-2 w-px bg-gray-300"></div>
 
-                  <button>
-                    <span>03</span>
-                    <span>Review and Pay</span>
+                  <button className="group relative flex-1 px-2 py-4 transition-colors hover:bg-gray-50">
+                    <span className="absolute top-1 left-1 text-xs text-gray-400">
+                      03
+                    </span>
+                    <span className="block font-medium">Review and Pay</span>
                   </button>
                 </div>
 
-                {/* Full width line under buttons */}
-                <div></div>
+                <div className="h-px w-full bg-gray-300"></div>
               </div>
 
-              {/* Main content */}
               <SelectClub />
             </div>
           </div>
@@ -115,3 +137,4 @@ function JoinToday() {
     </div>
   );
 }
+export default JoinToday;
