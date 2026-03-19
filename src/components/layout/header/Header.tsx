@@ -93,9 +93,10 @@ export default function Header({}) {
               {navLinksContent.map((element) => (
                 <li key={element.key} className="hover:underline">
                   <Link
-                    to="/"
+                    to={`/${element.content.toLowerCase()}`}
                     style={{ color: currentColors?.color }}
                     className="block min-w-[9ch] text-center font-bold"
+                    data-page={element.content}
                   >
                     {element.content}
                   </Link>
@@ -103,7 +104,7 @@ export default function Header({}) {
               ))}
               <li className="rounded-md bg-[#AAFF00] px-8 py-4 hover:bg-[#9EF200]">
                 <Link
-                  to="/"
+                  to="/jointoday"
                   style={{ color: currentColors?.color }}
                   className="block min-w-[9ch] text-center font-bold"
                 >
