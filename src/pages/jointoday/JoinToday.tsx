@@ -95,7 +95,7 @@ function ChooseMembership() {
                 className="w-full cursor-pointer rounded-lg border border-gray-200 transition-colors hover:border-black"
               >
                 <div className="flex items-center gap-4 p-4">
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <div className="h-16 w-24 overflow-hidden rounded-md">
                       <img
                         src={item.image}
@@ -154,7 +154,7 @@ function Review() {
             <div className="p-5">
               <div className="flex items-center gap-4">
                 {/* Image column */}
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <img
                     src={selectedMembership.image}
                     alt={selectedMembership.title}
@@ -313,7 +313,7 @@ function Review() {
           <div className="mt-8 space-y-4">
             {/* Row 1 */}
             <div className="flex gap-3">
-              <input type="checkbox" className="mt-1 h-4 w-4 flex-shrink-0" />
+              <input type="checkbox" className="mt-1 h-4 w-4 shrink-0" />
               <div className="text-sm text-gray-600">
                 I agree to the{" "}
                 <span className="cursor-pointer font-medium text-black underline">
@@ -324,7 +324,7 @@ function Review() {
 
             {/* Row 2 */}
             <div className="flex gap-3">
-              <input type="checkbox" className="mt-1 h-4 w-4 flex-shrink-0" />
+              <input type="checkbox" className="mt-1 h-4 w-4 shrink-0" />
               <div className="text-sm text-gray-600">
                 I agree that my membership will renew automatically and I will
                 be charged the monthly dues of $260.00 (excluding taxes) every
@@ -335,7 +335,7 @@ function Review() {
 
             {/* Row 3 */}
             <div className="flex gap-3">
-              <input type="checkbox" className="mt-1 h-4 w-4 flex-shrink-0" />
+              <input type="checkbox" className="mt-1 h-4 w-4 shrink-0" />
               <div className="text-sm text-gray-600">
                 I agree to pay the "Total Due Today" and commit to a minimum
                 purchase of 12 months of membership, subject to certain
@@ -360,7 +360,7 @@ function JoinToday() {
         <div className="flex flex-col lg:flex-row lg:gap-8">
           {/* Left column - Fixed on desktop only */}
           <div className="w-full lg:sticky lg:top-6 lg:w-1/2 lg:self-start">
-            <div className="relative h-[400px] w-full overflow-hidden rounded-lg sm:h-[500px] lg:h-[calc(100vh-3rem)]">
+            <div className="relative h-100 w-full overflow-hidden rounded-lg sm:h-125 lg:h-[calc(100vh-3rem)]">
               <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
