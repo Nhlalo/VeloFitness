@@ -51,6 +51,83 @@ function SelectClub() {
     </div>
   );
 }
+
+function ChooseMembership() {
+  return (
+    <div>
+      <div>
+        <div>
+          <h2>
+            Unlimited classes, guest passes, complimentary fitness assessments,
+            and so much more.
+          </h2>
+
+          <div>
+            <div>
+              <div>
+                <div>
+                  <div>Image</div>
+                </div>
+
+                <div>
+                  <div>Premium Club Access</div>
+                  <div>Downtown Fitness</div>
+                </div>
+
+                <div>
+                  <div>$79</div>
+                  <div>Month</div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div>
+                <div>
+                  <div>Image</div>
+                </div>
+
+                <div>
+                  <div>Elite Member Benefits</div>
+                  <div>Harbor Sports Club</div>
+                </div>
+
+                <div>
+                  <div>$99</div>
+                  <div>Month</div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div>
+                <div>
+                  <div>Image</div>
+                </div>
+
+                <div>
+                  <div>Signature Experience</div>
+                  <div>Central Park Gym</div>
+                </div>
+
+                <div>
+                  <div>$129</div>
+                  <div>Month</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Next button */}
+          <div>
+            <button>Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function JoinToday() {
   return (
     <div className="h-screen w-full overflow-hidden bg-white">
@@ -129,7 +206,7 @@ function JoinToday() {
                 <div className="h-px w-full bg-gray-300"></div>
               </div>
 
-              <SelectClub />
+              <ChooseMembership />
             </div>
           </div>
         </div>
