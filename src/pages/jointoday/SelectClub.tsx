@@ -46,6 +46,40 @@ export default function SelectClub() {
               Select a club +
             </button>
           </form>
+
+          <div className="mt-8 space-y-4">
+            <p className="text-xs leading-relaxed text-gray-500">
+              By clicking Join Today, I agree to the Vélo{" "}
+              <span className="cursor-pointer text-black underline">
+                Terms & Conditions
+              </span>
+              ,{" "}
+              <span className="cursor-pointer text-black underline">
+                Privacy Policy
+              </span>{" "}
+              and that Vélo brand companies and their membership advisors can
+              contact me regarding promotions, marketing, products, services,
+              and other information that may interest me. This site is protected
+              by reCAPTCHA and the Google{" "}
+              <span className="cursor-pointer text-black underline">
+                Privacy Policy
+              </span>{" "}
+              and{" "}
+              <span className="cursor-pointer text-black underline">
+                Terms of Service
+              </span>{" "}
+              apply.
+            </p>
+
+            <button className="w-full rounded-md bg-gray-200 px-6 py-4 text-center font-medium text-gray-500 transition-colors duration-300 hover:bg-gray-300">
+              Join Today
+            </button>
+
+            <p className="text-center text-xs text-gray-400">
+              By continuing, I agree to share my contact information with a
+              Membership advisor
+            </p>
+          </div>
         </div>
       </div>
     </div>
