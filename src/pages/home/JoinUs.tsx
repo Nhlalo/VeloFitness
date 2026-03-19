@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
+import useCarousel from "../../hooks/useCarousel";
 import GroupTraining from "../../assets/images/group-training.jpg";
 import PersonalTraining from "../../assets/images/personal-training.jpg";
 import Club from "../../assets/images/gym-club.jpg";
@@ -19,6 +20,10 @@ const routes: Record<string, string> = {
 
 export default function JoinUs() {
   const [hoveredItem, setHoveredItem] = useState<string>("Discover Classes");
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const descriptionRef = useRef<HTMLDivElement | null>(null);
+
+  const { eventHandlers } = useCarousel(containerRef, descriptionRef);
 
   const navigate = useNavigate();
 
@@ -91,7 +96,11 @@ export default function JoinUs() {
           aria-hidden="true"
           loading="lazy"
         />
-        <div className="absolute top-[50%] left-[50%] z-3 flex w-full -translate-x-1/2 -translate-y-1/2 flex-row gap-3 overflow-hidden px-9">
+        <div
+          ref={containerRef}
+          {...eventHandlers}
+          className="absolute top-[50%] left-[50%] z-3 flex w-full -translate-x-1/2 -translate-y-1/2 flex-row gap-3 overflow-hidden px-9"
+        >
           {gymOfferings.map((content: Training) => {
             // Button visibility:
             // - Mobile: always visible
@@ -110,6 +119,7 @@ export default function JoinUs() {
                 className={parentDivClasses}
                 onMouseEnter={handleOnMouseEnter}
                 data-link-name={content.linkName}
+                ref={descriptionRef}
               >
                 <hr
                   aria-hidden="true"
