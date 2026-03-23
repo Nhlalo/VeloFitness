@@ -3,12 +3,15 @@ import { gymDescription } from "../../data/constants/gymlocation";
 
 export default function ClubSelection() {
   return (
-    <div className="h-full w-full">
+    <div aria-live="polite" aria-atomic="true" className="h-full w-full">
       <div className="flex h-full items-start justify-center pt-12">
         <div className="w-full max-w-2xl rounded-lg bg-white p-8 shadow-xl">
           <div className="flex justify-end">
-            <button className="rounded-full p-1 transition-colors hover:bg-gray-100">
-              <X size={20} className="text-black" />
+            <button
+              aria-label="Go back"
+              className="rounded-full p-1 transition-colors hover:bg-gray-100"
+            >
+              <X size={20} className="text-black" aria-hidden="true" />
             </button>
           </div>
 
@@ -25,6 +28,7 @@ export default function ClubSelection() {
             <Search
               className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
               size={18}
+              aria-hidden
             />
             <input
               type="text"
