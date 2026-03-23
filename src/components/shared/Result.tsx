@@ -20,7 +20,13 @@ function Loading() {
   );
 }
 
-function Data({ data }: { data: Gym[] | Description[] | string }) {
+function Data({
+  data,
+  hoverBG,
+}: {
+  data: Gym[] | Description[] | string;
+  hoverBG: string;
+}) {
   const navigate = useNavigate();
 
   function determinePathRedirection(country: string): string {
@@ -58,7 +64,7 @@ function Data({ data }: { data: Gym[] | Description[] | string }) {
           return (
             <button
               type="button"
-              className="flex w-full gap-6 px-6 py-8 hover:bg-[#282828]"
+              className={`flex w-full gap-6 px-6 py-8 hover:${hoverBG}`}
               key={key}
               onClick={() => handleClick(country)}
             >
@@ -83,12 +89,20 @@ function Data({ data }: { data: Gym[] | Description[] | string }) {
   );
 }
 
-export default function Results({ location }: { location: string }) {
+export default function Results({
+  location,
+  mainBG,
+  hoverBG,
+}: {
+  location: string;
+  mainBG: string;
+  hoverBG: string;
+}) {
   const { loading, data, error } = useFindClub(location);
   return (
-    <div className="absolute mt-1 max-h-80 w-full rounded-xl bg-[#222020]">
+    <div className={`absolute mt-1 max-h-80 w-full rounded-xl ${mainBG}`}>
       {loading && <Loading />}
-      {data && <Data data={data} />}
+      {data && <Data data={data} hoverBG={hoverBG} />}
       {error && <Error />}
     </div>
   );
