@@ -36,14 +36,6 @@ export default function ClubSelection({
           : "pointer-events-none translate-x-full opacity-0"
       }`}
     >
-      {/* Overlay behind panel but within right column area */}
-      <div
-        className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ${
-          isDisplay ? "opacity-100" : "opacity-0"
-        }`}
-        onClick={onClose}
-      />
-
       {/* Slide panel */}
       <div
         className={`relative h-full w-full transform overflow-y-auto bg-white shadow-xl transition-transform duration-300 ease-out ${
@@ -53,7 +45,6 @@ export default function ClubSelection({
         <div className="relative h-full w-full">
           <div className="flex h-full items-start justify-center pt-12">
             <div className="w-full max-w-4xl rounded-lg bg-white p-8">
-              {/* Close button - top right */}
               <div className="flex justify-end">
                 <button
                   onClick={onClose}
@@ -64,18 +55,15 @@ export default function ClubSelection({
                 </button>
               </div>
 
-              {/* Heading */}
               <h1 className="mt-2 text-3xl font-bold tracking-wide uppercase">
                 114 CLUBS WORLDWIDE
               </h1>
 
-              {/* Paragraph */}
               <p className="mt-3 text-gray-500">
                 Choose your ideal home base. If you're torn between a few, a
                 membership advisor can help find a perfect fit.
               </p>
 
-              {/* Search input with icon - full width */}
               <div className="relative mt-6 w-full">
                 <Search
                   className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
@@ -89,13 +77,10 @@ export default function ClubSelection({
                 />
               </div>
 
-              {/* Clubs rows container */}
               <div className="mt-8 w-full">
                 {clubsData.map((club, index) => (
                   <div key={index}>
-                    {/* Row with two columns */}
                     <div className="flex gap-6 py-6">
-                      {/* Left column - Club info */}
                       <div className="flex w-1/2 flex-col items-start">
                         <div className="text-lg font-bold">{club.street}</div>
                         <div className="mt-1 text-sm text-gray-500">
@@ -106,7 +91,6 @@ export default function ClubSelection({
                         </button>
                       </div>
 
-                      {/* Right column - Image */}
                       <div className="w-1/2">
                         <img
                           src={club.image}
@@ -116,7 +100,6 @@ export default function ClubSelection({
                       </div>
                     </div>
 
-                    {/* Divider (except after last item) */}
                     {index < clubsData.length - 1 && (
                       <div className="h-px w-full bg-gray-200"></div>
                     )}
