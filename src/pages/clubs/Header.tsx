@@ -60,7 +60,13 @@ export default function Header({
             placeholder="City, ZIP Code, or Postal Code"
             onChange={handleChange}
           />
-          {inputValue.trim().length > 0 && <Results location={inputValue} />}
+          {inputValue.trim().length > 0 && (
+            <Results
+              location={inputValue}
+              mainBG="bg-[#222020]"
+              hoverBG="bg-[#282828]"
+            />
+          )}
         </div>
       </div>
     </header>
