@@ -2,7 +2,7 @@ import { useState, ChangeEvent, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { Search, ArrowRight } from "lucide-react";
 import debounce from "../../utils/debounce";
-import Results from "./Result";
+import Results from "../../components/shared/Result";
 
 export default function Header({
   heading,
