@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { LoaderCircle } from "lucide-react";
 import useFindClub from "../../hooks/useFindClub";
+import useNavigateClubPage from "../../hooks/useNavigateClubPage";
 import { Gym, Description } from "../../types/club.interface";
 
 function Error() {
@@ -28,24 +29,20 @@ function Data({
   hoverBG: string;
 }) {
   const navigate = useNavigate();
+  const { determinePathRedirection } = useNavigateClubPage();
 
-  function determinePathRedirection(country: string): string {
+  function handleClick(country: string, clubs: (Gym | Description)[]) {
     const lowercaseCountry = country.toLowerCase();
-
-    if (lowercaseCountry == "usa") return "USA";
-    else if (lowercaseCountry == "south africa") return "SouthAfrica";
-    return "Canada";
+    navigate(determinePathRedirection(lowercaseCountry, clubs));
   }
 
-  function handleClick(name: string) {
-    navigate(determinePathRedirection(name));
-  }
   return (
     <>
       {typeof data !== "string" &&
         data?.map((content) => {
           const isGym = "name" in content;
           const isDescription = "country" in content;
+          const isClub = "clubs" in content;
 
           const displayName = isGym
             ? content.name
@@ -59,6 +56,8 @@ function Data({
               ? content.country
               : "unknown";
 
+          const clubs = isClub ? content.clubs : [...data];
+
           const country = content.country;
 
           return (
@@ -66,7 +65,7 @@ function Data({
               type="button"
               className={`flex w-full gap-6 px-6 py-8 hover:${hoverBG}`}
               key={key}
-              onClick={() => handleClick(country)}
+              onClick={() => handleClick(country, clubs)}
             >
               <div className="aspect-2/1 w-14" aria-hidden="true">
                 <img
