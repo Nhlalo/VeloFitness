@@ -1,33 +1,15 @@
 import { X, Search } from "lucide-react";
+import { Gym } from "../../types/club.interface";
 
 export default function ClubSelection({
   isDisplay,
   onClose,
+  clubsData,
 }: {
   isDisplay: boolean;
   onClose: () => void;
+  clubsData: Gym[] | [];
 }) {
-  const clubsData = [
-    {
-      street: "123 Fitness Avenue",
-      address: "123 Fitness Avenue, New York, NY 10001, United States",
-      image:
-        "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      street: "456 Wellness Boulevard",
-      address: "456 Wellness Boulevard, Los Angeles, CA 90001, United States",
-      image:
-        "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      street: "789 Health Drive",
-      address: "789 Health Drive, Chicago, IL 60601, United States",
-      image:
-        "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    },
-  ];
-
   return (
     <div
       className={`fixed top-0 right-0 z-30 h-full w-full transform bg-white shadow-xl transition-transform duration-300 ease-out ${
@@ -73,11 +55,11 @@ export default function ClubSelection({
               </div>
 
               <div className="mt-8 w-full">
-                {clubsData.map((club, index) => (
-                  <div key={index}>
+                {clubsData?.map((club, index) => (
+                  <div key={club.cellNumber}>
                     <div className="flex gap-6 py-6">
                       <div className="flex w-1/2 flex-col items-start">
-                        <div className="text-lg font-bold">{club.street}</div>
+                        <div className="text-lg font-bold">{club.name}</div>
                         <div className="mt-1 text-sm text-gray-500">
                           {club.address}
                         </div>
@@ -89,8 +71,9 @@ export default function ClubSelection({
                       <div className="w-1/2">
                         <img
                           src={club.image}
-                          alt={club.street}
+                          alt={`${club.name} gym`}
                           className="h-32 w-full rounded-lg object-cover"
+                          loading="lazy"
                         />
                       </div>
                     </div>
