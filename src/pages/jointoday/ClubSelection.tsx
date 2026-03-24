@@ -18,7 +18,7 @@ export default function ClubSelection({
           : "pointer-events-none translate-x-full"
       }`}
     >
-      <div className="flex h-full flex-col overflow-y-auto">
+      <div className="no-scrollbar flex h-full flex-col overflow-y-auto">
         <div className="flex-1">
           <div className="flex h-full items-start justify-center pt-12">
             <div className="w-full rounded-lg bg-white p-8">
