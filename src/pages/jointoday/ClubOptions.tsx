@@ -1,5 +1,6 @@
 import { useState, useMemo, ChangeEvent } from "react";
 import { X, Search } from "lucide-react";
+import { Gym } from "../../types/club.interface";
 import { gymDescription } from "../../data/constants/gymlocation";
 import debounce from "../../utils/debounce";
 import Results from "../../components/shared/Result";
@@ -15,6 +16,8 @@ export default function ClubOptions({
   const [inputValue, setInputValue] = useState<string>("");
   const [isClubClicked, setIsClubClicked] = useState<boolean>(false);
 
+  const [clubs, setClubs] = useState<Gym[] | []>([]);
+
   const debouncedSetInput = useMemo(
     () =>
       debounce((value: string) => {
@@ -28,8 +31,9 @@ export default function ClubOptions({
     debouncedSetInput(value);
   }
 
-  function handleClick() {
+  function handleClick(data: Gym[]) {
     setIsClubClicked(true);
+    setClubs(data);
   }
 
   function handleClose() {
@@ -95,11 +99,12 @@ export default function ClubOptions({
               <div className="mt-6 w-full divide-y divide-gray-200">
                 {gymDescription.map((content) => {
                   const country = content.country;
+
                   return (
                     <button
                       type="button"
                       className="w-full py-4 text-left transition-colors first:pt-0 last:pb-0 hover:bg-gray-50"
-                      onClick={handleClick}
+                      onClick={() => handleClick(content.clubs)}
                       key={country}
                     >
                       <div className="flex w-full items-center justify-between">
@@ -116,7 +121,11 @@ export default function ClubOptions({
           </div>
         </div>
       </div>
-      <ClubSelection isDisplay={isClubClicked} onClose={handleClose} />
+      <ClubSelection
+        isDisplay={isClubClicked}
+        onClose={handleClose}
+        clubsData={clubs}
+      />
     </div>
   );
 }
