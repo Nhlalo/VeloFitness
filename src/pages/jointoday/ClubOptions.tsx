@@ -1,4 +1,4 @@
-import { useState, useMemo, ChangeEvent } from "react";
+import { useState, useMemo, ChangeEvent, useRef } from "react";
 import { X, Search } from "lucide-react";
 import { Gym } from "../../types/club.interface";
 import { gymDescription } from "../../data/constants/gymlocation";
@@ -17,6 +17,8 @@ export default function ClubOptions({
   const [isClubClicked, setIsClubClicked] = useState<boolean>(false);
 
   const [clubs, setClubs] = useState<Gym[] | []>([]);
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const debouncedSetInput = useMemo(
     () =>
@@ -38,6 +40,18 @@ export default function ClubOptions({
 
   function handleClose() {
     setIsClubClicked(false);
+  }
+
+  //This will be passed to the Result component so that when the result of the input search is pressed it can affect this component by causing rerendering.
+  function adjustClubData(data: Gym[]) {
+    setIsClubClicked(true);
+    setClubs(data);
+    setInputValue("");
+
+    //Clear the input search after button click
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
   }
 
   return (
@@ -84,6 +98,7 @@ export default function ClubOptions({
                   type="text"
                   placeholder="City, Zip Code, Postal Code"
                   onChange={handleChange}
+                  ref={inputRef}
                   className="w-full rounded-md border border-gray-200 p-3 pl-10 placeholder-gray-400 transition-colors focus:border-black focus:outline-none"
                 />
                 {inputValue.trim().length > 0 && (
@@ -91,6 +106,7 @@ export default function ClubOptions({
                     location={inputValue}
                     mainBG="bg-white"
                     hoverBG="bg-gray-100"
+                    adjustClubData={adjustClubData}
                   />
                 )}
               </div>
