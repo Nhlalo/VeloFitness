@@ -1,24 +1,13 @@
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
-import { Gym } from "../../types/club.interface";
+import useNavigateClubPage from "../../hooks/useNavigateClubPage";
 import { gymDescription } from "../../data/constants/gymlocation";
 import { acquireNumberGyms } from "../../utils/acquireGymData";
 import Header from "./Header";
 import Container from "../../components/shared/Container";
 
 function GymLocations() {
-  const navigate = useNavigate();
-
-  function determinePathRedirection(country: string, clubs: Gym[]): string {
-    // Encoded this way as the data contained is not sensitive
-    const encoded = btoa(JSON.stringify(clubs));
-
-    return `/clubs/${country}?clubs=${encoded}`;
-  }
-
-  function handleClick(country: string, clubs: Gym[]) {
-    navigate(determinePathRedirection(country, clubs));
-  }
+  const { determinePathRedirection, handleClick } = useNavigateClubPage();
   return (
     <Container>
       <div className="pb-24">
