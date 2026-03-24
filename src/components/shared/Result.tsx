@@ -28,13 +28,8 @@ function Data({
   data: Gym[] | Description[] | string;
   hoverBG: string;
 }) {
-  const navigate = useNavigate();
-  const { determinePathRedirection } = useNavigateClubPage();
-
-  function handleClick(country: string, clubs: (Gym | Description)[]) {
-    const lowercaseCountry = country.toLowerCase();
-    navigate(determinePathRedirection(lowercaseCountry, clubs));
-  }
+  //Will navigate to a new page. The url of the new page will contain the updated country and encoded clubs data.
+  const { handleClick } = useNavigateClubPage();
 
   return (
     <>
@@ -56,7 +51,7 @@ function Data({
               ? content.country
               : "unknown";
 
-          const clubs = isClub ? content.clubs : [...data];
+          const clubs = isClub ? content.clubs : [content];
 
           const country = content.country;
 
@@ -65,7 +60,7 @@ function Data({
               type="button"
               className={`flex w-full gap-6 px-6 py-8 hover:${hoverBG}`}
               key={key}
-              onClick={() => handleClick(country, clubs)}
+              onClick={() => handleClick(country.toLowerCase(), clubs)}
             >
               <div className="aspect-2/1 w-14" aria-hidden="true">
                 <img
