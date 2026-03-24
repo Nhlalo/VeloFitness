@@ -1,8 +1,9 @@
-import { useState, useMemo, ChangeEvent, useRef } from "react";
+import { useState } from "react";
 import { X, Search } from "lucide-react";
+import useClubSearch from "../../hooks/useClubSearch";
 import { Gym } from "../../types/club.interface";
 import { gymDescription } from "../../data/constants/gymlocation";
-import debounce from "../../utils/debounce";
+
 import Results from "../../components/shared/Result";
 import ClubSelection from "./ClubSelection";
 
@@ -13,25 +14,16 @@ export default function ClubOptions({
   isDisplay: boolean;
   onClose: () => void;
 }) {
-  const [inputValue, setInputValue] = useState<string>("");
   const [isClubClicked, setIsClubClicked] = useState<boolean>(false);
 
-  const [clubs, setClubs] = useState<Gym[] | []>([]);
-
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
-  const debouncedSetInput = useMemo(
-    () =>
-      debounce((value: string) => {
-        setInputValue(value);
-      }, 300),
-    [],
-  );
-
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const value = e.currentTarget.value;
-    debouncedSetInput(value);
-  }
+  const {
+    handleChange,
+    adjustClubData,
+    inputValue,
+    clubs,
+    setClubs,
+    inputRef,
+  } = useClubSearch(setIsClubClicked);
 
   function handleClick(data: Gym[]) {
     setIsClubClicked(true);
@@ -40,18 +32,6 @@ export default function ClubOptions({
 
   function handleClose() {
     setIsClubClicked(false);
-  }
-
-  //This will be passed to the Result component so that when the result of the input search is pressed it can affect this component by causing rerendering.
-  function adjustClubData(data: Gym[]) {
-    setIsClubClicked(true);
-    setClubs(data);
-    setInputValue("");
-
-    //Clear the input search after button click
-    if (inputRef.current) {
-      inputRef.current.value = "";
-    }
   }
 
   return (

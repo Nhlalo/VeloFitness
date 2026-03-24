@@ -1,5 +1,7 @@
 import { X, Search } from "lucide-react";
+import useClubSearch from "../../hooks/useClubSearch";
 import { Gym } from "../../types/club.interface";
+import Results from "../../components/shared/Result";
 
 export default function ClubSelection({
   isDisplay,
@@ -10,6 +12,12 @@ export default function ClubSelection({
   onClose: () => void;
   clubsData: Gym[] | [];
 }) {
+  const { handleChange, adjustClubData, inputValue, inputRef, clubs } =
+    useClubSearch();
+
+  // Use local clubs if on this page, otherwise use passed data(clubsData), coming from another page.
+  const clubsToRender = clubs.length ? clubs : clubsData;
+
   return (
     <div
       className={`fixed top-0 right-0 z-30 h-full w-full transform bg-white shadow-xl transition-transform duration-300 ease-out ${
@@ -50,12 +58,22 @@ export default function ClubSelection({
                 <input
                   type="text"
                   placeholder="City, Zip Code, Postal Code"
+                  ref={inputRef}
+                  onChange={handleChange}
                   className="w-full rounded-md border border-gray-200 p-3 pl-10 placeholder-gray-400 transition-colors focus:border-black focus:outline-none"
                 />
+                {inputValue.trim().length > 0 && (
+                  <Results
+                    location={inputValue}
+                    mainBG="bg-white"
+                    hoverBG="bg-gray-100"
+                    adjustClubData={adjustClubData}
+                  />
+                )}
               </div>
 
               <div className="mt-8 w-full">
-                {clubsData?.map((club, index) => (
+                {clubsToRender?.map((club, index) => (
                   <div key={club.cellNumber}>
                     <div className="flex gap-6 py-6">
                       <div className="flex w-1/2 flex-col items-start">
