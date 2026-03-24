@@ -30,21 +30,16 @@ export default function ClubSelection({
 
   return (
     <div
-      className={`absolute top-0 right-0 h-full transition-all duration-300 ease-out ${
+      className={`fixed top-0 right-0 z-30 h-full w-full transform bg-white shadow-xl transition-transform duration-300 ease-out ${
         isDisplay
-          ? "pointer-events-auto translate-x-0 opacity-100"
-          : "pointer-events-none translate-x-full opacity-0"
+          ? "pointer-events-auto translate-x-0"
+          : "pointer-events-none translate-x-full"
       }`}
     >
-      {/* Slide panel */}
-      <div
-        className={`relative h-full w-full transform overflow-y-auto bg-white shadow-xl transition-transform duration-300 ease-out ${
-          isDisplay ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="relative h-full w-full">
+      <div className="flex h-full flex-col overflow-y-auto">
+        <div className="flex-1">
           <div className="flex h-full items-start justify-center pt-12">
-            <div className="w-full max-w-4xl rounded-lg bg-white p-8">
+            <div className="w-full rounded-lg bg-white p-8">
               <div className="flex justify-end">
                 <button
                   onClick={onClose}
