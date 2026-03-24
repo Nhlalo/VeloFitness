@@ -3,7 +3,6 @@ import { ArrowRight } from "lucide-react";
 import { Gym } from "../../types/club.interface";
 import Header from "./Header";
 import Container from "../../components/shared/Container";
-import { useRef } from "react";
 
 export default function CountryClub() {
   const [searchParams] = useSearchParams();
@@ -13,7 +12,7 @@ export default function CountryClub() {
 
   const { country } = useParams() as { country: string };
 
-  const gymClubsRef = useRef<Gym[]>(JSON.parse(atob(encodedData)));
+  const gymClubs: Gym[] = JSON.parse(atob(encodedData));
 
   const navigate = useNavigate();
 
@@ -29,14 +28,14 @@ export default function CountryClub() {
       <Header heading={`${country} Clubs`} extraHeading="" showViewAll={true} />
       <Container>
         <div className="pb-24">
-          {gymClubsRef.current?.map((content) => {
+          {gymClubs.map((content) => {
             const clubName = content.name;
             const linkDescription = `view the information about the ${country} clubs`;
             return (
               <Link
                 to={determinePathRedirection(clubName)}
                 aria-label={linkDescription}
-                key={country}
+                key={clubName || country}
                 className="flex border-t border-solid border-white px-6 py-8 text-white hover:bg-white hover:text-black"
               >
                 <div className="flex grow-2 flex-col lg:flex-1">
@@ -60,9 +59,9 @@ export default function CountryClub() {
                 <div className="mt-6 hidden flex-1 flex-col items-center lg:flex">
                   <span className="mr-8 w-full text-sm">Featured Amenties</span>
                   <ul className="w-full list-disc">
-                    {content.amenties.map((amenty) => {
+                    {content.amenties.map((amenty, index) => {
                       return (
-                        <li key={content.cellNumber} className="text-sm">
+                        <li key={index} className="text-sm">
                           {amenty}
                         </li>
                       );
