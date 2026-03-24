@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useLocation } from "react-router";
 import { LoaderCircle } from "lucide-react";
 import useFindClub from "../../hooks/useFindClub";
 import useNavigateClubPage from "../../hooks/useNavigateClubPage";
@@ -24,10 +24,17 @@ function Loading() {
 function Data({
   data,
   hoverBG,
+  adjustClubData,
 }: {
   data: Gym[] | Description[] | string;
   hoverBG: string;
+  adjustClubData?: (data: Gym[]) => void;
 }) {
+  const location = useLocation();
+
+  //checks if the params contain jointoday
+  const pathname = location.pathname.includes("jointoday");
+
   //Will navigate to a new page. The url of the new page will contain the updated country and encoded clubs data.
   const { handleClick } = useNavigateClubPage();
 
@@ -55,12 +62,20 @@ function Data({
 
           const country = content.country;
 
+          function checkifFunctionExist() {
+            return adjustClubData ? adjustClubData(clubs) : null;
+          }
+
           return (
             <button
               type="button"
               className={`flex w-full gap-6 px-6 py-8 hover:${hoverBG}`}
               key={key}
-              onClick={() => handleClick(country.toLowerCase(), clubs)}
+              onClick={() =>
+                pathname
+                  ? checkifFunctionExist()
+                  : handleClick(country.toLowerCase(), clubs)
+              }
             >
               <div className="aspect-2/1 w-14" aria-hidden="true">
                 <img
@@ -87,16 +102,20 @@ export default function Results({
   location,
   mainBG,
   hoverBG,
+  adjustClubData,
 }: {
   location: string;
   mainBG: string;
   hoverBG: string;
+  adjustClubData?: (data: Gym[]) => void;
 }) {
   const { loading, data, error } = useFindClub(location);
   return (
     <div className={`absolute mt-1 max-h-80 w-full rounded-xl ${mainBG}`}>
       {loading && <Loading />}
-      {data && <Data data={data} hoverBG={hoverBG} />}
+      {data && (
+        <Data data={data} hoverBG={hoverBG} adjustClubData={adjustClubData} />
+      )}
       {error && <Error />}
     </div>
   );
