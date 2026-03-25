@@ -23,6 +23,7 @@ export default function ChooseMembership() {
                         src={item.image}
                         alt={item.title}
                         className="h-full w-full object-cover"
+                        loading="lazy"
                       />
                     </div>
                   </div>
