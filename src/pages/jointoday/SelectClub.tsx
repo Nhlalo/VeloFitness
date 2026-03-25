@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
+import validateField from "../../utils/validateInputs";
 import ClubOptions from "./ClubOptions";
 
 export default function SelectClub() {
@@ -9,18 +10,32 @@ export default function SelectClub() {
     zipCode: false,
     phoneNumber: false,
   });
+  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({
+    name: null,
+    surname: null,
+    email: null,
+    zipCode: null,
+    phoneNumber: null,
+  });
 
   //Determines the visibility of the ClubOptions component
   const [isSelectClub, setIsSelectClub] = useState<boolean>(false);
 
-  const validateField = (fieldName: string, value: string, pattern: string) => {
-    const regex = new RegExp(pattern);
-    const isValid = regex.test(value);
-    setFormErrors((prev) => ({
-      ...prev,
-      [fieldName]: !isValid && value.length > 0,
-    }));
+  const setRef = (key: string) => (el: HTMLInputElement | null) => {
+    inputRefs.current[key] = el;
   };
+
+  const areInputsValid = useCallback(() => {
+    for (const key in formErrors) {
+      if (
+        formErrors[key as keyof typeof formErrors] === true ||
+        !inputRefs.current[key as keyof typeof inputRefs.current]?.value.length
+      ) {
+        return false;
+      }
+    }
+    return true;
+  }, [formErrors]);
 
   function handleClick() {
     setIsSelectClub(true);
@@ -35,7 +50,7 @@ export default function SelectClub() {
       {/* Hide this content from the screen screen readers when ClubOptions component is rendered */}
       <div
         className="relative w-full space-y-6 overflow-hidden sm:space-y-8"
-        aria-hidden={!isSelectClub}
+        aria-hidden={isSelectClub}
       >
         <div>
           <div>
@@ -55,8 +70,14 @@ export default function SelectClub() {
                     maxLength={50}
                     required
                     onChange={(e) =>
-                      validateField("name", e.target.value, "[A-Za-z\\s\\-']+")
+                      validateField(
+                        setFormErrors,
+                        "name",
+                        e.target.value,
+                        "[A-Za-z\\s\\-']+",
+                      )
                     }
+                    ref={setRef("name")}
                     className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                       formErrors.name
                         ? "border-red-500 focus:border-red-500"
@@ -82,11 +103,13 @@ export default function SelectClub() {
                     required
                     onChange={(e) =>
                       validateField(
+                        setFormErrors,
                         "surname",
                         e.target.value,
                         "[A-Za-z\\s\\-']+",
                       )
                     }
+                    ref={setRef("surname")}
                     className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                       formErrors.surname
                         ? "border-red-500 focus:border-red-500"
@@ -111,11 +134,13 @@ export default function SelectClub() {
                   required
                   onChange={(e) =>
                     validateField(
+                      setFormErrors,
                       "email",
                       e.target.value,
                       "[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}",
                     )
                   }
+                  ref={setRef("email")}
                   className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                     formErrors.email
                       ? "border-red-500 focus:border-red-500"
@@ -132,18 +157,20 @@ export default function SelectClub() {
               <div>
                 <input
                   type="text"
-                  placeholder="Zip Code"
+                  placeholder="Zip or Postal Code"
                   pattern="^[A-Za-z0-9\s\-]{3,12}$"
                   maxLength={12}
                   minLength={3}
                   required
                   onChange={(e) =>
                     validateField(
+                      setFormErrors,
                       "zipCode",
                       e.target.value,
                       "^[A-Za-z0-9\\s\\-]{3,12}$",
                     )
                   }
+                  ref={setRef("zipCode")}
                   className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                     formErrors.zipCode
                       ? "border-red-500 focus:border-red-500"
@@ -162,17 +189,19 @@ export default function SelectClub() {
                 <input
                   type="tel"
                   placeholder="+1 (234) 567-8900"
-                  pattern="^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,4}[-\s.]?[0-9]{1,9}$"
+                  pattern="^[+]?[(]?[0-9]{1,4}[)]?[-\\s.]?[(]?[0-9]{1,4}[)]?[-\\s.]?[0-9]{1,4}[-\\s.]?[0-9]{1,9}$"
                   minLength={7}
                   maxLength={20}
                   required
                   onChange={(e) =>
                     validateField(
+                      setFormErrors,
                       "phoneNumber",
                       e.target.value,
                       "^[+]?[(]?[0-9]{1,4}[)]?[-\\s.]?[(]?[0-9]{1,4}[)]?[-\\s.]?[0-9]{1,4}[-\\s.]?[0-9]{1,9}$",
                     )
                   }
+                  ref={setRef("phoneNumber")}
                   className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                     formErrors.phoneNumber
                       ? "border-red-500 focus:border-red-500"
@@ -219,7 +248,11 @@ export default function SelectClub() {
                 apply.
               </p>
 
-              <button className="w-full rounded-md bg-gray-200 px-4 py-3 text-center text-sm font-medium text-gray-500 transition-colors duration-300 hover:bg-gray-300 sm:px-6 sm:py-4 sm:text-base">
+              <button
+                type="button"
+                disabled={areInputsValid() ? false : true}
+                className={`w-full rounded-md px-4 py-3 text-center text-sm font-medium text-black transition-colors duration-300 sm:px-6 sm:py-4 sm:text-base ${areInputsValid() ? `rounded-md border-2 border-black bg-white hover:bg-black hover:text-white` : `bg-gray-200 hover:bg-gray-300`}`}
+              >
                 Join Today
               </button>
 
