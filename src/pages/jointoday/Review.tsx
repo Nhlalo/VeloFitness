@@ -1,4 +1,5 @@
-import { CreditCard, Calendar, Lock } from "lucide-react";
+import { Info } from "lucide-react";
+
 export default function Review() {
   const selectedMembership = {
     image:
@@ -13,13 +14,9 @@ export default function Review() {
       <div>
         <div>
           <h2 className="mb-6 text-2xl font-bold md:text-3xl">Membership</h2>
-
-          {/* Main container with border */}
           <div className="overflow-hidden rounded-lg border border-gray-200">
-            {/* Row 1 - Selected membership block */}
             <div className="p-5">
               <div className="flex items-center gap-4">
-                {/* Image column */}
                 <div className="shrink-0">
                   <img
                     src={selectedMembership.image}
@@ -27,8 +24,6 @@ export default function Review() {
                     className="h-12 w-12 rounded-full object-cover"
                   />
                 </div>
-
-                {/* Text column */}
                 <div className="flex-1">
                   <div className="font-bold text-black">
                     {selectedMembership.title}
@@ -37,8 +32,6 @@ export default function Review() {
                     {selectedMembership.club}
                   </div>
                 </div>
-
-                {/* Price column */}
                 <div className="text-right">
                   <div className="text-lg font-bold text-black">
                     {selectedMembership.price}
@@ -49,8 +42,6 @@ export default function Review() {
             </div>
 
             <div className="h-px w-full bg-gray-200"></div>
-
-            {/* Row 2 - Membership start */}
             <div className="p-5">
               <div>
                 <div className="font-medium">
@@ -61,10 +52,7 @@ export default function Review() {
                 </div>
               </div>
             </div>
-
             <div className="h-px w-full bg-gray-200"></div>
-
-            {/* Row 3 - March */}
             <div className="flex flex-col gap-2 p-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <div className="font-medium">March</div>
@@ -76,8 +64,6 @@ export default function Review() {
             </div>
 
             <div className="h-px w-full bg-gray-200"></div>
-
-            {/* Row 4 - Initiation fee */}
             <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex-1">
                 <div className="font-medium">Initiation fee</div>
@@ -94,7 +80,6 @@ export default function Review() {
 
             <div className="h-px w-full bg-gray-200"></div>
 
-            {/* Row 5 - Subtotal */}
             <div className="flex items-center justify-between p-5">
               <div className="font-medium">Subtotal</div>
               <div>$360.00</div>
@@ -102,7 +87,6 @@ export default function Review() {
 
             <div className="h-px w-full bg-gray-200"></div>
 
-            {/* Row 6 - Taxes */}
             <div className="flex items-center justify-between p-5">
               <div className="font-medium">Taxes</div>
               <div>$28.80</div>
@@ -110,76 +94,19 @@ export default function Review() {
 
             <div className="h-px w-full bg-gray-200"></div>
 
-            {/* Row 7 - Total Due Today */}
             <div className="flex items-center justify-between bg-gray-50 p-5">
               <div className="font-bold">Total Due Today</div>
               <div className="font-bold">$388.80</div>
             </div>
           </div>
 
-          {/* Payment and billing container */}
-          <div className="mt-8">
-            <h3 className="mb-4 text-xl font-bold">Payment and billing</h3>
-
-            {/* Row 1 - Name and card */}
-            <div className="mb-4 flex flex-col gap-4 sm:flex-row">
-              <input
-                type="text"
-                placeholder="Name"
-                className="flex-1 rounded-md border border-gray-300 p-3 placeholder-gray-400 focus:border-black focus:outline-none"
-              />
-              <div className="relative flex-1">
-                <CreditCard
-                  className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
-                <input
-                  type="text"
-                  placeholder="Credit/debit card"
-                  className="w-full rounded-md border border-gray-300 p-3 pl-10 placeholder-gray-400 focus:border-black focus:outline-none"
-                />
-              </div>
-            </div>
-
-            {/* Row 2 - Expiration, CVC, Postal */}
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <div className="relative flex-1">
-                <Calendar
-                  className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
-                <input
-                  type="text"
-                  placeholder="Expiration"
-                  className="w-full rounded-md border border-gray-300 p-3 pl-10 placeholder-gray-400 focus:border-black focus:outline-none"
-                />
-              </div>
-              <div className="relative flex-1">
-                <Lock
-                  className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
-                <input
-                  type="text"
-                  placeholder="CVC"
-                  className="w-full rounded-md border border-gray-300 p-3 pl-10 placeholder-gray-400 focus:border-black focus:outline-none"
-                />
-              </div>
-              <div className="flex-1">
-                <input
-                  type="text"
-                  placeholder="Postal"
-                  className="w-full rounded-md border border-gray-300 p-3 placeholder-gray-400 focus:border-black focus:outline-none"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Terms container */}
           <div className="mt-8 space-y-4">
-            {/* Row 1 */}
             <div className="flex gap-3">
-              <input type="checkbox" className="mt-1 h-4 w-4 shrink-0" />
+              <input
+                type="checkbox"
+                name="terms1"
+                className="mt-1 h-4 w-4 shrink-0"
+              />
               <div className="text-sm text-gray-600">
                 I agree to the{" "}
                 <span className="cursor-pointer font-medium text-black underline">
@@ -188,9 +115,12 @@ export default function Review() {
               </div>
             </div>
 
-            {/* Row 2 */}
             <div className="flex gap-3">
-              <input type="checkbox" className="mt-1 h-4 w-4 shrink-0" />
+              <input
+                type="checkbox"
+                name="terms2"
+                className="mt-1 h-4 w-4 shrink-0"
+              />
               <div className="text-sm text-gray-600">
                 I agree that my membership will renew automatically and I will
                 be charged the monthly dues of $260.00 (excluding taxes) every
@@ -199,9 +129,12 @@ export default function Review() {
               </div>
             </div>
 
-            {/* Row 3 */}
             <div className="flex gap-3">
-              <input type="checkbox" className="mt-1 h-4 w-4 shrink-0" />
+              <input
+                type="checkbox"
+                name="terms3"
+                className="mt-1 h-4 w-4 shrink-0"
+              />
               <div className="text-sm text-gray-600">
                 I agree to pay the "Total Due Today" and commit to a minimum
                 purchase of 12 months of membership, subject to certain
@@ -214,6 +147,20 @@ export default function Review() {
               </div>
             </div>
           </div>
+
+          <div className="mt-6 flex items-start gap-2 rounded-md border border-blue-200 bg-blue-50 p-3">
+            <Info size={18} className="mt-0.5 shrink-0 text-blue-500" />
+            <div className="text-xs text-blue-700">
+              <span className="font-bold">Test Mode:</span> This is a Stripe
+              demo. Use{" "}
+              <span className="font-mono font-bold">4242 4242 4242 4242</span>{" "}
+              for testing with any future expiry and CVC.
+            </div>
+          </div>
+
+          <button className="mt-4 w-full rounded-md bg-gray-200 py-4 text-center font-medium text-gray-700 transition-colors hover:bg-gray-300">
+            Purchase Membership
+          </button>
         </div>
       </div>
     </div>
