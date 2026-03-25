@@ -81,17 +81,20 @@ export default function ClubOptions({
                 </p>
 
                 <div className="relative mt-4 w-full sm:mt-6">
-                  <Search
-                    className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
-                    size={18}
-                    aria-hidden="true"
-                  />
+                  <div className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2">
+                    <Search
+                      size={18}
+                      className="text-gray-400"
+                      aria-hidden="true"
+                    />
+                  </div>
                   <input
                     type="text"
                     placeholder="City, Zip Code, Postal Code"
                     onChange={handleChange}
                     ref={inputRef}
-                    className="w-full rounded-md border border-gray-200 p-2 pl-10 text-sm placeholder-gray-400 transition-colors focus:border-black focus:outline-none sm:p-3 sm:text-base"
+                    className="w-full rounded-md border border-gray-200 py-2 pr-3 pl-10 text-sm placeholder-gray-400 transition-colors focus:border-black focus:outline-none sm:py-3 sm:text-base"
+                    style={{ paddingLeft: "2.5rem" }}
                   />
                   {inputValue.trim().length > 0 && (
                     <Results
