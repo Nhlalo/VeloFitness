@@ -34,17 +34,17 @@ export default function SelectClub() {
     <>
       {/* Hide this content from the screen screen readers when ClubOptions component is rendered */}
       <div
-        className="relative space-y-8 overflow-hidden"
+        className="relative w-full space-y-6 overflow-hidden sm:space-y-8"
         aria-hidden={!isSelectClub}
       >
         <div>
           <div>
-            <h2 className="text-2xl font-bold md:text-3xl lg:text-4xl">
+            <h2 className="text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl">
               3 Steps you are in
             </h2>
 
-            <form className="mt-6 space-y-4" noValidate>
-              <div className="flex flex-col gap-4 sm:flex-row">
+            <form className="mt-4 space-y-3 sm:mt-6 sm:space-y-4" noValidate>
+              <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
                 <div className="flex-1">
                   <input
                     type="text"
@@ -57,7 +57,7 @@ export default function SelectClub() {
                     onChange={(e) =>
                       validateField("name", e.target.value, "[A-Za-z\\s\\-']+")
                     }
-                    className={`w-full rounded-md border p-3 placeholder-gray-400 transition-colors focus:outline-none ${
+                    className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                       formErrors.name
                         ? "border-red-500 focus:border-red-500"
                         : "border-gray-300 focus:border-black"
@@ -87,7 +87,7 @@ export default function SelectClub() {
                         "[A-Za-z\\s\\-']+",
                       )
                     }
-                    className={`w-full rounded-md border p-3 placeholder-gray-400 transition-colors focus:outline-none ${
+                    className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                       formErrors.surname
                         ? "border-red-500 focus:border-red-500"
                         : "border-gray-300 focus:border-black"
@@ -116,7 +116,7 @@ export default function SelectClub() {
                       "[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}",
                     )
                   }
-                  className={`w-full rounded-md border p-3 placeholder-gray-400 transition-colors focus:outline-none ${
+                  className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                     formErrors.email
                       ? "border-red-500 focus:border-red-500"
                       : "border-gray-300 focus:border-black"
@@ -144,7 +144,7 @@ export default function SelectClub() {
                       "^[A-Za-z0-9\\s\\-]{3,12}$",
                     )
                   }
-                  className={`w-full rounded-md border p-3 placeholder-gray-400 transition-colors focus:outline-none ${
+                  className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                     formErrors.zipCode
                       ? "border-red-500 focus:border-red-500"
                       : "border-gray-300 focus:border-black"
@@ -173,7 +173,7 @@ export default function SelectClub() {
                       "^[+]?[(]?[0-9]{1,4}[)]?[-\\s.]?[(]?[0-9]{1,4}[)]?[-\\s.]?[0-9]{1,4}[-\\s.]?[0-9]{1,9}$",
                     )
                   }
-                  className={`w-full rounded-md border p-3 placeholder-gray-400 transition-colors focus:outline-none ${
+                  className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                     formErrors.phoneNumber
                       ? "border-red-500 focus:border-red-500"
                       : "border-gray-300 focus:border-black"
@@ -189,14 +189,14 @@ export default function SelectClub() {
               <button
                 onClick={handleClick}
                 type="button"
-                className="w-full rounded-md border-2 border-black bg-white px-6 py-4 text-center font-bold transition-colors duration-300 hover:bg-black hover:text-white"
+                className="w-full rounded-md border-2 border-black bg-white px-4 py-3 text-center text-sm font-bold transition-colors duration-300 hover:bg-black hover:text-white sm:px-6 sm:py-4 sm:text-base"
               >
                 Select a club +
               </button>
             </form>
 
-            <div className="mt-8 space-y-4">
-              <p className="text-xs leading-relaxed text-gray-500">
+            <div className="mt-6 space-y-3 sm:mt-8 sm:space-y-4">
+              <p className="text-xs leading-relaxed text-gray-500 sm:text-xs">
                 By clicking Join Today, I agree to the Vélo{" "}
                 <span className="cursor-pointer text-black underline">
                   Terms & Conditions
@@ -219,7 +219,7 @@ export default function SelectClub() {
                 apply.
               </p>
 
-              <button className="w-full rounded-md bg-gray-200 px-6 py-4 text-center font-medium text-gray-500 transition-colors duration-300 hover:bg-gray-300">
+              <button className="w-full rounded-md bg-gray-200 px-4 py-3 text-center text-sm font-medium text-gray-500 transition-colors duration-300 hover:bg-gray-300 sm:px-6 sm:py-4 sm:text-base">
                 Join Today
               </button>
 
