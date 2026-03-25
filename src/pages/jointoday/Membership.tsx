@@ -1,28 +1,6 @@
-export default function ChooseMembership() {
-  const membershipData = [
-    {
-      image:
-        "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
-      title: "Premium Club Access",
-      club: "Downtown Fitness",
-      price: "$79",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1570829460005-c840387bb1ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
-      title: "Elite Member Benefits",
-      club: "Harbor Sports Club",
-      price: "$99",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1540496905036-5937c10647cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
-      title: "Signature Experience",
-      club: "Central Park Gym",
-      price: "$129",
-    },
-  ];
+import { membershipData } from "../../data/constants/membershipfee";
 
+export default function ChooseMembership() {
   return (
     <div className="space-y-6 sm:space-y-8">
       <div>
@@ -33,9 +11,9 @@ export default function ChooseMembership() {
           </h2>
 
           <div className="space-y-3 sm:space-y-4">
-            {membershipData.map((item, index) => (
+            {membershipData.map((item) => (
               <div
-                key={index}
+                key={item.club}
                 className="w-full cursor-pointer rounded-lg border border-gray-200 transition-colors hover:border-black"
               >
                 <div className="flex items-center gap-3 p-3 sm:gap-4 sm:p-4">
