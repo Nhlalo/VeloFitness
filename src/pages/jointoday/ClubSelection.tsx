@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { X, Search } from "lucide-react";
+import { ChosenClubContext } from "./PersonalInformation";
 import useClubSearch from "../../hooks/useClubSearch";
 import { Gym } from "../../types/club.interface";
 import Results from "../../components/shared/Result";
@@ -6,17 +8,27 @@ import Results from "../../components/shared/Result";
 export default function ClubSelection({
   isDisplay,
   onClose,
+  returnToJoinTodayPage,
   clubsData,
 }: {
   isDisplay: boolean;
   onClose: () => void;
+  returnToJoinTodayPage: () => void;
   clubsData: Gym[] | [];
 }) {
+  const { setUserClub } = useContext(ChosenClubContext);
+
   const { handleChange, adjustClubData, inputValue, inputRef, clubs } =
     useClubSearch();
 
   // Use local clubs if on this page, otherwise use passed data(clubsData), coming from another page.
   const clubsToRender = clubs.length ? clubs : clubsData;
+
+  function handleClick(clubName: string) {
+    setUserClub(clubName);
+    onClose();
+    returnToJoinTodayPage();
+  }
 
   return (
     <div
@@ -81,7 +93,10 @@ export default function ClubSelection({
                         <div className="mt-1 text-sm text-gray-500">
                           {club.address}
                         </div>
-                        <button className="mt-4 rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-gray-50">
+                        <button
+                          onClick={() => handleClick(club.name)}
+                          className="mt-4 rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-gray-50"
+                        >
                           Select Club
                         </button>
                       </div>
@@ -95,10 +110,6 @@ export default function ClubSelection({
                         />
                       </div>
                     </div>
-
-                    {index < clubsData.length - 1 && (
-                      <div className="h-px w-full bg-gray-200"></div>
-                    )}
                   </div>
                 ))}
               </div>
