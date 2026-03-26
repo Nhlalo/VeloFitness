@@ -43,7 +43,10 @@ export default function ClubOptions({
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
         }`}
-        onClick={onClose}
+        onClick={() => {
+          onClose();
+          handleClose();
+        }}
       />
 
       {/* Slide panel */}
@@ -94,7 +97,6 @@ export default function ClubOptions({
                     onChange={handleChange}
                     ref={inputRef}
                     className="w-full rounded-md border border-gray-200 py-2 pr-3 pl-10 text-sm placeholder-gray-400 transition-colors focus:border-black focus:outline-none sm:py-3 sm:text-base"
-                    style={{ paddingLeft: "2.5rem" }}
                   />
                   {inputValue.trim().length > 0 && (
                     <Results
@@ -136,6 +138,7 @@ export default function ClubOptions({
         <ClubSelection
           isDisplay={isClubClicked}
           onClose={handleClose}
+          returnToJoinTodayPage={onClose}
           clubsData={clubs}
         />
       </div>
