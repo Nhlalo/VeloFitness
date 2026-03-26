@@ -74,11 +74,7 @@ function UserInformation() {
 
   return (
     <>
-      {/* Hide this content from the screen readers when ClubOptions component is rendered */}
-      <div
-        className="relative w-full space-y-6 overflow-hidden sm:space-y-8"
-        aria-hidden={isSelectClub}
-      >
+      <div className="relative w-full space-y-6 overflow-hidden sm:space-y-8">
         <div>
           <div>
             <h2 className="text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl">
