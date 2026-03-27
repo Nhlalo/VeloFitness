@@ -1,6 +1,10 @@
+import { useContext } from "react";
+import { VisibilityContext } from "./JoinToday";
 import { Info } from "lucide-react";
 
 export default function Review() {
+  const { isVisible } = useContext(VisibilityContext);
+
   const selectedMembership = {
     image:
       "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -10,7 +14,11 @@ export default function Review() {
   };
 
   return (
-    <div className="space-y-8 pb-8">
+    <div
+      className={`transform space-y-8 bg-white pb-8 transition-transform duration-300 ease-out ${
+        isVisible.review ? "block translate-x-0" : "hidden translate-x-full"
+      }`}
+    >
       <div>
         <div>
           <h2 className="mb-6 text-2xl font-bold md:text-3xl">Membership</h2>
