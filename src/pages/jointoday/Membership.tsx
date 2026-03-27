@@ -1,9 +1,17 @@
+import { useContext } from "react";
+import { VisibilityContext } from "./JoinToday";
 import { membershipData } from "../../data/constants/membershipfee";
 
 export default function ChooseMembership() {
+  const { isVisible } = useContext(VisibilityContext);
+
   return (
-    <div className="space-y-6 sm:space-y-8">
-      <div>
+    <div
+      className={`no-scrollbar h-full w-full transform overflow-y-auto bg-white transition-transform duration-300 ease-out ${
+        isVisible.membership ? "block translate-x-0" : "hidden translate-x-full"
+      }`}
+    >
+      <div className="p-6 sm:p-8">
         <div>
           <h2 className="mb-6 text-lg leading-tight font-bold sm:mb-8 sm:text-xl md:text-2xl lg:text-3xl">
             Unlimited classes, guest passes, complimentary fitness assessments,
