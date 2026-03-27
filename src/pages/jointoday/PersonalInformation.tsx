@@ -6,6 +6,7 @@ import {
   createContext,
   useMemo,
 } from "react";
+import { VisibilityContext } from "./JoinToday";
 import validateField from "../../utils/validateInputs";
 import ClubOptions from "./ClubOptions";
 
@@ -20,6 +21,9 @@ const ChosenClubContext = createContext<userClubMemo>({
 });
 
 function UserInformation() {
+  const { userClub } = useContext(ChosenClubContext);
+  const { isVisible, setIsVisible } = useContext(VisibilityContext);
+
   const [formErrors, setFormErrors] = useState({
     name: false,
     surname: false,
@@ -27,8 +31,6 @@ function UserInformation() {
     zipCode: false,
     phoneNumber: false,
   });
-
-  const { userClub } = useContext(ChosenClubContext);
 
   //Determines the visibility of the ClubOptions component
   const [isSelectClub, setIsSelectClub] = useState<boolean>(false);
@@ -68,13 +70,23 @@ function UserInformation() {
     setIsSelectClub(true);
   }
 
+  function handleShowNextFormSection() {
+    setIsVisible({
+      personalInformation: false,
+      membershipVisible: true,
+      reviewV: false,
+    });
+  }
+
   function handleClose() {
     setIsSelectClub(false);
   }
 
   return (
     <>
-      <div className="relative w-full space-y-6 overflow-hidden sm:space-y-8">
+      <div
+        className={`w-full space-y-6 sm:space-y-8 ${isVisible.personalInformation ? "block" : "hidden"}`}
+      >
         <div>
           <div>
             <h2 className="text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl">
@@ -274,6 +286,7 @@ function UserInformation() {
               <button
                 type="button"
                 disabled={areInputsValid() ? false : true}
+                onClick={handleShowNextFormSection}
                 className={`w-full rounded-md px-4 py-3 text-center text-sm font-medium text-black transition-colors duration-300 sm:px-6 sm:py-4 sm:text-base ${areInputsValid() ? `rounded-md border-2 border-black bg-white hover:bg-black hover:text-white` : `bg-gray-200 hover:bg-gray-300`}`}
               >
                 Join Today
