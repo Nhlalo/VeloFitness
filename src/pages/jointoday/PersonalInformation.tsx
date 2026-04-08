@@ -7,6 +7,7 @@ import {
   useMemo,
 } from "react";
 import { VisibilityContext } from "./JoinToday";
+import { formFields } from "../../data/constants/inputsvalidation";
 import validateField from "../../utils/validateInputs";
 import ClubOptions from "./ClubOptions";
 
@@ -43,14 +44,14 @@ function UserInformation() {
     phoneNumber: null,
   });
 
-  const areInputsValid = useCallback(() => {
-    //If isSelectClub is true, child component(ClubOptions) is displayed on screen, do not execute the conditional code
+  const areInputsValid = () => {
+    console.log(userClub);
     if (!isSelectClub) {
       for (const key in formErrors) {
         if (
           formErrors[key as keyof typeof formErrors] === true ||
           !inputRefs.current[key as keyof typeof inputRefs.current]?.value
-            .length
+            ?.length
         ) {
           return false;
         }
@@ -58,9 +59,8 @@ function UserInformation() {
       if (!userClub) return false;
       return true;
     }
-
     return false;
-  }, [formErrors, userClub]);
+  };
 
   const setRef = (key: string) => (el: HTMLInputElement | null) => {
     inputRefs.current[key] = el;
@@ -73,8 +73,8 @@ function UserInformation() {
   function handleShowNextFormSection() {
     setIsVisible({
       personalInformation: false,
-      membershipVisible: true,
-      reviewV: false,
+      membership: true,
+      review: false,
     });
   }
 
@@ -85,7 +85,7 @@ function UserInformation() {
   return (
     <>
       <div
-        className={`w-full space-y-6 sm:space-y-8 ${isVisible.personalInformation ? "block" : "hidden"}`}
+        className={`top-0 right-0 w-full space-y-6 sm:space-y-8 ${isVisible.personalInformation ? "block" : "hidden"}`}
       >
         <div>
           <div>
@@ -98,18 +98,18 @@ function UserInformation() {
                 <div className="flex-1">
                   <input
                     type="text"
-                    placeholder="Name"
-                    pattern="[A-Za-z\s\-']+"
-                    title="Only letters, spaces, hyphens, and apostrophes allowed"
-                    minLength={2}
-                    maxLength={50}
+                    placeholder={formFields.name.placeholder}
+                    pattern={formFields.name.jsxPattern}
+                    title={formFields.name.title}
+                    minLength={formFields.name.minLength}
+                    maxLength={formFields.name.maxLength}
                     required
                     onChange={(e) =>
                       validateField(
                         setFormErrors,
                         "name",
                         e.target.value,
-                        "[A-Za-z\\s\\-']+",
+                        formFields.name.jsPattern,
                       )
                     }
                     ref={setRef("name")}
@@ -130,18 +130,18 @@ function UserInformation() {
                 <div className="flex-1">
                   <input
                     type="text"
-                    placeholder="Surname"
-                    pattern="[A-Za-z\s\-']+"
-                    title="Only letters, spaces, hyphens, and apostrophes allowed"
-                    minLength={2}
-                    maxLength={50}
+                    placeholder={formFields.surname.placeholder}
+                    pattern={formFields.surname.jsxPattern}
+                    title={formFields.surname.title}
+                    minLength={formFields.surname.minLength}
+                    maxLength={formFields.surname.maxLength}
                     required
                     onChange={(e) =>
                       validateField(
                         setFormErrors,
                         "surname",
                         e.target.value,
-                        "[A-Za-z\\s\\-']+",
+                        formFields.surname.jsPattern,
                       )
                     }
                     ref={setRef("surname")}
@@ -163,16 +163,16 @@ function UserInformation() {
               <div>
                 <input
                   type="email"
-                  placeholder="Email"
-                  pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
-                  maxLength={254}
+                  placeholder={formFields.email.placeholder}
+                  pattern={formFields.email.jsxPattern}
+                  maxLength={formFields.email.maxLength}
                   required
                   onChange={(e) =>
                     validateField(
                       setFormErrors,
                       "email",
                       e.target.value,
-                      "[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}",
+                      formFields.email.jsPattern,
                     )
                   }
                   ref={setRef("email")}
@@ -192,17 +192,17 @@ function UserInformation() {
               <div>
                 <input
                   type="text"
-                  placeholder="Zip or Postal Code"
-                  pattern="^[A-Za-z0-9\s\-]{3,12}$"
-                  maxLength={12}
-                  minLength={3}
+                  placeholder={formFields.zipCode.placeholder}
+                  pattern={formFields.zipCode.jsxPattern}
+                  maxLength={formFields.zipCode.maxLength}
+                  minLength={formFields.zipCode.minLength}
                   required
                   onChange={(e) =>
                     validateField(
                       setFormErrors,
                       "zipCode",
                       e.target.value,
-                      "^[A-Za-z0-9\\s\\-]{3,12}$",
+                      formFields.zipCode.jsPattern,
                     )
                   }
                   ref={setRef("zipCode")}
@@ -223,17 +223,17 @@ function UserInformation() {
               <div>
                 <input
                   type="tel"
-                  placeholder="+1 (234) 567-8900"
-                  pattern="^[+]?[(]?[0-9]{1,4}[)]?[-\\s.]?[(]?[0-9]{1,4}[)]?[-\\s.]?[0-9]{1,4}[-\\s.]?[0-9]{1,9}$"
-                  minLength={7}
-                  maxLength={20}
+                  placeholder={formFields.phoneNumber.placeholder}
+                  pattern={formFields.phoneNumber.jsxPattern}
+                  minLength={formFields.phoneNumber.minLength}
+                  maxLength={formFields.phoneNumber.maxLength}
                   required
                   onChange={(e) =>
                     validateField(
                       setFormErrors,
                       "phoneNumber",
                       e.target.value,
-                      "^[+]?[(]?[0-9]{1,4}[)]?[-\\s.]?[(]?[0-9]{1,4}[)]?[-\\s.]?[0-9]{1,4}[-\\s.]?[0-9]{1,9}$",
+                      formFields.phoneNumber.jsPattern,
                     )
                   }
                   ref={setRef("phoneNumber")}
