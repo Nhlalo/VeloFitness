@@ -63,4 +63,24 @@ function acquireNumberGyms(): number {
   return numberOfClubs;
 }
 
-export { acquireLocalGyms, acquireNumberGyms };
+function acquireNewGym(location: string) {
+  const locationLowerCase = location.toLowerCase().trim();
+  const gyms: Gym[] = [...USAGyms, ...SAGyms, ...canadaGyms];
+
+  // Find match according to matching zip, postal or name
+  const result = gyms.filter(
+    (gym) =>
+      gym.name.toLowerCase().includes(locationLowerCase) ||
+      gym.zip?.toLowerCase().includes(locationLowerCase) ||
+      gym.postal?.toLowerCase().includes(locationLowerCase) ||
+      gym.neighborhood.toLowerCase().includes(locationLowerCase) ||
+      gym.city?.toLowerCase().includes(locationLowerCase) ||
+      gym.state?.toLowerCase().includes(locationLowerCase),
+  );
+
+  if (!result.length) return null;
+
+  return result;
+}
+
+export { acquireLocalGyms, acquireNumberGyms, acquireNewGym };
