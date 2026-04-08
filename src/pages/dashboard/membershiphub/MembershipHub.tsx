@@ -111,7 +111,10 @@ export default function MembershipHub() {
             isCancelled={cancellationStatus.isCancelled}
           />
 
-          <UsageInsights isCancelled={cancellationStatus.isCancelled} />
+          <UsageInsights
+            isCancelled={cancellationStatus.isCancelled}
+            nextBillingDate={currentMembership.nextBilling}
+          />
 
           <ChangePlanModal
             isOpen={isPlanModalOpen}
