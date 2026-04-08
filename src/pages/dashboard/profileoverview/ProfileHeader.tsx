@@ -19,7 +19,7 @@ export default function ProfileHeader({
         </h1>
       </div>
       <div className="hidden sm:block">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-white/20 to-white/5 text-xl font-light backdrop-blur-sm">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-linear-to-br from-white/20 to-white/5 text-xl font-light backdrop-blur-sm">
           {avatarInitials}
         </div>
       </div>
