@@ -1,20 +1,26 @@
-// components/UsageInsights.jsx - Phase 1
+// components/UsageInsights.jsx - Phase 2
 
 export default function UsageInsights() {
   return (
-    <div>
-      <div>
-        <div>
-          <div>14</div>
-          <div>Days until renewal</div>
+    <div className="mt-12 border-t border-white/10 pt-8">
+      <div className="grid gap-5 md:grid-cols-3">
+        <div className="rounded-xl bg-white/5 p-4">
+          <div className="mb-1 text-2xl font-light">14</div>
+          <div className="font-mono text-xs text-white/40">
+            Days until renewal
+          </div>
         </div>
-        <div>
-          <div>6/8</div>
-          <div>Guest passes remaining</div>
+        <div className="rounded-xl bg-white/5 p-4">
+          <div className="mb-1 text-2xl font-light">6/8</div>
+          <div className="font-mono text-xs text-white/40">
+            Guest passes remaining
+          </div>
         </div>
-        <div>
-          <div>∞</div>
-          <div>Classes this month</div>
+        <div className="rounded-xl bg-white/5 p-4">
+          <div className="mb-1 text-2xl font-light">∞</div>
+          <div className="font-mono text-xs text-white/40">
+            Classes this month
+          </div>
         </div>
       </div>
     </div>
