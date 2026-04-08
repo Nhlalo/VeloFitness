@@ -12,8 +12,8 @@ export default function CurrentMembershipCard({
       <div
         className={`rounded-3xl border p-8 backdrop-blur-sm ${
           isCancelled
-            ? "border-yellow-500/30 bg-gradient-to-br from-yellow-500/5 to-transparent"
-            : "border-white/20 bg-gradient-to-br from-white/[0.08] to-transparent"
+            ? "border-yellow-500/30 bg-linear-to-br from-yellow-500/5 to-transparent"
+            : "border-white/20 bg-linear-to-br from-white/8 to-transparent"
         }`}
       >
         <div className="flex flex-col items-start gap-8 lg:flex-row lg:items-center">
