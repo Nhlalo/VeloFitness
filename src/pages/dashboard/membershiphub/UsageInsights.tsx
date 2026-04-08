@@ -1,6 +1,10 @@
-// components/UsageInsights.jsx - Phase 2
+export default function UsageInsights({
+  isCancelled,
+}: {
+  isCancelled: boolean;
+}) {
+  if (isCancelled) return null;
 
-export default function UsageInsights() {
   return (
     <div className="mt-12 border-t border-white/10 pt-8">
       <div className="grid gap-5 md:grid-cols-3">
