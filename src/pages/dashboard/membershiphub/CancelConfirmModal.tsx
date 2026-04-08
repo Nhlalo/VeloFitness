@@ -1,9 +1,26 @@
-// components/CancelConfirmModal.jsx - Phase 2
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  membershipTitle: string;
+  membershipEndsOn: string;
+}
 
-export default function CancelConfirmModal() {
+export default function CancelConfirmModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  membershipTitle,
+  membershipEndsOn,
+}: Props) {
+  if (!isOpen) return null;
+
   return (
     <>
-      <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm transition-opacity" />
+      <div
+        className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm transition-opacity"
+        onClick={onClose}
+      />
       <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4">
         <div className="pointer-events-auto w-full max-w-md rounded-2xl border border-red-500/30 bg-black shadow-2xl">
           <div className="border-b border-red-500/30 p-6">
@@ -19,7 +36,11 @@ export default function CancelConfirmModal() {
           </div>
           <div className="p-6">
             <p className="text-sm text-white/80">
-              Are you sure you want to cancel your membership?
+              Are you sure you want to cancel your{" "}
+              <span className="font-semibold text-white">
+                {membershipTitle}
+              </span>{" "}
+              membership?
             </p>
             <div className="mt-4 rounded-lg border border-yellow-500/20 bg-yellow-500/5 p-4">
               <p className="text-xs text-yellow-400">
@@ -31,12 +52,22 @@ export default function CancelConfirmModal() {
                 <li>• Club access after 30 days</li>
               </ul>
             </div>
+            <p className="mt-4 text-xs text-white/40">
+              Your membership will remain active until{" "}
+              <span className="text-white">{membershipEndsOn}</span>.
+            </p>
           </div>
           <div className="flex gap-3 border-t border-red-500/30 p-6 pt-4">
-            <button className="flex-1 rounded-full border border-white/20 px-4 py-2.5 text-sm font-medium">
+            <button
+              onClick={onClose}
+              className="flex-1 rounded-full border border-white/20 px-4 py-2.5 text-sm font-medium transition-all duration-300 hover:bg-white/10"
+            >
               Keep Membership
             </button>
-            <button className="flex-1 rounded-full bg-red-500 px-4 py-2.5 text-sm font-medium text-white">
+            <button
+              onClick={onConfirm}
+              className="flex-1 rounded-full bg-red-500 px-4 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-red-600"
+            >
               Yes, Cancel
             </button>
           </div>
