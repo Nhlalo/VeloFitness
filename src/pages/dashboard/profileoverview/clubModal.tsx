@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import { acquireNewGym } from "../../utils/acquireGymData";
+import { acquireNewGym } from "../../../utils/acquireGymData";
 
 interface ClubModalProps {
   isOpen: boolean;
