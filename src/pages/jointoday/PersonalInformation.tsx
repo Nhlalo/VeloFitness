@@ -82,6 +82,14 @@ function UserInformation() {
     setIsSelectClub(false);
   }
 
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement>,
+    inputName: string,
+    jsPattern: string,
+  ) {
+    validateField(setFormErrors, inputName, e.target.value, jsPattern);
+  }
+
   return (
     <>
       <div
@@ -105,12 +113,7 @@ function UserInformation() {
                     maxLength={formFields.name.maxLength}
                     required
                     onChange={(e) =>
-                      validateField(
-                        setFormErrors,
-                        "name",
-                        e.target.value,
-                        formFields.name.jsPattern,
-                      )
+                      handleChange(e, "name", formFields.name.jsPattern)
                     }
                     ref={setRef("name")}
                     className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
@@ -136,12 +139,7 @@ function UserInformation() {
                     maxLength={formFields.surname.maxLength}
                     required
                     onChange={(e) =>
-                      validateField(
-                        setFormErrors,
-                        "surname",
-                        e.target.value,
-                        formFields.surname.jsPattern,
-                      )
+                      handleChange(e, "surname", formFields.surname.jsPattern)
                     }
                     ref={setRef("surname")}
                     className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
@@ -166,12 +164,7 @@ function UserInformation() {
                   maxLength={formFields.email.maxLength}
                   required
                   onChange={(e) =>
-                    validateField(
-                      setFormErrors,
-                      "email",
-                      e.target.value,
-                      formFields.email.jsPattern,
-                    )
+                    handleChange(e, "email", formFields.email.jsPattern)
                   }
                   ref={setRef("email")}
                   className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
@@ -196,12 +189,7 @@ function UserInformation() {
                   minLength={formFields.zipCode.minLength}
                   required
                   onChange={(e) =>
-                    validateField(
-                      setFormErrors,
-                      "zipCode",
-                      e.target.value,
-                      formFields.zipCode.jsPattern,
-                    )
+                    handleChange(e, "zipCode", formFields.zipCode.jsPattern)
                   }
                   ref={setRef("zipCode")}
                   className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
@@ -226,10 +214,9 @@ function UserInformation() {
                   maxLength={formFields.phoneNumber.maxLength}
                   required
                   onChange={(e) =>
-                    validateField(
-                      setFormErrors,
+                    handleChange(
+                      e,
                       "phoneNumber",
-                      e.target.value,
                       formFields.phoneNumber.jsPattern,
                     )
                   }
