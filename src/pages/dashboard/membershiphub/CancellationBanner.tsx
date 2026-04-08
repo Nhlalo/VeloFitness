@@ -1,6 +1,13 @@
-// components/CancellationBanner.jsx - Phase 2
+interface Props {
+  cancellationDate: string | null;
+  membershipEndsOn: string | null;
+}
+export default function CancellationBanner({
+  cancellationDate,
+  membershipEndsOn,
+}: Props) {
+  if (!cancellationDate) return null;
 
-export default function CancellationBanner() {
   return (
     <div className="mb-8 rounded-2xl border border-yellow-500/30 bg-yellow-500/10 p-6 backdrop-blur-sm">
       <div className="flex items-start gap-4">
@@ -10,8 +17,8 @@ export default function CancellationBanner() {
             Membership Cancelled
           </h3>
           <p className="mt-1 text-sm text-white/70">
-            Your membership was cancelled on [date]. You will have access until
-            [date].
+            Your membership was cancelled on {cancellationDate}. You will have
+            access until {membershipEndsOn}.
           </p>
           <p className="mt-2 text-xs text-white/50">
             Click "Reactivate Membership" to restore your benefits.
