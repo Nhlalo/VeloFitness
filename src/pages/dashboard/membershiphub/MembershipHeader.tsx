@@ -1,6 +1,15 @@
-// components/MembershipHeader.jsx - Phase 2
-
-export default function MembershipHeader() {
+interface Props {
+  onChangePlanClick: () => void;
+  onCancelClick: () => void;
+  isCancelled: boolean;
+  onReactivateClick: () => void;
+}
+export default function MembershipHeader({
+  onChangePlanClick,
+  onCancelClick,
+  isCancelled,
+  onReactivateClick,
+}: Props) {
   return (
     <div className="mb-12 flex items-center justify-between border-b border-white/10 pb-6">
       <div>
@@ -12,12 +21,29 @@ export default function MembershipHeader() {
         </h1>
       </div>
       <div className="flex gap-3">
-        <button className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:bg-white hover:text-black">
-          Change Plan
-        </button>
-        <button className="rounded-full border border-red-500/50 px-5 py-2.5 text-sm font-medium text-red-400 transition-all duration-300 hover:bg-red-500 hover:text-white">
-          Cancel Subscription
-        </button>
+        {!isCancelled && (
+          <button
+            onClick={onChangePlanClick}
+            className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:bg-white hover:text-black"
+          >
+            Change Plan
+          </button>
+        )}
+        {!isCancelled ? (
+          <button
+            onClick={onCancelClick}
+            className="rounded-full border border-red-500/50 px-5 py-2.5 text-sm font-medium text-red-400 transition-all duration-300 hover:bg-red-500 hover:text-white"
+          >
+            Cancel Subscription
+          </button>
+        ) : (
+          <button
+            onClick={onReactivateClick}
+            className="rounded-full border border-green-500/50 px-5 py-2.5 text-sm font-medium text-green-400 transition-all duration-300 hover:bg-green-500 hover:text-white"
+          >
+            Reactivate Membership
+          </button>
+        )}
       </div>
     </div>
   );
