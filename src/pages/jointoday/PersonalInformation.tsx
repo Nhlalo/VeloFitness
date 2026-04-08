@@ -121,8 +121,7 @@ function UserInformation() {
                   />
                   {formErrors.name && (
                     <div className="mt-1 text-xs text-red-500">
-                      Please enter a valid name (letters, spaces, hyphens,
-                      apostrophes only)
+                      {formFields.name.errorMessage}
                     </div>
                   )}
                 </div>
@@ -153,8 +152,7 @@ function UserInformation() {
                   />
                   {formErrors.surname && (
                     <div className="mt-1 text-xs text-red-500">
-                      Please enter a valid surname (letters, spaces, hyphens,
-                      apostrophes only)
+                      {formFields.surname.errorMessage}
                     </div>
                   )}
                 </div>
@@ -184,7 +182,7 @@ function UserInformation() {
                 />
                 {formErrors.email && (
                   <div className="mt-1 text-xs text-red-500">
-                    Please enter a valid email address
+                    {formFields.email.errorMessage}
                   </div>
                 )}
               </div>
@@ -214,8 +212,7 @@ function UserInformation() {
                 />
                 {formErrors.zipCode && (
                   <div className="mt-1 text-xs text-red-500">
-                    Please enter a valid zip code (3-12 characters, letters,
-                    numbers, spaces, hyphens)
+                    {formFields.zipCode.errorMessage}
                   </div>
                 )}
               </div>
@@ -245,7 +242,7 @@ function UserInformation() {
                 />
                 {formErrors.phoneNumber && (
                   <div className="mt-1 text-xs text-red-500">
-                    Please enter a valid phone number
+                    {formFields.phoneNumber.errorMessage}
                   </div>
                 )}
               </div>
