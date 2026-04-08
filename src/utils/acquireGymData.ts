@@ -78,7 +78,7 @@ function acquireNewGym(location: string) {
       gym.state?.toLowerCase().includes(locationLowerCase),
   );
 
-  if (!result.length) return null;
+  if (!result.length) return [];
 
   return result;
 }
