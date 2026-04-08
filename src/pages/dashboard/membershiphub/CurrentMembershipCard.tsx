@@ -1,15 +1,33 @@
-// components/CurrentMembershipCard.jsx - Phase 2
-
-export default function CurrentMembershipCard() {
+import { MockMembershipData } from "../../../data/mock/mockMembershipSubscription";
+interface Props {
+  membership: MockMembershipData;
+  isCancelled: boolean;
+}
+export default function CurrentMembershipCard({
+  membership,
+  isCancelled,
+}: Props) {
   return (
     <div className="mb-12">
-      <div className="rounded-3xl border border-white/20 bg-linear-to-br from-white/8 to-transparent p-8 backdrop-blur-sm">
+      <div
+        className={`rounded-3xl border p-8 backdrop-blur-sm ${
+          isCancelled
+            ? "border-yellow-500/30 bg-gradient-to-br from-yellow-500/5 to-transparent"
+            : "border-white/20 bg-gradient-to-br from-white/[0.08] to-transparent"
+        }`}
+      >
         <div className="flex flex-col items-start gap-8 lg:flex-row lg:items-center">
           <div className="shrink-0">
-            <div className="h-32 w-32 overflow-hidden rounded-2xl border border-white/20 lg:h-40 lg:w-40">
+            <div
+              className={`h-32 w-32 overflow-hidden rounded-2xl border lg:h-40 lg:w-40 ${
+                isCancelled
+                  ? "border-yellow-500/30 opacity-70"
+                  : "border-white/20"
+              }`}
+            >
               <img
-                src="/api/placeholder/160/120"
-                alt="Plan"
+                src={membership.image}
+                alt={membership.title}
                 className="h-full w-full object-cover"
                 loading="lazy"
               />
@@ -18,32 +36,50 @@ export default function CurrentMembershipCard() {
           <div className="flex-1">
             <div className="mb-3 flex flex-wrap items-center gap-3">
               <h2 className="text-2xl font-light tracking-tight lg:text-3xl">
-                Premium Plus
+                {membership.title}
               </h2>
-              <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 font-mono text-xs tracking-wide">
-                Active
+              <span
+                className={`inline-flex items-center rounded-full px-3 py-1 font-mono text-xs tracking-wide ${
+                  isCancelled
+                    ? "bg-yellow-500/20 text-yellow-400"
+                    : "bg-white/10"
+                }`}
+              >
+                {isCancelled
+                  ? "Pending Cancellation"
+                  : membership.renewalStatus}
               </span>
             </div>
-            <p className="mb-4 text-sm text-white/60">All Velo Clubs</p>
+            <p className="mb-4 text-sm text-white/60">{membership.club}</p>
             <div className="mb-6 grid gap-4 sm:grid-cols-2">
-              <div className="flex items-center gap-2 text-sm text-white/70">
-                <span className="text-white/40">✦</span>
-                Unlimited classes
-              </div>
-              <div className="flex items-center gap-2 text-sm text-white/70">
-                <span className="text-white/40">✦</span>8 guest passes / month
-              </div>
+              {membership.features.slice(0, 4).map((feature, idx) => (
+                <div
+                  key={idx}
+                  className={`flex items-center gap-2 text-sm ${
+                    isCancelled ? "text-white/40" : "text-white/70"
+                  }`}
+                >
+                  <span
+                    className={isCancelled ? "text-white/20" : "text-white/40"}
+                  >
+                    ✦
+                  </span>
+                  {feature}
+                </div>
+              ))}
             </div>
             <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-4">
               <div>
-                <div className="text-3xl font-light">$199</div>
+                <div className="text-3xl font-light">{membership.price}</div>
                 <div className="text-xs text-white/40">billed monthly</div>
               </div>
               <div className="text-right">
                 <div className="font-mono text-xs text-white/40">
                   Next billing
                 </div>
-                <div className="text-sm">April 15, 2026</div>
+                <div className="text-sm">
+                  {isCancelled ? "No further billing" : membership.nextBilling}
+                </div>
               </div>
             </div>
           </div>
