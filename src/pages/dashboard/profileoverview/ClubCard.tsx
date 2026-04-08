@@ -10,7 +10,7 @@ export default function ClubCard({
   onChangeClubClick,
 }: Props) {
   return (
-    <div className="rounded-2xl border border-white/20 bg-gradient-to-br from-white/10 to-white/5 p-6 backdrop-blur-sm">
+    <div className="rounded-2xl border border-white/20 bg-linear-to-br from-white/10 to-white/5 p-6 backdrop-blur-sm">
       <div className="mb-6 flex items-start justify-between">
         <div>
           <div className="font-mono text-xs tracking-wide text-white/40 uppercase">
