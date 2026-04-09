@@ -14,13 +14,13 @@ export default function CompleteDashboard() {
   };
 
   return (
-    <div>
+    <div className="flex min-h-screen bg-black">
       <CollapsibleSidebar
         activePage={activePage}
         onPageChange={setActivePage}
         onCollapseChange={handleSidebarCollapse}
       />
-      <div>
+      <div className="ml-0 flex-1 transition-all duration-300">
         {activePage === "profile" && <ProfileOverview />}
         {activePage === "membership" && <MembershipHub />}
       </div>
