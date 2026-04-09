@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import throttle from "lodash.throttle";
-import CollapsibleSidebar from "./CollasibleSidebar";
+import CollapsibleSidebar from "./CollapsibleSidebar";
 import ProfileOverview from "./profileoverview/ProfileOverview";
 import MembershipHub from "./membershiphub/MembershipHub";
 
