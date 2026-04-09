@@ -14,7 +14,7 @@ export default function ForgotPassword({ onBack }: ForgotPasswordProps) {
 
   const validateEmail = isInputValid(emailJSPattern, resetEmail);
 
-  const handleResetPassword = (e: React.FormEvent) => {
+  const handleResetPassword = (e: React.SubmitEvent) => {
     e.preventDefault();
   };
 
