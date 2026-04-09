@@ -13,14 +13,14 @@ export default function MembershipHeader({
 }: Props) {
   return (
     <div className="mb-12 flex flex-col gap-6 border-b border-white/10 pb-6 md:flex-row md:items-center md:justify-between">
-      <div>
+      <header>
         <div className="mb-2 font-mono text-xs tracking-wider text-white/40 uppercase">
           Your Plan
         </div>
         <h1 className="text-4xl font-light tracking-tight sm:text-5xl lg:text-6xl">
           Membership
         </h1>
-      </div>
+      </header>
 
       <div className="flex flex-col gap-3 sm:flex-row">
         {!isCancelled && (
