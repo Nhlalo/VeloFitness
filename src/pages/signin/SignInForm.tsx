@@ -162,7 +162,6 @@ export default function SignInForm({ onForgotPassword }: SignInFormProps) {
         .
       </div>
 
-      {/* Sign In Button */}
       <button
         type="submit"
         disabled={!isFormValid}
