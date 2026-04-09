@@ -76,7 +76,7 @@ export default function ProfileOverview() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="mt-6 min-h-screen bg-black text-white md:mt-0">
       {/* Grid Background */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent" />
