@@ -4,6 +4,7 @@ interface Props {
   isCancelled: boolean;
   onReactivateClick: () => void;
 }
+
 export default function MembershipHeader({
   onChangePlanClick,
   onCancelClick,
@@ -11,7 +12,7 @@ export default function MembershipHeader({
   onReactivateClick,
 }: Props) {
   return (
-    <div className="mb-12 flex items-center justify-between border-b border-white/10 pb-6">
+    <div className="mb-12 flex flex-col gap-6 border-b border-white/10 pb-6 md:flex-row md:items-center md:justify-between">
       <div>
         <div className="mb-2 font-mono text-xs tracking-wider text-white/40 uppercase">
           Your Plan
@@ -20,7 +21,8 @@ export default function MembershipHeader({
           Membership
         </h1>
       </div>
-      <div className="flex gap-3">
+
+      <div className="flex flex-col gap-3 sm:flex-row">
         {!isCancelled && (
           <button
             onClick={onChangePlanClick}
@@ -29,6 +31,7 @@ export default function MembershipHeader({
             Change Plan
           </button>
         )}
+
         {!isCancelled ? (
           <button
             onClick={onCancelClick}
