@@ -9,6 +9,24 @@ export default function CompleteDashboard() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkScreenSize();
+
+    const throttledCheck = throttle(checkScreenSize, 150);
+
+    window.addEventListener("resize", throttledCheck);
+
+    return () => {
+      throttledCheck.cancel();
+      window.removeEventListener("resize", throttledCheck);
+    };
+  }, []);
+
+  // Handle sidebar collapse state change (desktop only)
   const handleSidebarCollapse = (collapsed: boolean) => {
     setIsSidebarCollapsed(collapsed);
   };
@@ -20,7 +38,17 @@ export default function CompleteDashboard() {
         onPageChange={setActivePage}
         onCollapseChange={handleSidebarCollapse}
       />
-      <div className="ml-0 flex-1 transition-all duration-300">
+
+      {/* Main Content - Margin only on desktop, full width on mobile */}
+      <div
+        className={`flex-1 transition-all duration-300 ${
+          !isMobile && isSidebarCollapsed
+            ? "ml-20"
+            : !isMobile && !isSidebarCollapsed
+              ? "ml-64"
+              : "ml-0"
+        }`}
+      >
         {activePage === "profile" && <ProfileOverview />}
         {activePage === "membership" && <MembershipHub />}
       </div>
