@@ -47,4 +47,12 @@ export const formFields = {
     maxLength: 20,
     errorMessage: "Please enter a valid phone number",
   },
+  password: {
+    jsxPattern: "^[\\x20-\\x7E]{8,}$",
+    jsPattern: "^[\\x20-\\x7E]{8,}$",
+    placeholder: "••••••••",
+    minLength: 8,
+    maxLength: 64,
+    errorMessage: "Password must be at least 8 characters",
+  },
 };
