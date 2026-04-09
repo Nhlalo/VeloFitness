@@ -124,7 +124,7 @@ export default function SignInForm({ onForgotPassword }: SignInFormProps) {
         )}
       </div>
 
-      <div className="flex items-center justify-between text-sm">
+      <div className="flex items-center gap-1 text-sm">
         <button
           type="button"
           onClick={onForgotPassword}
@@ -132,7 +132,7 @@ export default function SignInForm({ onForgotPassword }: SignInFormProps) {
         >
           Forgot Password
         </button>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <span className="text-gray-500">or</span>
           <button
             type="button"
