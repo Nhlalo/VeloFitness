@@ -7,23 +7,23 @@ export default function SignIn() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-black px-4 text-white">
-      <div className="w-full max-w-md overflow-hidden">
-        <div className="relative">
+      <div className="relative w-full max-w-md">
+        <div className="grid">
           <div
-            className={`transition-all duration-500 ${
+            className={`col-start-1 row-start-1 transition-all duration-500 ${
               view === "login"
-                ? "translate-x-0 opacity-100"
-                : "absolute inset-0 -translate-x-full opacity-0"
+                ? "visible translate-x-0 opacity-100"
+                : "pointer-events-none invisible -translate-x-full opacity-0"
             }`}
           >
             <SignInForm onForgotPassword={() => setView("forgot")} />
           </div>
 
           <div
-            className={`transition-all duration-500 ${
+            className={`col-start-1 row-start-1 transition-all duration-500 ${
               view === "forgot"
-                ? "translate-x-0 opacity-100"
-                : "absolute inset-0 translate-x-full opacity-0"
+                ? "visible translate-x-0 opacity-100"
+                : "pointer-events-none invisible translate-x-full opacity-0"
             }`}
           >
             <ForgotPassword onBack={() => setView("login")} />
