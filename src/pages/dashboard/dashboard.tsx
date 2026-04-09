@@ -4,7 +4,7 @@ import CollapsibleSidebar from "./CollapsibleSidebar";
 import ProfileOverview from "./profileoverview/ProfileOverview";
 import MembershipHub from "./membershiphub/MembershipHub";
 
-export default function CompleteDashboard() {
+export default function Dashboard() {
   const [activePage, setActivePage] = useState("profile");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
