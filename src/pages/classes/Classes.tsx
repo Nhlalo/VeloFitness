@@ -26,12 +26,14 @@ const classesDescription: Props[] = [
     description:
       "Science-backed classes developed by industry minds to maximize transformation.",
     imageSource: Training,
+    path: "/profile",
   },
   {
     heading: " Expert Instructors",
     description:
       "  Renowned Instructors build community and ignite Members to push past their limits",
     imageSource: PersonalTraining,
+    path: "/profile",
   },
 ];
 
@@ -173,6 +175,7 @@ export default function Classes() {
               description={content.description}
               imageSource={content.imageSource}
               key={content.heading}
+              path={content.path}
             />
           );
         })}
