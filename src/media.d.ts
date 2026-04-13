@@ -1,4 +1,4 @@
-/*TypeScript cannot process media types, so this notifies Typescript to treat importing a media file as string (the file path) */
+/*TypeScript cannot process media types, css files, so this notifies Typescript to treat importing a media file as string (the file path) */
 declare module "*.jpg" {
   const value: string;
   export default value;
@@ -62,4 +62,14 @@ declare module "*.ogv" {
 declare module "*.mkv" {
   const value: string;
   export default value;
+}
+
+declare module "*.css" {
+  const content: string;
+  export default content;
+}
+
+declare module "*.css" {
+  const content: string;
+  export default content;
 }
