@@ -1,3 +1,4 @@
+import useNavigateBasedOnLogin from "../../hooks/useNavigateBasedOnLogIn";
 import Container from "./Container";
 import { Props } from "../../types/classes.interface";
 
@@ -5,7 +6,10 @@ export default function SubClasses({
   heading,
   description,
   imageSource,
+  path,
 }: Props) {
+  const { handleClick } = useNavigateBasedOnLogin(path);
+
   return (
     <Container>
       <div className="m-auto flex flex-col py-18 lg:flex-row">
@@ -16,7 +20,10 @@ export default function SubClasses({
           <p className="mb-6 hidden w-[60%] py-3 text-lg leading-[1.4] lg:block">
             {description}
           </p>
-          <button className="m-2 hidden rounded-md border-2 border-white bg-transparent px-8 py-4 text-white hover:bg-gray-400 lg:inline">
+          <button
+            onClick={handleClick}
+            className="m-2 hidden rounded-md border-2 border-white bg-transparent px-8 py-4 text-white hover:bg-gray-400 lg:inline"
+          >
             BOOK A CLASS
           </button>
         </div>
