@@ -1,5 +1,4 @@
-import { useNavigate } from "react-router";
-import { useAuth } from "../../context/authContext";
+import useNavigateBasedOnLogin from "../../hooks/useNavigateBasedOnLogIn";
 import { HeroBannerProps } from "../../types/herobanner.interface";
 
 export default function HeroBanner({
@@ -8,15 +7,7 @@ export default function HeroBanner({
   heading2,
   buttonText,
 }: HeroBannerProps) {
-  const navigate = useNavigate();
-
-  const { isLoggedIn } = useAuth();
-
-  function handleClick() {
-    const ifLoggedIn = isLoggedIn ? "/profile" : "/jointoday";
-
-    navigate(ifLoggedIn);
-  }
+  const { handleClick } = useNavigateBasedOnLogin();
 
   return (
     <header className="relative h-screen overflow-hidden bg-black">
