@@ -19,7 +19,7 @@ export default function LoggedInModal({
         {/* User Info Section */}
         <div className="border-b border-gray-100 px-4 py-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#AAFF00] to-[#8BCC00]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-[#AAFF00] to-[#8BCC00]">
               <span className="text-sm font-bold text-gray-900">
                 {user?.avatarInitials || "U"}
               </span>
