@@ -1,27 +1,37 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import useRouteHandle from "../../../hooks/useRouteHandle.tsx";
+import { useAuth } from "../../../context/authContext.tsx";
 import { Menu } from "lucide-react";
 import { navLinksContent } from "../../../data/constants/navigation.ts";
 import handleScrollToTop from "../../../utils/scrollToTop.ts";
+import LoggedInModal from "./LoggedInModal.tsx";
 import Sidebar from "./Sidebar.tsx";
 import Logo from "../../../assets/images/logo.png";
 
 export default function Header({}) {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
+  const [showUserMenu, setShowUserMenu] = useState<boolean>(false);
 
   const lastFocusedElement = useRef<HTMLElement>(null);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   const url = useLocation();
 
   const navigate = useNavigate();
+
+  const { user, isLoggedIn } = useAuth();
 
   const colorScheme = useRouteHandle();
 
   const currentColors = isScrolled
     ? colorScheme?.scrolled
     : colorScheme?.default;
+
+  const loggedInLinks = isLoggedIn
+    ? navLinksContent.filter((link) => link.content.toLowerCase() != "sign in")
+    : navLinksContent;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,7 +43,22 @@ export default function Header({}) {
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []); //
+  }, []);
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        userMenuRef.current &&
+        !userMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowUserMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   //This will display the side bar
   function handleOpeningSidebar() {
@@ -50,8 +75,13 @@ export default function Header({}) {
   function handleHomePage() {
     navigate("/");
   }
+
   const handleClick = () => {
     url.pathname === "/" ? handleScrollToTop() : handleHomePage();
+  };
+
+  const toggleUserMenu = () => {
+    setShowUserMenu(!showUserMenu);
   };
 
   return (
@@ -88,9 +118,10 @@ export default function Header({}) {
               Vélo Fitness
             </figcaption>
           </button>
+
           <nav className="hidden lg:block">
             <ul className="flex items-center gap-10">
-              {navLinksContent.map((element) => (
+              {loggedInLinks.map((element) => (
                 <li key={element.key} className="hover:underline">
                   <Link
                     to={`/${element.content.split(" ").join("").toLowerCase()}`}
@@ -103,14 +134,61 @@ export default function Header({}) {
                 </li>
               ))}
               <li>
-                <Link
-                  to="/jointoday"
-                  style={{ color: currentColors?.color }}
-                  className="flex min-w-[9ch] gap-1 rounded-md bg-[#AAFF00] px-8 py-4 text-center font-bold hover:bg-[#9EF200]"
-                >
-                  <span>Join </span>
-                  <span>Today</span>
-                </Link>
+                {!isLoggedIn && (
+                  <Link
+                    to="/jointoday"
+                    style={{ color: currentColors?.color }}
+                    className="flex min-w-[9ch] gap-1 rounded-md bg-[#AAFF00] px-8 py-4 text-center font-bold hover:bg-[#9EF200]"
+                  >
+                    <span>Join </span>
+                    <span>Today</span>
+                  </Link>
+                )}
+                {isLoggedIn && (
+                  <div className="relative" ref={userMenuRef}>
+                    <button
+                      onClick={toggleUserMenu}
+                      className="flex items-center gap-3 rounded-full transition-all duration-200 hover:opacity-80 focus:ring-2 focus:ring-[#AAFF00] focus:ring-offset-2 focus:outline-none"
+                      style={{ color: currentColors?.color }}
+                      aria-label="User menu"
+                    >
+                      {/* User Avatar Circle with Initials */}
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#AAFF00] to-[#8BCC00] shadow-md">
+                        <span className="text-sm font-bold text-gray-900">
+                          {user?.avatarInitials || "U"}
+                        </span>
+                      </div>
+
+                      {/* User Name - Hidden on small screens */}
+                      <span className="hidden text-sm font-medium sm:inline-block">
+                        {user?.name || user?.email?.split("@")[0] || "User"}
+                      </span>
+
+                      {/* Dropdown Arrow Icon */}
+                      <svg
+                        className={`hidden h-4 w-4 transition-transform duration-200 sm:block ${
+                          showUserMenu ? "rotate-180" : ""
+                        }`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+
+                    {/* Dropdown Menu */}
+                    {showUserMenu && (
+                      <LoggedInModal setShowUserMenu={setShowUserMenu} />
+                    )}
+                  </div>
+                )}
               </li>
             </ul>
           </nav>
