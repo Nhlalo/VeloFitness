@@ -201,7 +201,7 @@ export default function Sidebar({
 
                   <li className="py-6 pr-0 pl-14 hover:underline">
                     <Link
-                      to="/membership"
+                      to="/mymembership"
                       ref={membershipInfoRef}
                       className="text-5 text-white focus:text-gray-500"
                       tabIndex={sideBarStatus ? 0 : -1}
