@@ -47,17 +47,7 @@ export default function LoggedInModal({
 
         <button
           onClick={() => {
-            navigate("/my-bookings");
-            setShowUserMenu(false);
-          }}
-          className="w-full px-4 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
-        >
-          My Bookings
-        </button>
-
-        <button
-          onClick={() => {
-            navigate("/membership");
+            navigate("/mymembership");
             setShowUserMenu(false);
           }}
           className="w-full px-4 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
