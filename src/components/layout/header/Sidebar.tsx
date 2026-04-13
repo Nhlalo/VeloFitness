@@ -23,10 +23,10 @@ export default function Sidebar({
   const sidebarRef = useRef(null);
   const logoLinkRef = useRef(null);
   const closeSideBarBTNRef = useRef(null);
-  const concertsLinkRef = useRef(null);
-  const chartsLinkRef = useRef(null);
-  const myMusicLinkRef = useRef(null);
-  const contactsLinkRef = useRef(null);
+  const clubsRef = useRef(null);
+  const membershipRef = useRef(null);
+  const classesRef = useRef(null);
+  const signInRef = useRef(null);
 
   const navigate = useNavigate();
   const url = useLocation();
@@ -35,18 +35,18 @@ export default function Sidebar({
   const refs = [
     logoLinkRef,
     closeSideBarBTNRef,
-    concertsLinkRef,
-    chartsLinkRef,
-    myMusicLinkRef,
-    contactsLinkRef,
+    clubsRef,
+    membershipRef,
+    classesRef,
+    signInRef,
   ].map((ref) => ref?.current);
 
   //Links are generated through mapping, therefore the reference (ref) must be dynamically. This function aids in that.
   const navLinksContent = NavLinksContentRef(
-    concertsLinkRef,
-    chartsLinkRef,
-    myMusicLinkRef,
-    contactsLinkRef,
+    clubsRef,
+    membershipRef,
+    classesRef,
+    signInRef,
   );
 
   //Close the sidebar when navigating to a new page
@@ -120,7 +120,7 @@ export default function Sidebar({
                   className="py-6 pr-0 pl-14 hover:underline"
                 >
                   <Link
-                    to="/"
+                    to={`/${navLinkContent.content.split(" ").join("").toLowerCase()}`}
                     ref={navLinkContent.ref}
                     className="text-5 text-white focus:text-gray-500"
                     tabIndex={sideBarStatus ? 0 : -1}
