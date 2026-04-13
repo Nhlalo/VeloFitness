@@ -1,5 +1,7 @@
-import { Link, useNavigate, useParams, useSearchParams } from "react-router";
+import { Link, useParams, useSearchParams } from "react-router";
 import { ArrowRight } from "lucide-react";
+import useNavigateBasedOnLogin from "../../hooks/useNavigateBasedOnLogIn";
+import { useAuth } from "../../context/authContext";
 import { Gym } from "../../types/club.interface";
 import Header from "./Header";
 import Container from "../../components/shared/Container";
@@ -7,6 +9,9 @@ import Container from "../../components/shared/Container";
 export default function CountryClub() {
   const [searchParams] = useSearchParams();
 
+  const { handleClick } = useNavigateBasedOnLogin("/profile");
+
+  const { isLoggedIn } = useAuth();
   //Need to decode as the param was encoded to reduce the url length
   const encodedData = searchParams.get("clubs") as string;
 
@@ -14,15 +19,11 @@ export default function CountryClub() {
 
   const gymClubs: Gym[] = JSON.parse(atob(encodedData));
 
-  const navigate = useNavigate();
-
-  function determinePathRedirection(club: string): string {
-    return `/clubs/${country}/${club}`;
+  function determinePathRedirection(): string {
+    const ifLoggedIn = isLoggedIn ? "/profile" : "jointoday";
+    return ifLoggedIn;
   }
 
-  function handleClick(club: string) {
-    navigate(determinePathRedirection(club));
-  }
   return (
     <div className="bg-black text-white">
       <Header heading={`${country} Clubs`} extraHeading="" showViewAll={true} />
@@ -33,7 +34,7 @@ export default function CountryClub() {
             const linkDescription = `view the information about the ${country} clubs`;
             return (
               <Link
-                to={determinePathRedirection(clubName)}
+                to={determinePathRedirection()}
                 aria-label={linkDescription}
                 key={clubName || country}
                 className="flex border-t border-solid border-white px-6 py-8 text-white hover:bg-white hover:text-black"
@@ -50,7 +51,7 @@ export default function CountryClub() {
                   <button
                     type="button"
                     className="flex items-center self-start pt-4 text-sm font-semibold"
-                    onClick={() => handleClick(clubName)}
+                    onClick={handleClick}
                   >
                     View this club
                     <ArrowRight aria-hidden="true" />
