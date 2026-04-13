@@ -87,6 +87,29 @@ const router = createBrowserRouter([
           footer: "hidden",
         },
       },
+      {
+        path: "profile",
+        lazy: async () => {
+          const module = await import("./pages/dashboard/Dashboard.tsx");
+          return { Component: module.default };
+        },
+        handle: {
+          header: "hidden",
+          footer: "hidden",
+        },
+      },
+      {
+        path: "mymembership",
+        lazy: async () => {
+          const module =
+            await import("./pages/dashboard/membershiphub/MembershipHub.tsx");
+          return { Component: module.default };
+        },
+        handle: {
+          header: "hidden",
+          footer: "hidden",
+        },
+      },
     ],
   },
 ]);
