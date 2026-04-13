@@ -26,7 +26,6 @@ export default function useClubSearch(
 
   //This will be passed to the Result component so that when the result of the input search is pressed it can affect this component by causing rerendering.
   function adjustClubData(data: Gym[]) {
-    console.log("setIsClubClicked in hook:", setIsClubClicked);
     if (setIsClubClicked) {
       setIsClubClicked(true);
     }
