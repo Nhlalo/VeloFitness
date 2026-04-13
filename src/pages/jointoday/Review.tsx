@@ -1,57 +1,118 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { VisibilityContext } from "./JoinToday";
-import { Info } from "lucide-react";
+import { Info, X } from "lucide-react";
 
 export default function Review() {
-  const { isVisible } = useContext(VisibilityContext);
+  const { isVisible, setIsVisible, formData, selectedMembership } =
+    useContext(VisibilityContext);
+  const [termsAccepted, setTermsAccepted] = useState({
+    terms1: false,
+    terms2: false,
+    terms3: false,
+  });
 
-  const selectedMembership = {
-    image:
-      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    title: "Premium Club Access",
-    club: "Downtown Fitness",
-    price: "$79",
+  const handleCheckboxChange = (name: string) => {
+    setTermsAccepted((prev) => ({
+      ...prev,
+      [name]: !prev[name as keyof typeof prev],
+    }));
+  };
+
+  const allTermsAccepted =
+    termsAccepted.terms1 && termsAccepted.terms2 && termsAccepted.terms3;
+
+  // Calculate totals
+  const membershipPrice = selectedMembership
+    ? parseFloat(selectedMembership.price.replace("$", ""))
+    : 79;
+  const initiationFee = 100;
+  const subtotal = membershipPrice + initiationFee;
+  const taxes = subtotal * 0.08; // 8% tax
+  const totalDue = subtotal + taxes;
+
+  const handleGoBack = () => {
+    setIsVisible({
+      personalInformation: false,
+      membership: true,
+      review: false,
+    });
   };
 
   return (
     <div
-      className={`transform space-y-8 bg-white pb-8 transition-transform duration-300 ease-out ${
-        isVisible.review ? "block translate-x-0" : "hidden translate-x-full"
+      className={`transition-all duration-500 ${
+        isVisible.review
+          ? "visible translate-x-0 opacity-100"
+          : "pointer-events-none invisible absolute inset-0 translate-x-full opacity-0"
       }`}
     >
-      <div>
-        <div>
+      <div className="pb-8">
+        {/* Back Button */}
+        <div className="mb-4 flex justify-end px-6 pt-6 sm:px-8 sm:pt-8">
+          <button
+            onClick={handleGoBack}
+            className="rounded-full p-2 transition-colors hover:bg-gray-100"
+            aria-label="Go back"
+          >
+            <X size={20} className="text-black" />
+          </button>
+        </div>
+
+        <div className="px-6 sm:px-8">
           <h2 className="mb-6 text-2xl font-bold md:text-3xl">Membership</h2>
+
           <div className="overflow-hidden rounded-lg border border-gray-200">
+            {/* Membership Summary */}
             <div className="p-5">
               <div className="flex items-center gap-4">
                 <div className="shrink-0">
                   <img
-                    src={selectedMembership.image}
-                    alt={selectedMembership.title}
+                    src={selectedMembership?.image}
+                    alt={selectedMembership?.title || "Membership"}
                     className="h-12 w-12 rounded-full object-cover"
+                    loading="lazy"
                   />
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 text-left">
                   <div className="font-bold text-black">
-                    {selectedMembership.title}
+                    {selectedMembership?.title || "Premium Club Access"}
                   </div>
                   <div className="text-sm text-gray-400">
-                    {selectedMembership.club}
+                    {selectedMembership?.club || "Selected Club"}
                   </div>
                 </div>
                 <div className="text-right">
                   <div className="text-lg font-bold text-black">
-                    {selectedMembership.price}
+                    {selectedMembership?.price || "$79"}
                   </div>
                   <div className="text-xs text-gray-400">Month</div>
                 </div>
               </div>
             </div>
 
-            <div className="h-px w-full bg-gray-200"></div>
+            {/* Member Information */}
+            <div className="h-px w-full bg-gray-200" />
             <div className="p-5">
-              <div>
+              <div className="text-left">
+                <div className="font-medium">
+                  Member: {formData.name} {formData.surname}
+                </div>
+                <div className="mt-1 text-sm text-gray-400">
+                  Email: {formData.email}
+                </div>
+                <div className="mt-1 text-sm text-gray-400">
+                  Phone: {formData.phoneNumber}
+                </div>
+                <div className="mt-1 text-sm text-gray-400">
+                  Club: {formData.userClub}
+                </div>
+              </div>
+            </div>
+
+            {/* Start Date */}
+            <div className="h-px w-full bg-gray-200" />
+            <div className="p-5">
+              <div className="text-left">
                 <div className="font-medium">
                   Membership start: Thursday - 03/19/26
                 </div>
@@ -60,59 +121,65 @@ export default function Review() {
                 </div>
               </div>
             </div>
-            <div className="h-px w-full bg-gray-200"></div>
+
+            {/* Prorated Amount */}
+            <div className="h-px w-full bg-gray-200" />
             <div className="flex flex-col gap-2 p-5 sm:flex-row sm:items-center sm:justify-between">
-              <div>
+              <div className="text-left">
                 <div className="font-medium">March</div>
                 <div className="text-sm text-gray-400">
-                  Procrated 03/09/26 - 03/31/26
+                  Prorated 03/09/26 - 03/31/26
                 </div>
               </div>
-              <div className="font-medium sm:text-right">$260.00</div>
+              <div className="font-medium sm:text-right">
+                ${membershipPrice.toFixed(2)}
+              </div>
             </div>
 
-            <div className="h-px w-full bg-gray-200"></div>
+            {/* Initiation Fee */}
+            <div className="h-px w-full bg-gray-200" />
             <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-start sm:justify-between">
-              <div className="flex-1">
+              <div className="flex-1 text-left">
                 <div className="font-medium">Initiation fee</div>
                 <div className="mt-1 text-sm text-gray-500">
                   Join today for $100 initiation and receive an additional
                   complimentary PT session + a $250 credit to The Shop or Spa.
-                  Credits will be dropped into member accounts on April 15th.
                 </div>
               </div>
               <div className="font-medium whitespace-nowrap sm:text-right">
-                $100.00
+                ${initiationFee.toFixed(2)}
               </div>
             </div>
 
-            <div className="h-px w-full bg-gray-200"></div>
-
+            {/* Subtotal */}
+            <div className="h-px w-full bg-gray-200" />
             <div className="flex items-center justify-between p-5">
               <div className="font-medium">Subtotal</div>
-              <div>$360.00</div>
+              <div>${subtotal.toFixed(2)}</div>
             </div>
 
-            <div className="h-px w-full bg-gray-200"></div>
-
+            {/* Taxes */}
+            <div className="h-px w-full bg-gray-200" />
             <div className="flex items-center justify-between p-5">
               <div className="font-medium">Taxes</div>
-              <div>$28.80</div>
+              <div>${taxes.toFixed(2)}</div>
             </div>
 
-            <div className="h-px w-full bg-gray-200"></div>
-
+            {/* Total */}
+            <div className="h-px w-full bg-gray-200" />
             <div className="flex items-center justify-between bg-gray-50 p-5">
               <div className="font-bold">Total Due Today</div>
-              <div className="font-bold">$388.80</div>
+              <div className="font-bold">${totalDue.toFixed(2)}</div>
             </div>
           </div>
 
-          <div className="mt-8 space-y-4">
+          {/* Terms and Conditions */}
+          <div className="mt-8 space-y-4 text-left">
             <div className="flex gap-3">
               <input
                 type="checkbox"
-                name="terms1"
+                checked={termsAccepted.terms1}
+                onChange={() => handleCheckboxChange("terms1")}
                 className="mt-1 h-4 w-4 shrink-0"
               />
               <div className="text-sm text-gray-600">
@@ -126,37 +193,35 @@ export default function Review() {
             <div className="flex gap-3">
               <input
                 type="checkbox"
-                name="terms2"
+                checked={termsAccepted.terms2}
+                onChange={() => handleCheckboxChange("terms2")}
                 className="mt-1 h-4 w-4 shrink-0"
               />
               <div className="text-sm text-gray-600">
                 I agree that my membership will renew automatically and I will
-                be charged the monthly dues of $260.00 (excluding taxes) every
-                month on the 23rd day of the month beginning March 2026 until I
-                cancel, price subject to change
+                be charged the monthly dues of ${membershipPrice.toFixed(2)}{" "}
+                (excluding taxes) every month on the 23rd day of the month
+                beginning March 2026 until I cancel, price subject to change
               </div>
             </div>
 
             <div className="flex gap-3">
               <input
                 type="checkbox"
-                name="terms3"
+                checked={termsAccepted.terms3}
+                onChange={() => handleCheckboxChange("terms3")}
                 className="mt-1 h-4 w-4 shrink-0"
               />
               <div className="text-sm text-gray-600">
                 I agree to pay the "Total Due Today" and commit to a minimum
                 purchase of 12 months of membership, subject to certain
-                exceptions. As detailed in my{" "}
-                <span className="cursor-pointer font-medium text-black underline">
-                  Membership Terms & Conditions
-                </span>
-                , cancellations require advance notice, and no full or partial
-                refunds will be provided except as required by law.
+                exceptions.
               </div>
             </div>
           </div>
 
-          <div className="mt-6 flex items-start gap-2 rounded-md border border-blue-200 bg-blue-50 p-3">
+          {/* Stripe Test Mode Info */}
+          <div className="mt-6 flex items-start gap-2 rounded-md border border-blue-200 bg-blue-50 p-3 text-left">
             <Info size={18} className="mt-0.5 shrink-0 text-blue-500" />
             <div className="text-xs text-blue-700">
               <span className="font-bold">Test Mode:</span> This is a Stripe
@@ -166,7 +231,15 @@ export default function Review() {
             </div>
           </div>
 
-          <button className="mt-4 w-full rounded-md bg-gray-200 py-4 text-center font-medium text-gray-700 transition-colors hover:bg-gray-300">
+          {/* Purchase Button */}
+          <button
+            disabled={!allTermsAccepted}
+            className={`mt-4 w-full rounded-md py-4 text-center font-medium transition-colors ${
+              allTermsAccepted
+                ? "bg-black text-white hover:bg-gray-800"
+                : "cursor-not-allowed bg-gray-200 text-gray-400"
+            }`}
+          >
             Purchase Membership
           </button>
         </div>

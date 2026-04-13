@@ -1,17 +1,60 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { VisibilityContext } from "./JoinToday";
 import { membershipData } from "../../data/constants/membershipfee";
+import { X } from "lucide-react";
 
-export default function ChooseMembership() {
-  const { isVisible } = useContext(VisibilityContext);
+export default function Membership() {
+  const { isVisible, setIsVisible, setSelectedMembership, selectedMembership } =
+    useContext(VisibilityContext);
+  const [selectedId, setSelectedId] = useState<number | null>(
+    selectedMembership?.id || null,
+  );
+
+  const handleSelectMembership = (item: any) => {
+    setSelectedId(item.id);
+    setSelectedMembership(item);
+  };
+
+  const handleNext = () => {
+    if (selectedId) {
+      setIsVisible({
+        personalInformation: false,
+        membership: false,
+        review: true,
+      });
+    }
+  };
+
+  const handleGoBack = () => {
+    setIsVisible({
+      personalInformation: true,
+      membership: false,
+      review: false,
+    });
+  };
 
   return (
     <div
-      className={`no-scrollbar h-full w-full transform overflow-y-auto bg-white transition-transform duration-300 ease-out ${
-        isVisible.membership ? "block translate-x-0" : "hidden translate-x-full"
+      className={`transition-all duration-500 ${
+        isVisible.membership
+          ? "visible translate-x-0 opacity-100"
+          : isVisible.review
+            ? "pointer-events-none invisible absolute inset-0 -translate-x-full opacity-0"
+            : "pointer-events-none invisible absolute inset-0 translate-x-full opacity-0"
       }`}
     >
       <div className="p-6 sm:p-8">
+        {/* Back Button */}
+        <div className="mb-4 flex justify-end">
+          <button
+            onClick={handleGoBack}
+            className="rounded-full p-2 transition-colors hover:bg-gray-100"
+            aria-label="Go back"
+          >
+            <X size={20} className="text-black" />
+          </button>
+        </div>
+
         <div>
           <h2 className="mb-6 text-lg leading-tight font-bold sm:mb-8 sm:text-xl md:text-2xl lg:text-3xl">
             Unlimited classes, guest passes, complimentary fitness assessments,
@@ -20,9 +63,14 @@ export default function ChooseMembership() {
 
           <div className="space-y-3 sm:space-y-4">
             {membershipData.map((item) => (
-              <div
-                key={item.club}
-                className="w-full cursor-pointer rounded-lg border border-gray-200 transition-colors hover:border-black"
+              <button
+                key={item.id}
+                onClick={() => handleSelectMembership(item)}
+                className={`w-full cursor-pointer rounded-lg border transition-all ${
+                  selectedId === item.id
+                    ? "border-black ring-2 ring-black"
+                    : "border-gray-200 hover:border-black"
+                }`}
               >
                 <div className="flex items-center gap-3 p-3 sm:gap-4 sm:p-4">
                   <div className="shrink-0">
@@ -36,7 +84,7 @@ export default function ChooseMembership() {
                     </div>
                   </div>
 
-                  <div className="flex flex-1 flex-col justify-center">
+                  <div className="flex flex-1 flex-col justify-center text-left">
                     <div className="text-sm font-bold text-black sm:text-base">
                       {item.title}
                     </div>
@@ -52,12 +100,20 @@ export default function ChooseMembership() {
                     <div className="text-xs text-gray-400">Month</div>
                   </div>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
 
           <div className="mt-6 sm:mt-8">
-            <button className="w-full rounded-lg border-2 border-gray-200 bg-white px-4 py-3 text-sm font-bold text-gray-400 transition-colors duration-300 hover:border-black hover:text-black sm:px-6 sm:py-4 sm:text-base">
+            <button
+              onClick={handleNext}
+              disabled={!selectedId}
+              className={`w-full rounded-lg border-2 bg-white px-4 py-3 text-sm font-bold transition-colors duration-300 sm:px-6 sm:py-4 sm:text-base ${
+                selectedId
+                  ? "border-black text-black hover:bg-black hover:text-white"
+                  : "cursor-not-allowed border-gray-200 text-gray-400"
+              }`}
+            >
               Next
             </button>
           </div>

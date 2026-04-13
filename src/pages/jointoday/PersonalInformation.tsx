@@ -1,101 +1,98 @@
-import {
-  useState,
-  useRef,
-  useCallback,
-  useContext,
-  createContext,
-  useMemo,
-} from "react";
+import { useState, useContext } from "react";
 import { VisibilityContext } from "./JoinToday";
 import { formFields } from "../../data/constants/inputsvalidation";
 import validateField from "../../utils/validateInputs";
 import ClubOptions from "./ClubOptions";
 
-interface userClubMemo {
-  userClub: string | null;
-  setUserClub: React.Dispatch<React.SetStateAction<string | null>>;
+interface FormErrors {
+  name: boolean;
+  surname: boolean;
+  email: boolean;
+  zipCode: boolean;
+  phoneNumber: boolean;
 }
 
-const ChosenClubContext = createContext<userClubMemo>({
-  userClub: null,
-  setUserClub: () => {},
-});
-
-function UserInformation() {
-  const { userClub } = useContext(ChosenClubContext);
-  const { isVisible, setIsVisible } = useContext(VisibilityContext);
-
-  const [formErrors, setFormErrors] = useState({
+export default function PersonalInformation() {
+  const { isVisible, setIsVisible, formData, setFormData } =
+    useContext(VisibilityContext);
+  const [formErrors, setFormErrors] = useState<FormErrors>({
     name: false,
     surname: false,
     email: false,
     zipCode: false,
     phoneNumber: false,
   });
-
-  //Determines the visibility of the ClubOptions component
   const [isSelectClub, setIsSelectClub] = useState<boolean>(false);
 
-  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({
-    name: null,
-    surname: null,
-    email: null,
-    zipCode: null,
-    phoneNumber: null,
-  });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    fieldName: string,
+    jsPattern: string,
+  ) => {
+    const value = e.target.value;
+
+    setFormData((prev: any) => ({
+      ...prev,
+      [fieldName]: value,
+    }));
+
+    validateField(setFormErrors, fieldName, value, jsPattern);
+  };
 
   const areInputsValid = () => {
-    console.log(userClub);
-    if (!isSelectClub) {
-      for (const key in formErrors) {
-        if (
-          formErrors[key as keyof typeof formErrors] === true ||
-          !inputRefs.current[key as keyof typeof inputRefs.current]?.value
-            ?.length
-        ) {
-          return false;
-        }
-      }
-      if (!userClub) return false;
-      return true;
-    }
-    return false;
+    const hasAllValues =
+      formData.name &&
+      formData.surname &&
+      formData.email &&
+      formData.zipCode &&
+      formData.phoneNumber &&
+      formData.userClub;
+
+    if (!hasAllValues) return false;
+
+    const hasErrors = Object.values(formErrors).some((error) => error === true);
+
+    return !hasErrors;
   };
 
-  const setRef = (key: string) => (el: HTMLInputElement | null) => {
-    inputRefs.current[key] = el;
-  };
-
-  function handleClick() {
+  const handleSelectClub = () => {
     setIsSelectClub(true);
-  }
+  };
 
-  function handleShowNextFormSection() {
-    setIsVisible({
-      personalInformation: false,
-      membership: true,
-      review: false,
-    });
-  }
-
-  function handleClose() {
+  const handleClubSelected = (club: string) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      userClub: club,
+    }));
     setIsSelectClub(false);
-  }
+  };
 
-  function handleChange(
-    e: React.ChangeEvent<HTMLInputElement>,
-    inputName: string,
-    jsPattern: string,
-  ) {
-    validateField(setFormErrors, inputName, e.target.value, jsPattern);
-  }
+  const handleCloseClubOptions = () => {
+    setIsSelectClub(false);
+  };
+
+  const handleShowNextFormSection = () => {
+    if (areInputsValid()) {
+      setIsVisible({
+        personalInformation: false,
+        membership: true,
+        review: false,
+      });
+    }
+  };
+
+  const isFormValid = areInputsValid();
 
   return (
     <>
       <div
-        className={`top-0 right-0 w-full space-y-6 sm:space-y-8 ${isVisible.personalInformation ? "block" : "hidden"}`}
+        className={`transition-all duration-500 ${
+          isVisible.personalInformation
+            ? "visible translate-x-0 opacity-100"
+            : "pointer-events-none invisible absolute inset-0 -translate-x-full opacity-0"
+        }`}
       >
-        <div>
+        <div className="space-y-6 sm:space-y-8">
           <div>
             <h2 className="text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl">
               3 Steps you are in
@@ -107,15 +104,10 @@ function UserInformation() {
                   <input
                     type="text"
                     placeholder={formFields.name.placeholder}
-                    pattern={formFields.name.jsxPattern}
-                    title={formFields.name.title}
-                    minLength={formFields.name.minLength}
-                    maxLength={formFields.name.maxLength}
-                    required
+                    value={formData.name}
                     onChange={(e) =>
                       handleChange(e, "name", formFields.name.jsPattern)
                     }
-                    ref={setRef("name")}
                     className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                       formErrors.name
                         ? "border-red-500 focus:border-red-500"
@@ -123,7 +115,11 @@ function UserInformation() {
                     }`}
                   />
                   {formErrors.name && (
-                    <div className="mt-1 text-xs text-red-500">
+                    <div
+                      className="mt-1 text-xs text-red-500"
+                      aria-live="polite"
+                      aria-atomic="true"
+                    >
                       {formFields.name.errorMessage}
                     </div>
                   )}
@@ -133,15 +129,10 @@ function UserInformation() {
                   <input
                     type="text"
                     placeholder={formFields.surname.placeholder}
-                    pattern={formFields.surname.jsxPattern}
-                    title={formFields.surname.title}
-                    minLength={formFields.surname.minLength}
-                    maxLength={formFields.surname.maxLength}
-                    required
+                    value={formData.surname}
                     onChange={(e) =>
                       handleChange(e, "surname", formFields.surname.jsPattern)
                     }
-                    ref={setRef("surname")}
                     className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                       formErrors.surname
                         ? "border-red-500 focus:border-red-500"
@@ -149,7 +140,11 @@ function UserInformation() {
                     }`}
                   />
                   {formErrors.surname && (
-                    <div className="mt-1 text-xs text-red-500">
+                    <div
+                      className="mt-1 text-xs text-red-500"
+                      aria-live="polite"
+                      aria-atomic="true"
+                    >
                       {formFields.surname.errorMessage}
                     </div>
                   )}
@@ -160,13 +155,10 @@ function UserInformation() {
                 <input
                   type="email"
                   placeholder={formFields.email.placeholder}
-                  pattern={formFields.email.jsxPattern}
-                  maxLength={formFields.email.maxLength}
-                  required
+                  value={formData.email}
                   onChange={(e) =>
                     handleChange(e, "email", formFields.email.jsPattern)
                   }
-                  ref={setRef("email")}
                   className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                     formErrors.email
                       ? "border-red-500 focus:border-red-500"
@@ -174,7 +166,11 @@ function UserInformation() {
                   }`}
                 />
                 {formErrors.email && (
-                  <div className="mt-1 text-xs text-red-500">
+                  <div
+                    className="mt-1 text-xs text-red-500"
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
                     {formFields.email.errorMessage}
                   </div>
                 )}
@@ -184,14 +180,10 @@ function UserInformation() {
                 <input
                   type="text"
                   placeholder={formFields.zipCode.placeholder}
-                  pattern={formFields.zipCode.jsxPattern}
-                  maxLength={formFields.zipCode.maxLength}
-                  minLength={formFields.zipCode.minLength}
-                  required
+                  value={formData.zipCode}
                   onChange={(e) =>
                     handleChange(e, "zipCode", formFields.zipCode.jsPattern)
                   }
-                  ref={setRef("zipCode")}
                   className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                     formErrors.zipCode
                       ? "border-red-500 focus:border-red-500"
@@ -199,7 +191,11 @@ function UserInformation() {
                   }`}
                 />
                 {formErrors.zipCode && (
-                  <div className="mt-1 text-xs text-red-500">
+                  <div
+                    className="mt-1 text-xs text-red-500"
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
                     {formFields.zipCode.errorMessage}
                   </div>
                 )}
@@ -209,10 +205,7 @@ function UserInformation() {
                 <input
                   type="tel"
                   placeholder={formFields.phoneNumber.placeholder}
-                  pattern={formFields.phoneNumber.jsxPattern}
-                  minLength={formFields.phoneNumber.minLength}
-                  maxLength={formFields.phoneNumber.maxLength}
-                  required
+                  value={formData.phoneNumber}
                   onChange={(e) =>
                     handleChange(
                       e,
@@ -220,7 +213,6 @@ function UserInformation() {
                       formFields.phoneNumber.jsPattern,
                     )
                   }
-                  ref={setRef("phoneNumber")}
                   className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
                     formErrors.phoneNumber
                       ? "border-red-500 focus:border-red-500"
@@ -228,18 +220,24 @@ function UserInformation() {
                   }`}
                 />
                 {formErrors.phoneNumber && (
-                  <div className="mt-1 text-xs text-red-500">
+                  <div
+                    className="mt-1 text-xs text-red-500"
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
                     {formFields.phoneNumber.errorMessage}
                   </div>
                 )}
               </div>
 
               <button
-                onClick={handleClick}
+                onClick={handleSelectClub}
                 type="button"
                 className="w-full rounded-md border-2 border-black bg-white px-4 py-3 text-center text-sm font-bold transition-colors duration-300 hover:bg-black hover:text-white sm:px-6 sm:py-4 sm:text-base"
               >
-                Select a club +
+                {formData.userClub
+                  ? `Selected: ${formData.userClub}`
+                  : "Select a club +"}
               </button>
             </form>
 
@@ -255,49 +253,31 @@ function UserInformation() {
                 </span>{" "}
                 and that Vélo brand companies and their membership advisors can
                 contact me regarding promotions, marketing, products, services,
-                and other information that may interest me. This site is
-                protected by reCAPTCHA and the Google{" "}
-                <span className="cursor-pointer text-black underline">
-                  Privacy Policy
-                </span>{" "}
-                and{" "}
-                <span className="cursor-pointer text-black underline">
-                  Terms of Service
-                </span>{" "}
-                apply.
+                and other information that may interest me.
               </p>
 
               <button
                 type="button"
-                disabled={areInputsValid() ? false : true}
+                disabled={!isFormValid}
                 onClick={handleShowNextFormSection}
-                className={`w-full rounded-md px-4 py-3 text-center text-sm font-medium text-black transition-colors duration-300 sm:px-6 sm:py-4 sm:text-base ${areInputsValid() ? `rounded-md border-2 border-black bg-white hover:bg-black hover:text-white` : `bg-gray-200 hover:bg-gray-300`}`}
+                className={`w-full rounded-md px-4 py-3 text-center text-sm font-medium transition-colors duration-300 sm:px-6 sm:py-4 sm:text-base ${
+                  isFormValid
+                    ? "rounded-md border-2 border-black bg-white text-black hover:bg-black hover:text-white"
+                    : "cursor-not-allowed bg-gray-200 text-gray-400"
+                }`}
               >
                 Join Today
               </button>
-
-              <p className="text-center text-xs text-gray-400">
-                By continuing, I agree to share my contact information with a
-                Membership advisor
-              </p>
             </div>
           </div>
         </div>
       </div>
-      <ClubOptions onClose={handleClose} isDisplay={isSelectClub} />
+
+      <ClubOptions
+        onClose={handleCloseClubOptions}
+        isDisplay={isSelectClub}
+        onSelectClub={handleClubSelected}
+      />
     </>
   );
 }
-
-export default function PersonalInformation() {
-  const [userClub, setUserClub] = useState<string | null>(null);
-
-  const userClubMemo = useMemo(() => ({ userClub, setUserClub }), [userClub]);
-  return (
-    <ChosenClubContext.Provider value={userClubMemo}>
-      <UserInformation />
-    </ChosenClubContext.Provider>
-  );
-}
-
-export { ChosenClubContext };
