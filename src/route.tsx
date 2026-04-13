@@ -76,6 +76,17 @@ const router = createBrowserRouter([
           footer: "hidden",
         },
       },
+      {
+        path: "signin",
+        lazy: async () => {
+          const module = await import("./pages/signin/SignIn.tsx");
+          return { Component: module.default };
+        },
+        handle: {
+          header: "hidden",
+          footer: "hidden",
+        },
+      },
     ],
   },
 ]);
