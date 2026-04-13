@@ -40,6 +40,6 @@ export const mockAuthorisationCall = (): Promise<
           message: "Internal server error",
         });
       }
-    }, 1000);
+    }, 500);
   });
 };
