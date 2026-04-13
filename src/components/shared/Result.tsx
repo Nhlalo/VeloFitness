@@ -3,6 +3,15 @@ import { LoaderCircle } from "lucide-react";
 import useFindClub from "../../hooks/useFindClub";
 import useNavigateClubPage from "../../hooks/useNavigateClubPage";
 import { Gym, Description } from "../../types/club.interface";
+import { ClubDataContext } from "../../pages/jointoday/ClubOptions";
+import { useContext } from "react";
+
+interface ResultsProps {
+  location: string;
+  mainBG: string;
+  hoverBG: string;
+  adjustClubData?: (data: Gym[]) => void;
+}
 
 function Error() {
   return (
@@ -30,6 +39,7 @@ function Data({
   hoverBG: string;
   adjustClubData?: (data: Gym[]) => void;
 }) {
+  const { setSelectedClubs, setIsClubClicked } = useContext(ClubDataContext);
   const location = useLocation();
 
   //checks if the params contain jointoday
@@ -62,10 +72,6 @@ function Data({
 
           const country = content.country;
 
-          function checkifFunctionExist() {
-            return adjustClubData ? adjustClubData(clubs) : null;
-          }
-
           return (
             <button
               type="button"
@@ -73,7 +79,9 @@ function Data({
               key={key}
               onClick={() =>
                 pathname
-                  ? checkifFunctionExist()
+                  ? (setSelectedClubs(clubs),
+                    setIsClubClicked(true),
+                    adjustClubData?.(clubs))
                   : handleClick(country.toLowerCase(), clubs)
               }
             >
@@ -103,12 +111,7 @@ export default function Results({
   mainBG,
   hoverBG,
   adjustClubData,
-}: {
-  location: string;
-  mainBG: string;
-  hoverBG: string;
-  adjustClubData?: (data: Gym[]) => void;
-}) {
+}: ResultsProps) {
   const { loading, data, error } = useFindClub(location);
   return (
     <div className={`absolute mt-1 max-h-80 w-full rounded-xl ${mainBG}`}>
