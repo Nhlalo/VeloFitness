@@ -1,8 +1,10 @@
+import useNavigateBasedOnLogin from "../../hooks/useNavigateBasedOnLogIn";
 import Container from "../../components/shared/Container";
 import TenseTraining from "../../assets/images/tense-training.jpg";
 import TenseTraining2 from "../../assets/images/tense-training2.jpg";
 
 export default function Classes() {
+  const { handleClick } = useNavigateBasedOnLogin();
   return (
     <Container>
       <div className="flex flex-col items-center gap-8 py-20 lg:flex-row lg:items-stretch">
@@ -36,7 +38,10 @@ export default function Classes() {
             stronger, energized, and accomplished. Join us and discover why our
             members call this the best workout they've ever had.{" "}
           </p>
-          <button className="m-2 mr-auto rounded-md bg-[#AAFF00] px-5 py-3 text-[#1d1d1f] hover:bg-[#9EF200] md:px-8 md:py-4">
+          <button
+            onClick={handleClick}
+            className="m-2 mr-auto rounded-md bg-[#AAFF00] px-5 py-3 text-[#1d1d1f] hover:bg-[#9EF200] md:px-8 md:py-4"
+          >
             Book A Class
           </button>
         </div>
