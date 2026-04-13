@@ -153,7 +153,7 @@ export default function Header({}) {
                       aria-label="User menu"
                     >
                       {/* User Avatar Circle with Initials */}
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#AAFF00] to-[#8BCC00] shadow-md">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-[#AAFF00] to-[#8BCC00] shadow-md">
                         <span className="text-sm font-bold text-gray-900">
                           {user?.avatarInitials || "U"}
                         </span>
