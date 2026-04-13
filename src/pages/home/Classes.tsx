@@ -4,7 +4,7 @@ import TenseTraining from "../../assets/images/tense-training.jpg";
 import TenseTraining2 from "../../assets/images/tense-training2.jpg";
 
 export default function Classes() {
-  const { handleClick } = useNavigateBasedOnLogin();
+  const { handleClick } = useNavigateBasedOnLogin("/profile");
   return (
     <Container>
       <div className="flex flex-col items-center gap-8 py-20 lg:flex-row lg:items-stretch">

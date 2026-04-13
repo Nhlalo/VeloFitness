@@ -7,7 +7,7 @@ export default function HeroBanner({
   heading2,
   buttonText,
 }: HeroBannerProps) {
-  const { handleClick } = useNavigateBasedOnLogin();
+  const { handleClick } = useNavigateBasedOnLogin("/profile");
 
   return (
     <header className="relative h-screen overflow-hidden bg-black">
