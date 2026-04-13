@@ -93,7 +93,7 @@ export default function Header({}) {
               {navLinksContent.map((element) => (
                 <li key={element.key} className="hover:underline">
                   <Link
-                    to={`/${element.content.toLowerCase()}`}
+                    to={`/${element.content.split(" ").join("").toLowerCase()}`}
                     style={{ color: currentColors?.color }}
                     className="block min-w-[9ch] text-center font-bold"
                     data-page={element.content}
@@ -102,13 +102,14 @@ export default function Header({}) {
                   </Link>
                 </li>
               ))}
-              <li className="rounded-md bg-[#AAFF00] px-8 py-4 hover:bg-[#9EF200]">
+              <li>
                 <Link
                   to="/jointoday"
                   style={{ color: currentColors?.color }}
-                  className="block min-w-[9ch] text-center font-bold"
+                  className="flex min-w-[9ch] gap-1 rounded-md bg-[#AAFF00] px-8 py-4 text-center font-bold hover:bg-[#9EF200]"
                 >
-                  Join Today
+                  <span>Join </span>
+                  <span>Today</span>
                 </Link>
               </li>
             </ul>
