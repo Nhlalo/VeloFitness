@@ -10,7 +10,7 @@ const navLinksContent = [
   { content: "Clubs", key: listItemKeys.concerts },
   { content: "Membership", key: listItemKeys.charts },
   { content: "Classes", key: listItemKeys.mymusic },
-  { content: "Join Today", key: listItemKeys.contacts },
+  { content: "Sign In", key: listItemKeys.contacts },
 ];
 
 type Prop = {
