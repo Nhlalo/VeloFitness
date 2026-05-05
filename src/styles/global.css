@@ -41,4 +41,9 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+
+  /* Remove the outline if the focus came from a mouse click (:focus-visible), but KEEP it if it came from a keyboard Tab. */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
 }
