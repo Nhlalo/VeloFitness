@@ -24,7 +24,6 @@ dist-ssr
 *.sw?
 
 #Sensitive data - ssh keys
-# Always add to .gitignore
 **/*.key
 **/*.pem
 **/id_rsa*
