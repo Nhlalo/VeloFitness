@@ -11,7 +11,7 @@ import Logo from "../../../assets/images/logo.png";
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className="w-full bg-[#141414] pt-6 pb-17 text-white">
+    <footer className="w-full bg-black pt-6 pb-17 text-white">
       <div className="m-auto w-[min(90vw,1128px)]">
         <div className="flex w-full flex-col md:flex-row">
           <div className="mr-[7%] ml-[13%] flex grow flex-col md:mr-0 md:ml-0 md:block">
@@ -22,7 +22,7 @@ export default function Footer() {
             >
               <div
                 aria-hidden="true"
-                className="flex w-fit items-center justify-center rounded-full bg-[#5b5b5b] p-1"
+                className="flex w-fit items-center justify-center rounded-full bg-white p-1"
               >
                 <img
                   src={Logo}
