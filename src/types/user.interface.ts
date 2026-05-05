@@ -1,10 +1,14 @@
 export interface User {
+  userId: string;
   name: string;
   surname: string;
   email: string;
-  zipCode: string;
+  clubName: string;
+  membershipStatus: string;
+  membershipStartDate: string;
+  membershipEndDate: string;
+  nextBillingDate: string;
+  membershipTitle: string;
   phoneNumber: string;
-  selectedClub: string;
-  memberSince: string;
-  avatarInitials: string;
+  zipCode: string;
 }
