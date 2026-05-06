@@ -2,8 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import useRouteHandle from "../../../hooks/useRouteHandle.tsx";
 import { useAuth } from "../../../context/authContext.tsx";
-import { Menu } from "lucide-react";
+import { Menu, ChevronDown } from "lucide-react";
 import { navLinksContent } from "../../../data/constants/navigation.ts";
+import generateInitials from "../../../utils/generateInitials.ts";
 import handleScrollToTop from "../../../utils/scrollToTop.ts";
 import LoggedInModal from "./LoggedInModal.tsx";
 import Sidebar from "./Sidebar.tsx";
@@ -23,6 +24,11 @@ export default function Header({}) {
 
   const { user, isLoggedIn } = useAuth();
 
+  const userInitials = generateInitials(
+    user?.name as string,
+    user?.surname as string,
+  );
+
   const colorScheme = useRouteHandle();
 
   const currentColors = isScrolled
@@ -39,7 +45,6 @@ export default function Header({}) {
       setIsScrolled(hasScrolled);
     };
 
-    // Use passive for better performance
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
@@ -153,34 +158,28 @@ export default function Header({}) {
                       aria-label="User menu"
                     >
                       {/* User Avatar Circle with Initials */}
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-[#AAFF00] to-[#8BCC00] shadow-md">
+                      <div
+                        aria-hidden="true"
+                        className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-[#AAFF00] to-[#8BCC00] shadow-md"
+                      >
                         <span className="text-sm font-bold text-gray-900">
-                          {user?.avatarInitials || "U"}
+                          {userInitials}
                         </span>
                       </div>
 
-                      {/* User Name - Hidden on small screens */}
-                      <span className="hidden text-sm font-medium sm:inline-block">
-                        {user?.name || user?.email?.split("@")[0] || "User"}
+                      <span
+                        aria-hidden="true"
+                        className="hidden text-sm font-medium sm:inline-block"
+                      >
+                        {user?.name || user?.email?.split("@")[0]}
                       </span>
 
-                      {/* Dropdown Arrow Icon */}
-                      <svg
+                      <ChevronDown
+                        aria-hidden="true"
                         className={`hidden h-4 w-4 transition-transform duration-200 sm:block ${
                           showUserMenu ? "rotate-180" : ""
                         }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
+                      />
                     </button>
 
                     {/* Dropdown Menu */}
