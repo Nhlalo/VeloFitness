@@ -1,21 +1,50 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { ArrowLeft } from "lucide-react";
 import { formFields } from "../../data/constants/inputsvalidation";
 import { isInputValid } from "../../utils/validateInputs";
+import apiRequest from "../../service/appApi";
 
 interface ForgotPasswordProps {
   onBack: () => void;
+  loadingState: {
+    loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  };
 }
 
-export default function ForgotPassword({ onBack }: ForgotPasswordProps) {
+export default function ForgotPassword({
+  onBack,
+  loadingState,
+}: ForgotPasswordProps) {
   const emailJSPattern = formFields.email.jsPattern;
+
+  const { loading, setLoading } = loadingState;
 
   const [resetEmail, setResetEmail] = useState("");
 
+  const navigate = useNavigate();
+
   const validateEmail = isInputValid(emailJSPattern, resetEmail);
 
-  const handleResetPassword = (e: React.SubmitEvent) => {
+  const handleResetPassword = async (e: React.SubmitEvent) => {
     e.preventDefault();
+    if (loading) return;
+    try {
+      const response = await apiRequest("auth/reset-password-request", {
+        email: resetEmail,
+      });
+
+      if (!response.ok) {
+        throw new Error("Could not process password forgot");
+      }
+
+      setLoading(false);
+      navigate("/password-message", { replace: true });
+    } catch (error) {
+      setLoading(false);
+      console.error("Password forgot error:", error);
+    }
   };
 
   return (
@@ -54,7 +83,7 @@ export default function ForgotPassword({ onBack }: ForgotPasswordProps) {
           style={{ boxShadow: "none" }}
         />
         {!validateEmail && resetEmail.length > 0 && (
-          <p className="text-sm text-red-500">
+          <p role="alert" className="text-sm text-red-500">
             {formFields.email.errorMessage}
           </p>
         )}
