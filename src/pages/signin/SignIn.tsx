@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import SignInForm from "./SignInForm";
 import ForgotPassword from "./ForgotPassword";
 
 export default function SignIn() {
   const [view, setView] = useState<"login" | "forgot">("login");
+
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const loadingMemo = useMemo(
+    () => ({ loading, setLoading }),
+    [loading, setLoading],
+  );
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-black px-4 text-white">
@@ -16,7 +23,10 @@ export default function SignIn() {
                 : "pointer-events-none invisible -translate-x-full opacity-0"
             }`}
           >
-            <SignInForm onForgotPassword={() => setView("forgot")} />
+            <SignInForm
+              onForgotPassword={() => setView("forgot")}
+              loadingState={loadingMemo}
+            />
           </div>
 
           <div
@@ -26,7 +36,10 @@ export default function SignIn() {
                 : "pointer-events-none invisible translate-x-full opacity-0"
             }`}
           >
-            <ForgotPassword onBack={() => setView("login")} />
+            <ForgotPassword
+              onBack={() => setView("login")}
+              loadingState={loadingMemo}
+            />
           </div>
         </div>
       </div>
