@@ -7,8 +7,8 @@ const membershipData: MembershipData[] = [
   {
     id: 1,
     image: StandardClub,
-    title: "Signature Experience",
-    club: "L'Ordre des Champions", // The Order of Champions
+    club: "Signature Experience",
+    title: "L'Ordre des Champions", // The Order of Champions
     price: "$79",
     features: [
       "12 classes / month",
@@ -24,8 +24,8 @@ const membershipData: MembershipData[] = [
   {
     id: 2,
     image: EliteClub,
-    title: "Elite Member Benefits",
-    club: "La Société Privée", // The Private Society
+    club: "Elite Member Benefits",
+    title: "La Société Privée", // The Private Society
     price: "$99",
     features: [
       "Unlimited classes",
@@ -41,8 +41,8 @@ const membershipData: MembershipData[] = [
   {
     id: 3,
     image: PremiumClub,
-    title: "Premium Club Access",
-    club: "Le Cercle d'Or", // The Golden Circle
+    club: "Premium Club Access",
+    title: "Le Cercle d'Or", // The Golden Circle
     price: "$129",
     features: [
       "Unlimited classes",
