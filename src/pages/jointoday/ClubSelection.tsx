@@ -10,7 +10,7 @@ interface ClubSelectionProps {
   onClose: () => void;
   returnToJoinTodayPage: () => void;
   clubsData: Gym[] | [];
-  onSelectClub?: (clubName: string) => void; // Add callback prop
+  onSelectClub?: (clubName: string) => void;
 }
 
 export default function ClubSelection({
@@ -51,7 +51,6 @@ export default function ClubSelection({
 
   const handleBack = () => {
     onClose();
-    // Don't call returnToJoinTodayPage here - that would close everything
   };
 
   if (!isDisplay) return null;
@@ -68,7 +67,6 @@ export default function ClubSelection({
         <div className="flex-1">
           <div className="flex h-full items-start justify-center px-4 py-8 sm:px-6 sm:py-10 md:py-12 lg:px-8">
             <div className="w-full rounded-lg bg-white">
-              {/* Header with Back Button */}
               <div className="flex items-center justify-between">
                 <button
                   onClick={handleBack}
@@ -76,6 +74,7 @@ export default function ClubSelection({
                   className="rounded-full p-1 transition-colors hover:bg-gray-100"
                 >
                   <svg
+                    aria-hidden="true"
                     width="20"
                     height="20"
                     viewBox="0 0 24 24"
@@ -134,7 +133,6 @@ export default function ClubSelection({
                 )}
               </div>
 
-              {/* Clubs List */}
               <div className="mt-6 w-full divide-y divide-gray-200">
                 {clubsToRender && clubsToRender.length > 0 ? (
                   clubsToRender.map((club, index) => (
