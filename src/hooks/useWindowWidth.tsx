@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 
-//Tracks the width of the window
-export default function useWindowWidth() {
-  const [width, setWidth] = useState(window.innerWidth);
+export default function useWindowWidth(): number {
+  const [width, setWidth] = useState<number>(window.innerWidth);
 
   useEffect(() => {
-    let timeoutId: number;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     const handleResize = () => {
       clearTimeout(timeoutId);
