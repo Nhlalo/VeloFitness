@@ -1,4 +1,4 @@
-interface Props {
+interface MembershipHeaderProps {
   onChangePlanClick: () => void;
   onCancelClick: () => void;
   isCancelled: boolean;
@@ -10,7 +10,7 @@ export default function MembershipHeader({
   onCancelClick,
   isCancelled,
   onReactivateClick,
-}: Props) {
+}: MembershipHeaderProps) {
   return (
     <div className="mb-12 flex flex-col gap-6 border-b border-white/10 pb-6 md:flex-row md:items-center md:justify-between">
       <header>
