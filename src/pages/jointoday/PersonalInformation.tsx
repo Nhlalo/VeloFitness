@@ -4,6 +4,53 @@ import { formFields } from "../../data/constants/inputsvalidation";
 import validateField from "../../utils/validateInputs";
 import ClubOptions from "./ClubOptions";
 
+function ErrorMessage({ message }: { message: string }) {
+  return (
+    <div
+      className="mt-1 text-xs text-red-500"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      {message}
+    </div>
+  );
+}
+interface FormFieldProps {
+  type?: string;
+  placeholder: string;
+  value: string;
+  isError: boolean;
+  message: string;
+  classValues?: string;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+function FormField({
+  type = "text",
+  placeholder,
+  value,
+  isError,
+  message,
+  classValues,
+  handleChange,
+}: FormFieldProps) {
+  return (
+    <div className={classValues}>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={handleChange}
+        className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
+          isError
+            ? "border-red-500 focus:border-red-500"
+            : "border-gray-300 focus:border-black"
+        }`}
+      />
+      {isError && <ErrorMessage message={message} />}
+    </div>
+  );
+}
+
 interface FormErrors {
   name: boolean;
   surname: boolean;
@@ -46,7 +93,7 @@ export default function PersonalInformation() {
       formData.email &&
       formData.zipCode &&
       formData.phoneNumber &&
-      formData.userClub;
+      formData.clubName;
 
     if (!hasAllValues) return false;
 
@@ -59,10 +106,10 @@ export default function PersonalInformation() {
     setIsSelectClub(true);
   };
 
-  const handleClubSelected = (club: string) => {
+  const handleClubSelected = (clubName: string) => {
     setFormData((prev: any) => ({
       ...prev,
-      userClub: club,
+      clubName: clubName,
     }));
     setIsSelectClub(false);
   };
@@ -100,143 +147,69 @@ export default function PersonalInformation() {
 
             <form className="mt-4 space-y-3 sm:mt-6 sm:space-y-4" noValidate>
               <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-                <div className="flex-1">
-                  <input
-                    type="text"
-                    placeholder={formFields.name.placeholder}
-                    value={formData.name}
-                    onChange={(e) =>
-                      handleChange(e, "name", formFields.name.jsPattern)
-                    }
-                    className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
-                      formErrors.name
-                        ? "border-red-500 focus:border-red-500"
-                        : "border-gray-300 focus:border-black"
-                    }`}
-                  />
-                  {formErrors.name && (
-                    <div
-                      className="mt-1 text-xs text-red-500"
-                      aria-live="polite"
-                      aria-atomic="true"
-                    >
-                      {formFields.name.errorMessage}
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex-1">
-                  <input
-                    type="text"
-                    placeholder={formFields.surname.placeholder}
-                    value={formData.surname}
-                    onChange={(e) =>
-                      handleChange(e, "surname", formFields.surname.jsPattern)
-                    }
-                    className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
-                      formErrors.surname
-                        ? "border-red-500 focus:border-red-500"
-                        : "border-gray-300 focus:border-black"
-                    }`}
-                  />
-                  {formErrors.surname && (
-                    <div
-                      className="mt-1 text-xs text-red-500"
-                      aria-live="polite"
-                      aria-atomic="true"
-                    >
-                      {formFields.surname.errorMessage}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div>
-                <input
-                  type="email"
-                  placeholder={formFields.email.placeholder}
-                  value={formData.email}
-                  onChange={(e) =>
-                    handleChange(e, "email", formFields.email.jsPattern)
+                <FormField
+                  classValues="flex-1"
+                  placeholder={formFields.name.placeholder}
+                  value={formData.name}
+                  message={formFields.name.errorMessage}
+                  isError={formErrors.name}
+                  handleChange={(e) =>
+                    handleChange(e, "name", formFields.name.jsPattern)
                   }
-                  className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
-                    formErrors.email
-                      ? "border-red-500 focus:border-red-500"
-                      : "border-gray-300 focus:border-black"
-                  }`}
                 />
-                {formErrors.email && (
-                  <div
-                    className="mt-1 text-xs text-red-500"
-                    aria-live="polite"
-                    aria-atomic="true"
-                  >
-                    {formFields.email.errorMessage}
-                  </div>
-                )}
+                <FormField
+                  classValues="flex-1"
+                  placeholder={formFields.surname.placeholder}
+                  value={formData.surname}
+                  message={formFields.surname.errorMessage}
+                  isError={formErrors.surname}
+                  handleChange={(e) =>
+                    handleChange(e, "surname", formFields.surname.jsPattern)
+                  }
+                />
               </div>
 
-              <div>
-                <input
-                  type="text"
-                  placeholder={formFields.zipCode.placeholder}
-                  value={formData.zipCode}
-                  onChange={(e) =>
-                    handleChange(e, "zipCode", formFields.zipCode.jsPattern)
-                  }
-                  className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
-                    formErrors.zipCode
-                      ? "border-red-500 focus:border-red-500"
-                      : "border-gray-300 focus:border-black"
-                  }`}
-                />
-                {formErrors.zipCode && (
-                  <div
-                    className="mt-1 text-xs text-red-500"
-                    aria-live="polite"
-                    aria-atomic="true"
-                  >
-                    {formFields.zipCode.errorMessage}
-                  </div>
-                )}
-              </div>
-
-              <div>
-                <input
-                  type="tel"
-                  placeholder={formFields.phoneNumber.placeholder}
-                  value={formData.phoneNumber}
-                  onChange={(e) =>
-                    handleChange(
-                      e,
-                      "phoneNumber",
-                      formFields.phoneNumber.jsPattern,
-                    )
-                  }
-                  className={`w-full rounded-md border p-2 text-sm placeholder-gray-400 transition-colors focus:outline-none sm:p-3 sm:text-base ${
-                    formErrors.phoneNumber
-                      ? "border-red-500 focus:border-red-500"
-                      : "border-gray-300 focus:border-black"
-                  }`}
-                />
-                {formErrors.phoneNumber && (
-                  <div
-                    className="mt-1 text-xs text-red-500"
-                    aria-live="polite"
-                    aria-atomic="true"
-                  >
-                    {formFields.phoneNumber.errorMessage}
-                  </div>
-                )}
-              </div>
+              <FormField
+                type="email"
+                placeholder={formFields.email.placeholder}
+                value={formData.email}
+                message={formFields.email.errorMessage}
+                isError={formErrors.email}
+                handleChange={(e) =>
+                  handleChange(e, "email", formFields.email.jsPattern)
+                }
+              />
+              <FormField
+                placeholder={formFields.zipCode.placeholder}
+                value={formData.zipCode}
+                message={formFields.zipCode.errorMessage}
+                isError={formErrors.zipCode}
+                handleChange={(e) =>
+                  handleChange(e, "zipCode", formFields.zipCode.jsPattern)
+                }
+              />
+              <FormField
+                type="tel"
+                placeholder={formFields.phoneNumber.placeholder}
+                value={formData.phoneNumber}
+                message={formFields.phoneNumber.errorMessage}
+                isError={formErrors.phoneNumber}
+                handleChange={(e) =>
+                  handleChange(
+                    e,
+                    "phoneNumber",
+                    formFields.phoneNumber.jsPattern,
+                  )
+                }
+              />
 
               <button
                 onClick={handleSelectClub}
                 type="button"
                 className="w-full rounded-md border-2 border-black bg-white px-4 py-3 text-center text-sm font-bold transition-colors duration-300 hover:bg-black hover:text-white sm:px-6 sm:py-4 sm:text-base"
               >
-                {formData.userClub
-                  ? `Selected: ${formData.userClub}`
+                {formData.clubName
+                  ? `Selected: ${formData.clubName}`
                   : "Select a club +"}
               </button>
             </form>
