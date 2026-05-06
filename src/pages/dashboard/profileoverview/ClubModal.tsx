@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { X } from "lucide-react";
+import { X, ChevronRight } from "lucide-react";
 import { acquireNewGym } from "../../../utils/acquireGymData";
 
 interface ClubModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSelectClub: (clubName: string) => void;
-  currentClub: string;
+  currentClub: string | undefined;
 }
 
 export default function ClubModal({
@@ -15,7 +15,6 @@ export default function ClubModal({
   onSelectClub,
   currentClub,
 }: ClubModalProps) {
-  // State for club search
   const [clubSearchTerm, setClubSearchTerm] = useState("");
 
   // Filter clubs based on search term
@@ -23,12 +22,11 @@ export default function ClubModal({
 
   const handleSelectClub = (clubName: string) => {
     onSelectClub(clubName);
-    setClubSearchTerm(""); // Reset search on selection
+    setClubSearchTerm("");
   };
 
-  // Handle modal close with reset
   const handleClose = () => {
-    setClubSearchTerm(""); // Reset search when closing
+    setClubSearchTerm("");
     onClose();
   };
 
@@ -46,8 +44,8 @@ export default function ClubModal({
       />
 
       <div
-        aria-live="polite"
-        aria-atomic="true"
+        aria-modal="true"
+        role="dialog"
         className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4"
       >
         <div className="pointer-events-auto flex h-auto max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/20 bg-black shadow-2xl">
@@ -63,7 +61,7 @@ export default function ClubModal({
               className="text-2xl leading-none text-white/60 transition-colors hover:text-white"
               aria-label="close the modal"
             >
-              <X aria-hidden />
+              <X aria-hidden="true" />
             </button>
           </header>
 
@@ -110,8 +108,11 @@ export default function ClubModal({
                           </div>
                         )}
                       </div>
-                      <div className="shrink-0 text-white/40 transition-colors group-hover:text-white">
-                        →
+                      <div
+                        aria-hidden="true"
+                        className="shrink-0 text-white/40 transition-colors group-hover:text-white"
+                      >
+                        <ChevronRight />
                       </div>
                     </div>
                   </button>
