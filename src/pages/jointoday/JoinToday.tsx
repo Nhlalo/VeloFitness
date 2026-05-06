@@ -68,7 +68,11 @@ function PaymentProcess({ children }: { children: React.ReactNode }) {
           className="absolute top-4 right-4 z-10 rounded-full p-2 transition-colors hover:bg-black lg:top-6 lg:right-6 lg:text-black lg:hover:bg-gray-100"
           aria-label="Go back"
         >
-          <X size={20} className="text-black sm:text-white lg:text-black" />
+          <X
+            aria-hidden="true"
+            size={20}
+            className="text-black sm:text-white lg:text-black"
+          />
         </button>
 
         <div className="mx-auto lg:px-8 lg:py-6">
@@ -113,7 +117,6 @@ function PaymentProcess({ children }: { children: React.ReactNode }) {
                 className="space-y-6 overflow-x-hidden overflow-y-auto px-4 py-6 sm:px-6 md:px-8 lg:px-0 lg:py-0 lg:pl-4 xl:pl-6"
                 style={{ maxHeight: "calc(100vh - 2rem)" }}
               >
-                {/* Navigation Tabs */}
                 <div className="lg:sticky lg:top-0 lg:z-10 lg:bg-white">
                   <div className="flex w-full">
                     <div className="group relative flex-1 px-2 py-4 sm:px-4">
@@ -173,11 +176,16 @@ function PaymentProcess({ children }: { children: React.ReactNode }) {
         <>
           {/* Overlay */}
           <div
+            aria-hidden="true"
             className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
             onClick={handleStay}
           />
 
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            aria-modal="true"
+            role="dialog"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          >
             <div className="w-full max-w-md rounded-lg bg-white p-6 text-center shadow-xl">
               <h2 className="mb-6 text-2xl font-bold text-black">
                 Are You Sure You Want To Leave?
@@ -219,7 +227,7 @@ export default function JoinToday() {
     email: "",
     zipCode: "",
     phoneNumber: "",
-    userClub: null as string | null,
+    clubName: null as string | null,
   });
 
   const [selectedMembership, setSelectedMembership] = useState<any>(null);
