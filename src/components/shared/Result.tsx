@@ -114,7 +114,10 @@ export default function Results({
 }: ResultsProps) {
   const { loading, data, error } = useFindClub(location);
   return (
-    <div className={`absolute mt-1 max-h-80 w-full rounded-xl ${mainBG}`}>
+    <div
+      role="alert"
+      className={`absolute mt-1 max-h-80 w-full rounded-xl ${mainBG}`}
+    >
       {loading && <Loading />}
       {data && (
         <Data data={data} hoverBG={hoverBG} adjustClubData={adjustClubData} />
