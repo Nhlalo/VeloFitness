@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
-import { VisibilityContext } from "./JoinToday";
-import { membershipData } from "../../data/constants/membershipfee";
 import { X } from "lucide-react";
+import { VisibilityContext } from "./JoinToday";
+import { MembershipData } from "../../types/membershipdata.interface";
+import { membershipData } from "../../data/constants/membershipfee";
 
 export default function Membership() {
   const { isVisible, setIsVisible, setSelectedMembership, selectedMembership } =
@@ -10,7 +11,7 @@ export default function Membership() {
     selectedMembership?.id || null,
   );
 
-  const handleSelectMembership = (item: any) => {
+  const handleSelectMembership = (item: MembershipData) => {
     setSelectedId(item.id);
     setSelectedMembership(item);
   };
@@ -44,14 +45,13 @@ export default function Membership() {
       }`}
     >
       <div className="p-6 sm:p-8">
-        {/* Back Button */}
         <div className="mb-4 flex justify-end">
           <button
             onClick={handleGoBack}
             className="rounded-full p-2 transition-colors hover:bg-gray-100"
             aria-label="Go back"
           >
-            <X size={20} className="text-black" />
+            <X aria-hidden="true" size={20} className="text-black" />
           </button>
         </div>
 
