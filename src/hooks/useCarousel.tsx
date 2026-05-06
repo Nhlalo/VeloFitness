@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import useWindowWidth from "./useWindowWidth";
 
 // ===== SEPARATE HANDLER FUNCTIONS =====
@@ -9,8 +9,6 @@ const TouchHandlers = (
   setIsDragging: (isDragging: boolean) => void,
   windowWidth: number,
 ) => {
-  //Disable mouse handle at desktop view
-
   const dragState = useRef({
     isActive: false,
     startX: 0,
@@ -29,7 +27,11 @@ const TouchHandlers = (
   };
 
   const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!containerRef.current || !dragState.current || windowWidth >= 1024)
+    if (
+      !containerRef.current ||
+      !dragState.current.isActive ||
+      windowWidth >= 1024
+    )
       return;
 
     const deltaX = dragState.current.startX - e.touches[0].clientX;
@@ -40,8 +42,9 @@ const TouchHandlers = (
   };
 
   const onTouchEnd = () => {
-    if (!containerRef.current || windowWidth >= 1024) return;
+    if (!dragState.current.isActive || windowWidth >= 1024) return;
 
+    dragState.current.isActive = false;
     setIsDragging(false);
     onDragEnd();
   };
@@ -55,8 +58,6 @@ const MouseHandlers = (
   setIsDragging: (isDragging: boolean) => void,
   windowWidth: number,
 ) => {
-  //Disable mouse handle at desktop view
-
   const dragState = useRef({
     isActive: false,
     startX: 0,
@@ -64,7 +65,11 @@ const MouseHandlers = (
   });
 
   const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Only enable drag on mobile/tablet (<1024px)
     if (!containerRef.current || windowWidth >= 1024) return;
+
+    // Don't interfere with button clicks or text selection
+    if (e.button !== 0) return;
 
     dragState.current = {
       isActive: true,
@@ -74,11 +79,16 @@ const MouseHandlers = (
 
     setIsDragging(true);
 
+    // Prevent default to avoid text selection during drag
     e.preventDefault();
   };
 
-  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current || !dragState.current || windowWidth >= 1024)
+  const onMouseMove = (e: MouseEvent) => {
+    if (
+      !containerRef.current ||
+      !dragState.current.isActive ||
+      windowWidth >= 1024
+    )
       return;
 
     e.preventDefault();
@@ -88,21 +98,34 @@ const MouseHandlers = (
   };
 
   const onMouseUp = () => {
-    if (!containerRef.current || windowWidth >= 1024) return;
+    if (!dragState.current.isActive || windowWidth >= 1024) return;
 
+    dragState.current.isActive = false;
     setIsDragging(false);
-
     onDragEnd();
   };
 
+  useEffect(() => {
+    if (windowWidth >= 1024) return;
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+  }, [windowWidth]);
+
   const onMouseLeave = () => {
-    if (!containerRef.current || windowWidth >= 1024) {
+    if (dragState.current.isActive) {
+      dragState.current.isActive = false;
       setIsDragging(false);
       onDragEnd();
     }
   };
 
-  return { onMouseDown, onMouseMove, onMouseUp, onMouseLeave };
+  return { onMouseDown, onMouseLeave };
 };
 
 const KeyboardHandlers = (
@@ -159,8 +182,8 @@ export default function useCarousel(
     const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
     const maxScroll = scrollWidth - clientWidth;
 
-    setPreviousScrollable(scrollLeft > 0);
-    setNextScrollable(Math.abs(scrollLeft - maxScroll) >= 1);
+    setPreviousScrollable(scrollLeft > 1); // Small threshold for better UX
+    setNextScrollable(scrollLeft < maxScroll - 1); // Small threshold for better UX
   };
 
   const getScrollAmount = () =>
@@ -169,13 +192,50 @@ export default function useCarousel(
   const smoothScroll = (direction: "left" | "right") => {
     if (!containerRef.current || isDragging) return;
 
-    containerRef.current.scrollBy({
-      left: direction === "left" ? -getScrollAmount() : getScrollAmount(),
+    const currentScroll = containerRef.current.scrollLeft;
+    const maxScroll =
+      containerRef.current.scrollWidth - containerRef.current.clientWidth;
+    const scrollAmount = getScrollAmount();
+
+    let newScrollLeft =
+      direction === "left"
+        ? currentScroll - scrollAmount
+        : currentScroll + scrollAmount;
+
+    // Clamp to boundaries to prevent overscroll
+    newScrollLeft = Math.max(0, Math.min(newScrollLeft, maxScroll));
+
+    containerRef.current.scrollTo({
+      left: newScrollLeft,
       behavior: "smooth",
     });
 
-    setTimeout(updateButtonStates, 200);
+    // Update buttons after scroll completes
+    const checkScrollEnd = () => {
+      if (!containerRef.current) return;
+      if (Math.abs(containerRef.current.scrollLeft - newScrollLeft) < 1) {
+        updateButtonStates();
+      } else {
+        requestAnimationFrame(checkScrollEnd);
+      }
+    };
+    requestAnimationFrame(checkScrollEnd);
   };
+
+  // Listen to scroll events for real-time button updates
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      requestAnimationFrame(updateButtonStates);
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    updateButtonStates(); // Initial update
+
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, [containerRef.current]);
 
   // ===== TOUCH HANDLERS =====
   const touchHandlers = TouchHandlers(
@@ -206,8 +266,9 @@ export default function useCarousel(
     isDragging,
     eventHandlers: {
       ...touchHandlers,
-      ...mouseHandlers,
-      ...keyboardHandlers,
+      onMouseDown: mouseHandlers.onMouseDown,
+      onMouseLeave: mouseHandlers.onMouseLeave,
+      onKeyDown: keyboardHandlers.onKeyDown,
     },
     handlePrevious: () => smoothScroll("left"),
     handleNext: () => smoothScroll("right"),
