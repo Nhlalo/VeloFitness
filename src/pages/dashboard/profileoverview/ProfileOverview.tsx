@@ -1,9 +1,9 @@
-// ProfileOverview.jsx - Main component
-
-import { useState } from "react";
-import { User } from "../../../types/user.interface";
-import { mockUser } from "../../../data/mock/mockUser";
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router";
+import { useAuth } from "../../../context/authContext";
+import apiRequest from "../../../service/appApi";
 import validateField from "../../../utils/validateInputs";
+import generateInitials from "../../../utils/generateInitials";
 import ClubModal from "./clubModal";
 import ProfileHeader from "./ProfileHeader";
 import PersonalDetails from "./PersonalDetails";
@@ -11,9 +11,11 @@ import { Stats, QuickStats } from "./Stats";
 import ClubCard from "./ClubCard";
 
 export default function ProfileOverview() {
-  const [user, setUser] = useState<User>(mockUser);
+  const { user, setUser } = useAuth();
+  const [loading, setLoading] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isClubModalOpen, setIsClubModalOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [formErrors, setFormErrors] = useState({
     name: false,
     surname: false,
@@ -22,13 +24,24 @@ export default function ProfileOverview() {
     phoneNumber: false,
   });
 
+  const navigate = useNavigate();
+
+  //This will store the user's infor before any change, so when the cancel button is pressed, it can revert to the old information.
+  const userInforRef = useRef(user);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     inputName: string,
     jsPattern: string,
   ) => {
     const { value } = e.target;
-    setUser((prev) => ({ ...prev, [inputName]: value }));
+    setUser((prev) => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        [inputName]: value,
+      };
+    });
     validateField(setFormErrors, inputName, value, jsPattern);
   };
 
@@ -36,8 +49,11 @@ export default function ProfileOverview() {
     setIsEditing(true);
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
+    if (loading) return;
+
     const hasErrors = Object.values(formErrors).some((error) => error === true);
+    if (!user) return;
     const hasEmptyFields =
       !user.name.trim() ||
       !user.surname.trim() ||
@@ -45,13 +61,45 @@ export default function ProfileOverview() {
       !user.zipCode.trim() ||
       !user.phoneNumber.trim();
 
-    if (!hasErrors && !hasEmptyFields) {
+    if (hasErrors && hasEmptyFields) return;
+
+    try {
+      const body = {
+        name: user.name,
+        surname: user.surname,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        zipCode: user.zipCode,
+      };
+
+      const response = await apiRequest("profile/update", body);
+
+      if (!response.ok) {
+        setLoading(false);
+        if (response.status == 401) {
+          navigate("/sigin", { replace: true });
+        }
+        throw new Error("Personal details change failed");
+      }
+
+      setUser((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          ...body,
+        };
+      });
+      userInforRef.current = user;
+      setLoading(false);
+      setIsClubModalOpen(false);
       setIsEditing(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Personal details change error:", error);
     }
   };
 
   const handleCancelClick = () => {
-    setUser(mockUser);
     setFormErrors({
       name: false,
       surname: false,
@@ -60,9 +108,14 @@ export default function ProfileOverview() {
       phoneNumber: false,
     });
     setIsEditing(false);
+    setUser(userInforRef.current);
   };
 
   const handleChangeClubClick = () => {
+    if (user?.membershipStatus?.toLowerCase() !== "active") {
+      setToastMessage("Please reactivate your membership to change club");
+      return;
+    }
     setIsClubModalOpen(true);
   };
 
@@ -70,9 +123,49 @@ export default function ProfileOverview() {
     setIsClubModalOpen(false);
   };
 
-  const handleSelectClub = (clubName: string) => {
-    setUser((prev) => ({ ...prev, selectedClub: clubName }));
-    setIsClubModalOpen(false);
+  const handleSelectClub = async (clubName: string) => {
+    if (loading) return;
+    if (clubName == userInforRef.current?.clubName) {
+      setIsClubModalOpen(false);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await apiRequest(
+        "club",
+        {
+          clubName: clubName,
+        },
+        "PATCH",
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error(
+          `Club change error: ${response.status} ${response.statusText}`,
+          errorData,
+        );
+        setLoading(false);
+        if (response.status == 401) {
+          navigate("/sigin", { replace: true });
+        }
+        return;
+      }
+
+      setUser((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          clubName: clubName,
+        };
+      });
+      setLoading(false);
+      setIsClubModalOpen(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Club Name change error:", error);
+    }
   };
 
   return (
@@ -84,9 +177,9 @@ export default function ProfileOverview() {
 
         <div className="relative mx-auto max-w-6xl px-6 py-12 sm:px-8 lg:px-12">
           <ProfileHeader
-            name={user.name}
-            surname={user.surname}
-            avatarInitials={user.avatarInitials}
+            name={user?.name}
+            surname={user?.surname}
+            avatarInitials={generateInitials(user?.name, user?.surname)}
           />
 
           <div className="grid gap-8 lg:grid-cols-3">
@@ -106,9 +199,11 @@ export default function ProfileOverview() {
 
             <div className="space-y-6">
               <ClubCard
-                selectedClub={user.selectedClub}
-                memberSince={user.memberSince}
+                clubName={user?.clubName}
+                memberSince={user?.membershipStartDate}
                 onChangeClubClick={handleChangeClubClick}
+                toastMessage={toastMessage}
+                setToastMessage={setToastMessage}
               />
 
               <QuickStats />
@@ -121,7 +216,7 @@ export default function ProfileOverview() {
         isOpen={isClubModalOpen}
         onClose={handleCloseClubModal}
         onSelectClub={handleSelectClub}
-        currentClub={user.selectedClub}
+        currentClub={user?.clubName}
       />
     </div>
   );
