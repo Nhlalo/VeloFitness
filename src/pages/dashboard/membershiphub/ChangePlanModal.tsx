@@ -1,10 +1,11 @@
-import { MockMembershipData } from "../../../data/mock/mockMembershipSubscription";
+import { Check, X } from "lucide-react";
+import { MembershipData } from "../../../data/constants/membershipSubscription";
 
-interface Props {
+interface ChangePlanModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelectPlan: (plan: MockMembershipData) => void;
-  availablePlans: MockMembershipData[];
+  onSelectPlan: (membershipTitle: string) => void;
+  availablePlans: MembershipData[];
 }
 
 export default function ChangePlanModal({
@@ -12,12 +13,14 @@ export default function ChangePlanModal({
   onClose,
   onSelectPlan,
   availablePlans,
-}: Props) {
+}: ChangePlanModalProps) {
   if (!isOpen) return null;
 
   return (
     <>
       <div
+        aria-modal="true"
+        role="dialog"
         className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
@@ -31,10 +34,11 @@ export default function ChangePlanModal({
               </p>
             </div>
             <button
+              aria-label="close the modal"
               onClick={onClose}
               className="text-2xl leading-none text-white/60 transition-colors hover:text-white"
             >
-              ×
+              <X aria-hidden="true" />
             </button>
           </div>
           <div className="min-h-0 flex-1 space-y-4 overflow-y-auto p-6 pb-8">
@@ -74,13 +78,15 @@ export default function ChangePlanModal({
                           key={idx}
                           className="flex items-center gap-2 text-xs text-white/60"
                         >
-                          <span className="text-white/30">✓</span>
+                          <span aria-hidden="true" className="text-white/30">
+                            <Check />
+                          </span>
                           {feature}
                         </div>
                       ))}
                     </div>
                     <button
-                      onClick={() => onSelectPlan(plan)}
+                      onClick={() => onSelectPlan(plan.title)}
                       className="w-full rounded-full border border-white/20 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-white hover:text-black"
                     >
                       Select Plan
