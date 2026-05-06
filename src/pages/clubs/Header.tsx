@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useMemo } from "react";
+import { useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router";
 import { Search, ArrowRight } from "lucide-react";
 import debounce from "../../utils/debounce";
@@ -17,17 +17,11 @@ export default function Header({
 
   const navigate = useNavigate();
 
-  const debouncedSetInput = useMemo(
-    () =>
-      debounce((value: string) => {
-        setInputValue(value);
-      }, 300),
-    [],
-  );
-
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const value = e.currentTarget.value;
-    debouncedSetInput(value);
+    debounce(() => {
+      setInputValue(value);
+    }, 300);
   }
   function onClick() {
     navigate("/clubs");
