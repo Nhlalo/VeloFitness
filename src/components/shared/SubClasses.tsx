@@ -37,7 +37,10 @@ export default function SubClasses({
             className="h-auto w-full"
           />
           <p className="mb-6 py-5 lg:hidden">{description}</p>
-          <button className="m-2 rounded-md border-2 border-white bg-transparent px-5 py-3 text-white hover:bg-gray-400 lg:hidden">
+          <button
+            onClick={handleClick}
+            className="m-2 rounded-md border-2 border-white bg-transparent px-5 py-3 text-white hover:bg-gray-400 lg:hidden"
+          >
             BOOK A CLASS
           </button>
         </div>
