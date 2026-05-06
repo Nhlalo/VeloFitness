@@ -1,13 +1,13 @@
-interface Props {
-  name: string;
-  surname: string;
+interface ProfileHeaderProps {
+  name: string | undefined;
+  surname: string | undefined;
   avatarInitials: string;
 }
 export default function ProfileHeader({
   name,
   surname,
   avatarInitials,
-}: Props) {
+}: ProfileHeaderProps) {
   return (
     <header className="mb-12 flex items-center justify-between border-b border-white/10 pb-6">
       <div>
