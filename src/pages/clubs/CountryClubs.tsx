@@ -12,7 +12,8 @@ export default function CountryClub() {
   const { handleClick } = useNavigateBasedOnLogin("/profile");
 
   const { isLoggedIn } = useAuth();
-  //Need to decode as the param was encoded to reduce the url length
+
+  //Needed to decode as the param was encoded to reduce the url length
   const encodedData = searchParams.get("clubs") as string;
 
   const { country } = useParams() as { country: string };
