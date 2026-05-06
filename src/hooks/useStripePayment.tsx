@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { MetaData } from "../types/stripemetadata.interface";
+import apiRequest from "../service/appApi";
 
 export const useStripePayment = () => {
   const [loading, setLoading] = useState(false);
@@ -32,17 +33,18 @@ export const useStripePayment = () => {
   };
 
   const processPayment = async (
-    amount: number,
-    currency = "usd",
     metadata: MetaData,
+    userInfor: Record<string, string>,
   ) => {
     if (!stripe || !elements) {
-      setError("Stripe not initialized. Please refresh the page.");
-      return { success: false, error: "Stripe not initialized" };
+      console.error("Stripe not initialized. Please refresh the page.");
+      setError("Payment system is loading. Please wait or refresh the page.");
+      return { success: false, error: "Payment system not ready" };
     }
     const cardElement = elements.getElement(CardElement);
 
     if (!cardElement) {
+      console.error("Payment form not properly loaded");
       throw new Error("Payment form not properly loaded");
     }
 
@@ -50,17 +52,24 @@ export const useStripePayment = () => {
     setError(null);
 
     try {
-      const response = await fetch(
-        `${"http://localhost:3000"}/api/create-payment-intent`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount, currency, metadata }),
-        },
-      );
+      console.log("EMAIL", metadata.customerEmail);
+      console.log("Membership Title", userInfor.membershipTitle);
+      const response = await apiRequest("checkout", {
+        email: metadata.customerEmail,
+        membershipTitle: userInfor.membershipTitle,
+      });
 
       if (!response.ok) {
-        throw new Error("Failed to create payment intent");
+        const errorData = await response.json().catch(() => ({}));
+        console.error(
+          `API Error: ${response.status} ${response.statusText}`,
+          errorData,
+        );
+        setError("Payment failed. Please try again or contact support.");
+        return {
+          success: false,
+          error: "Payment failed. Please try again or contact support.",
+        };
       }
 
       const { clientSecret } = await response.json();
@@ -70,24 +79,50 @@ export const useStripePayment = () => {
           payment_method: {
             card: cardElement,
             billing_details: {
-              name: metadata.customerName || "Member",
-              email: metadata.customerEmail || "member@example.com",
+              name: metadata.customerName,
+              email: metadata.customerEmail,
             },
           },
         });
 
       if (stripeError) {
+        console.log(stripeError);
         const friendlyError = getUserFriendlyErrorMessage(stripeError);
         setError(friendlyError);
         return { success: false, error: friendlyError };
       }
+      console.log("Payment successful");
+
+      const createUserProfile = await apiRequest("profile/create", {
+        ...userInfor,
+        paymentIntentId: paymentIntent.id,
+      });
+
+      if (!createUserProfile.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error(
+          `API Error: ${response.status} ${response.statusText}`,
+          errorData,
+        );
+        setError("Payment failed. Please try again or contact support.");
+        return {
+          success: false,
+          error: "Payment failed. Please try again or contact support.",
+        };
+      }
+
+      const userProfileData = await createUserProfile.json();
+      const token = userProfileData?.data.token;
 
       setSuccess(true);
-      return { success: true, paymentIntent };
+      return { success: true, paymentIntent, token };
     } catch (err) {
-      const friendlyError = getUserFriendlyErrorMessage(err);
-      setError(friendlyError);
-      return { success: false, error: friendlyError };
+      console.log(err);
+      setError("Unable to connect to server. Please check your connection.");
+      return {
+        success: false,
+        error: "Unable to connect to server. Please check your connection.",
+      };
     } finally {
       setLoading(false);
     }
