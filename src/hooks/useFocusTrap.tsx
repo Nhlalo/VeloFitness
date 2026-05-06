@@ -1,4 +1,3 @@
-// hooks/useFocusTrap.ts
 import { useEffect } from "react";
 
 export default function useFocusTrap(
