@@ -1,9 +1,11 @@
-interface Props {
+import { TriangleAlert } from "lucide-react";
+
+interface CancelConfirmModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  membershipTitle: string;
-  membershipEndsOn: string;
+  membershipTitle: string | undefined;
+  membershipEndsOn: string | undefined;
 }
 
 export default function CancelConfirmModal({
@@ -12,12 +14,14 @@ export default function CancelConfirmModal({
   onConfirm,
   membershipTitle,
   membershipEndsOn,
-}: Props) {
+}: CancelConfirmModalProps) {
   if (!isOpen) return null;
 
   return (
     <>
       <div
+        role="dialog"
+        aria-modal="true"
         className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
@@ -25,7 +29,9 @@ export default function CancelConfirmModal({
         <div className="pointer-events-auto w-full max-w-md rounded-2xl border border-red-500/30 bg-black shadow-2xl">
           <div className="border-b border-red-500/30 p-6">
             <div className="flex items-center gap-3">
-              <div className="text-3xl">⚠️</div>
+              <div aria-hidden={true} className="text-3xl">
+                <TriangleAlert />
+              </div>
               <div>
                 <h3 className="text-xl font-light">Cancel Subscription</h3>
                 <p className="mt-1 text-xs text-white/40">
@@ -44,7 +50,7 @@ export default function CancelConfirmModal({
             </p>
             <div className="mt-4 rounded-lg border border-yellow-500/20 bg-yellow-500/5 p-4">
               <p className="text-xs text-yellow-400">
-                ⚠️ You will lose access to:
+                <TriangleAlert aria-hidden="true" /> You will lose access to:
               </p>
               <ul className="mt-2 space-y-1 text-xs text-white/60">
                 <li>• All remaining guest passes</li>
