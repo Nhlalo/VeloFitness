@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useAuth } from "../../../context/authContext";
 import {
-  mockMembershipData,
-  MockMembershipData,
-} from "../../../data/mock/mockMembershipSubscription";
+  membershipData,
+  MembershipData,
+} from "../../../data/constants/membershipSubscription";
+import apiRequest from "../../../service/appApi";
 import MembershipHeader from "./MembershipHeader";
 import CancellationBanner from "./CancellationBanner";
 import CurrentMembershipCard from "./CurrentMembershipCard";
@@ -10,83 +12,185 @@ import UsageInsights from "./UsageInsights";
 import ChangePlanModal from "./ChangePlanModal";
 import CancelConfirmModal from "./CancelConfirmModal";
 
+function findMembershipData(
+  membershipsData: MembershipData[],
+  userMembership: string,
+) {
+  return membershipsData.find(
+    (membershipData) =>
+      membershipData.title.toLowerCase() == userMembership.toLowerCase(),
+  );
+}
+
 interface CancellationStatus {
   isCancelled: boolean;
   cancellationDate: null | string;
   membershipEndsOn: null | string;
 }
+
 export default function MembershipHub() {
-  const [currentMembership, setCurrentMembership] =
-    useState<MockMembershipData>(mockMembershipData[0]);
+  const { user, setUser } = useAuth();
+
+  const userMembership = user?.membershipTitle
+    ? findMembershipData(membershipData, user.membershipTitle)
+    : null;
+
+  const membershipStatus = user?.membershipStatus.toLowerCase() == "active";
+
+  const [currentMembership, setCurrentMembership] = useState<
+    MembershipData | null | undefined
+  >(userMembership);
   const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [cancellationStatus, setCancellationStatus] =
     useState<CancellationStatus>({
-      isCancelled: false,
+      isCancelled: !membershipStatus,
       cancellationDate: null,
       membershipEndsOn: null,
     });
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const availablePlans = mockMembershipData.filter(
-    (plan) => plan.title !== currentMembership.title,
+  const availablePlans = membershipData.filter(
+    (plan) =>
+      plan?.title?.toLowerCase() !== user?.membershipTitle?.toLowerCase(),
   );
 
   const handleChangePlanClick = () => setIsPlanModalOpen(true);
   const handleClosePlanModal = () => setIsPlanModalOpen(false);
 
-  const handleSelectPlan = (plan: MockMembershipData) => {
-    setCurrentMembership({
-      ...plan,
-      nextBilling: currentMembership.nextBilling,
-      renewalStatus: "Active",
-    });
-    setCancellationStatus({
-      isCancelled: false,
-      cancellationDate: null,
-      membershipEndsOn: null,
-    });
-    setIsPlanModalOpen(false);
+  const handleSelectPlan = async (membershipTitle: string) => {
+    if (loading) return;
+    try {
+      const response = await apiRequest(
+        "membership",
+        {
+          membershipTitle: membershipTitle,
+        },
+        "PATCH",
+      );
+
+      if (!response.ok) {
+        throw new Error("Membership change failed");
+      }
+      const data = await response.json();
+
+      console.log(data);
+      const membershipPlan = findMembershipData(
+        membershipData,
+        data.user.membershipTitle,
+      );
+
+      setCurrentMembership(membershipPlan);
+
+      setCancellationStatus({
+        isCancelled: false,
+        cancellationDate: null,
+        membershipEndsOn: null,
+      });
+      setUser((prev) => {
+        if (!prev) return null;
+
+        return {
+          ...prev,
+          membershipTitle: data.user.membershipTitle,
+          membershipStatus: "active".toLowerCase(),
+          nextBillingDate: data.user.nextBillingDate,
+        };
+      });
+      setLoading(false);
+      setIsPlanModalOpen(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Membership change error:", error);
+    }
   };
 
   const handleCancelClick = () => setIsCancelModalOpen(true);
   const handleCloseCancelModal = () => setIsCancelModalOpen(false);
 
-  const handleConfirmCancel = () => {
-    const today = new Date();
-    const endDate = new Date();
-    endDate.setDate(today.getDate() + 30);
+  const handleConfirmCancel = async () => {
+    if (loading) return;
+    try {
+      const response = await apiRequest("membership/cancel");
 
-    setCancellationStatus({
-      isCancelled: true,
-      cancellationDate: today.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }),
-      membershipEndsOn: endDate.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }),
-    });
-    setIsCancelModalOpen(false);
+      if (!response.ok) {
+        throw new Error("Cancellation failed");
+      }
+
+      const data = await response.json();
+
+      const cancellationDate = data.user.cancelledAt
+        ? new Date(data.cancelledAt)
+        : new Date();
+
+      const membershipEndDate = user?.membershipEndDate
+        ? new Date(user.membershipEndDate)
+        : new Date();
+
+      setCancellationStatus({
+        isCancelled: true,
+        cancellationDate: cancellationDate.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+        membershipEndsOn: membershipEndDate.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+      });
+
+      setUser((prev) => {
+        if (!prev) return null;
+
+        return {
+          ...prev,
+          membershipStatus: "Inactive",
+          nextBillingDate: "",
+        };
+      });
+
+      setLoading(false);
+      setIsCancelModalOpen(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Cancellation error:", error);
+    }
   };
 
-  const handleReactivateClick = () => {
-    setCancellationStatus({
-      isCancelled: false,
-      cancellationDate: null,
-      membershipEndsOn: null,
-    });
-  };
+  const handleReactivateClick = async () => {
+    if (loading) return;
+    try {
+      const response = await apiRequest("membership/reactivate");
 
-  const membershipEndsOn = new Date(
-    Date.now() + 30 * 24 * 60 * 60 * 1000,
-  ).toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
+      if (!response.ok) {
+        throw new Error("Reactivation failed");
+      }
+      const data = await response.json();
+      console.log("DATA", data);
+
+      setCancellationStatus({
+        isCancelled: false,
+        cancellationDate: null,
+        membershipEndsOn: null,
+      });
+      setUser((prev) => {
+        if (!prev) return null;
+
+        return {
+          ...prev,
+          membershipTitle: data.user.membershipTitle,
+          membershipStatus: "active".toLowerCase(),
+          nextBillingDate: data.user.nextBillingDate,
+        };
+      });
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Reactivation  error:", error);
+    }
+  };
 
   return (
     <div className="mt-6 min-h-screen bg-black text-white md:mt-0">
@@ -109,11 +213,16 @@ export default function MembershipHub() {
           <CurrentMembershipCard
             membership={currentMembership}
             isCancelled={cancellationStatus.isCancelled}
+            nextBillingDate={
+              !cancellationStatus.isCancelled ? user?.nextBillingDate : null
+            }
           />
 
           <UsageInsights
             isCancelled={cancellationStatus.isCancelled}
-            nextBillingDate={currentMembership.nextBilling}
+            nextBillingDate={
+              !cancellationStatus.isCancelled ? user?.nextBillingDate : null
+            }
           />
 
           <ChangePlanModal
@@ -121,15 +230,14 @@ export default function MembershipHub() {
             onClose={handleClosePlanModal}
             onSelectPlan={handleSelectPlan}
             availablePlans={availablePlans}
-            // currentPlanTitle={currentMembership.title}
           />
 
           <CancelConfirmModal
             isOpen={isCancelModalOpen}
             onClose={handleCloseCancelModal}
             onConfirm={handleConfirmCancel}
-            membershipTitle={currentMembership.title}
-            membershipEndsOn={membershipEndsOn}
+            membershipTitle={currentMembership?.title}
+            membershipEndsOn={user?.membershipEndDate}
           />
         </div>
       </div>
