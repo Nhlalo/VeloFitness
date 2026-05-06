@@ -102,14 +102,9 @@ export default function JoinUs() {
           className="absolute top-[50%] left-[50%] z-3 flex w-full -translate-x-1/2 -translate-y-1/2 flex-row gap-3 overflow-hidden px-9"
         >
           {gymOfferings.map((content: Training) => {
-            // Button visibility:
-            // - Mobile: always visible
-            // - Desktop: visible only on hover
             const buttonClasses = `font-semibold text-black underline underline-offset-8 transition-opacity duration-200 
   opacity-100 ${hoveredItem === content.linkName ? "lg:opacity-100" : "lg:opacity-0"}`;
-            //Div appearance
-            // - Mobile: white background with black text
-            // - Desktop: transparent background with white text until hovered
+
             const parentDivClasses = `min-w-[17.5rem] flex-1 bg-white px-6 pt-0 pb-8 text-black 
   ${hoveredItem === content.linkName ? "lg:bg-white lg:text-black" : "lg:bg-transparent lg:text-white"}
   `;
