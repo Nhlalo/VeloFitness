@@ -68,7 +68,7 @@ const exclusivesDescription: ExclusiveDescription[] = [
   },
 ];
 
-function Exlusives() {
+function Exclusives() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const imgContainerRef = useRef<HTMLDivElement | null>(null);
   const leftButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -103,28 +103,46 @@ function Exlusives() {
           {exclusivesDescription.map((content, index) => {
             return (
               <div
-                className="relative aspect-square w-[80%] shrink-0 px-3 md:w-[65%] lg:w-[35vw]"
+                className="relative flex w-[80%] shrink-0 flex-col px-3 md:w-[65%] lg:block lg:w-[35vw]"
                 key={content.alt}
-                ref={imgContainerRef}
               >
-                <img
-                  src={content.imageSrc}
-                  alt={content.alt}
-                  className={`${activeIndex == index ? "lg:scale-100" : "lg:scale-75"} h-full w-full object-cover`}
-                  ref={(el) => {
-                    itemRefs.current[index] = el;
-                  }}
-                  data-index={index}
-                />
                 <div
-                  className={`${activeIndex == index ? "lg:scale-x-105 lg:opacity-100" : "lg:scale-x-50 lg:opacity-0"} bottom-0 bg-white p-3 transition-all duration-300 ease-in-out lg:absolute`}
+                  className="relative aspect-square w-full"
+                  ref={imgContainerRef}
                 >
-                  <h3 className="text-[1.75rem] font-semibold text-black lg:text-3xl">
-                    {content.heading}
-                  </h3>
-                  <p className="text-gray-800 lg:text-lg">
-                    {content.description}
-                  </p>
+                  <img
+                    src={content.imageSrc}
+                    alt={content.alt}
+                    className={`${activeIndex == index ? "lg:scale-100" : "lg:scale-75"} h-full w-full object-cover`}
+                    ref={(el) => {
+                      itemRefs.current[index] = el;
+                    }}
+                    data-index={index}
+                  />
+
+                  {/* Desktop view*/}
+                  <div
+                    className={`${activeIndex == index ? "lg:scale-x-105 lg:opacity-100" : "lg:scale-x-50 lg:opacity-0"} bottom-0 hidden bg-white p-3 transition-all duration-300 ease-in-out lg:absolute lg:block`}
+                  >
+                    <h3 className="text-[1.75rem] font-semibold text-black lg:text-3xl">
+                      {content.heading}
+                    </h3>
+                    <p className="text-gray-800 lg:text-lg">
+                      {content.description}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Mobile/Tablet view*/}
+                <div className="flex flex-1 lg:hidden">
+                  <div className="flex w-full flex-col bg-white p-3">
+                    <h3 className="text-[1.75rem] font-semibold text-black">
+                      {content.heading}
+                    </h3>
+                    <p className="flex-1 text-gray-800">
+                      {content.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             );
@@ -134,12 +152,12 @@ function Exlusives() {
           <button
             type="button"
             className={`flex h-10 w-10 items-center justify-center bg-white opacity-0 lg:opacity-100 ${!isPreviousScrollable ? "scale-80 text-gray-500" : "scale-100 text-black"}`}
-            aria-label="View previous slide w-10 h-10"
+            aria-label="View previous slide"
             ref={leftButtonRef}
             disabled={!isPreviousScrollable}
             onClick={handlePrevious}
           >
-            <ArrowLeft aria-hidden />
+            <ArrowLeft aria-hidden="true" />
           </button>
           <button
             type="button"
@@ -167,7 +185,7 @@ export default function Classes() {
         buttonText={herobannerProps.buttonText}
       />
       <main className="bg-black text-white">
-        <Exlusives />
+        <Exclusives />
         {classesDescription.map((content) => {
           return (
             <SubClasses
