@@ -1,17 +1,25 @@
-interface Props {
+import { TriangleAlert } from "lucide-react";
+
+interface CancellationBannerProps {
   cancellationDate: string | null;
   membershipEndsOn: string | null;
 }
 export default function CancellationBanner({
   cancellationDate,
   membershipEndsOn,
-}: Props) {
+}: CancellationBannerProps) {
   if (!cancellationDate) return null;
 
   return (
-    <div className="mb-8 rounded-2xl border border-yellow-500/30 bg-yellow-500/10 p-6 backdrop-blur-sm">
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      className="mb-8 rounded-2xl border border-yellow-500/30 bg-yellow-500/10 p-6 backdrop-blur-sm"
+    >
       <div className="flex items-start gap-4">
-        <div className="text-2xl">⚠️</div>
+        <div className="text-2xl" aria-hidden="true">
+          <TriangleAlert />
+        </div>
         <div className="flex-1">
           <h3 className="font-semibold text-yellow-400">
             Membership Cancelled
