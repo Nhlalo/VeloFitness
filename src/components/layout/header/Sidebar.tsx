@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import { useAuth } from "../../../context/authContext.tsx";
 import useFocusTrap from "../../../hooks/useFocusTrap";
 import NavLinksContentRef from "../../../data/constants/navigation";
+import generateInitials from "../../../utils/generateInitials.ts";
 import Container from "../../shared/Container";
 
 //UpdateSidebarVisibility(function)- change the state, in the parent component, of whether the side bar should be closed or not
@@ -33,6 +34,11 @@ export default function Sidebar({
   const url = useLocation();
 
   const { user, isLoggedIn } = useAuth();
+
+  const userInitials = generateInitials(
+    user?.name as string,
+    user?.surname as string,
+  );
 
   //Reference all the elements that are focusable, essential in trapping focus within sidebar
   const refs = [
@@ -139,16 +145,14 @@ export default function Sidebar({
                 <div className="flex items-center gap-4 px-14">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#AAFF00]">
                     <span className="text-base font-bold text-black">
-                      {user?.avatarInitials || "U"}
+                      {userInitials}
                     </span>
                   </div>
                   <div className="flex flex-col">
                     <span className="text-sm font-semibold text-white">
-                      {user?.name || "User"}
+                      {user?.name}
                     </span>
-                    <span className="text-xs text-gray-400">
-                      {user?.email || "user@example.com"}
-                    </span>
+                    <span className="text-xs text-gray-400">{user?.email}</span>
                   </div>
                 </div>
               </div>
@@ -210,7 +214,6 @@ export default function Sidebar({
                     </Link>
                   </li>
 
-                  {/* Sign Out Link */}
                   <li className="py-6 pr-0 pl-14 hover:underline">
                     <button
                       ref={signOutRef}
