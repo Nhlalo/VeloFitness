@@ -12,8 +12,8 @@ export const mockAuthorisationCall = (): Promise<
 > => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const shouldSucceed = true;
-      const shouldReturnUser = true;
+      const shouldSucceed = false;
+      const shouldReturnUser = false;
 
       if (shouldSucceed) {
         if (shouldReturnUser) {
