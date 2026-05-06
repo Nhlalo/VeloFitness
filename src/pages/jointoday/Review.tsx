@@ -1,6 +1,10 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router";
 import { VisibilityContext } from "./JoinToday";
-import { Info, X } from "lucide-react";
+import { X } from "lucide-react";
+
+import StripeProvider from "../../components/payment/StripeProvider";
+import PaymentForm from "../../components/payment/PaymentForm";
 
 export default function Review() {
   const { isVisible, setIsVisible, formData, selectedMembership } =
@@ -11,12 +15,29 @@ export default function Review() {
     terms3: false,
   });
 
-  const handleCheckboxChange = (name: string) => {
-    setTermsAccepted((prev) => ({
-      ...prev,
-      [name]: !prev[name as keyof typeof prev],
-    }));
-  };
+  const navigate = useNavigate();
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const date = new Date();
+  const monthName = months[date.getMonth()];
+  const today = date.toISOString().split("T")[0];
+  const shortDay = date.toLocaleDateString("en-US", { weekday: "short" });
+  const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0)
+    .toISOString()
+    .split("T")[0];
 
   const allTermsAccepted =
     termsAccepted.terms1 && termsAccepted.terms2 && termsAccepted.terms3;
@@ -30,6 +51,12 @@ export default function Review() {
   const taxes = subtotal * 0.08; // 8% tax
   const totalDue = subtotal + taxes;
 
+  const handleCheckboxChange = (name: string) => {
+    setTermsAccepted((prev) => ({
+      ...prev,
+      [name]: !prev[name as keyof typeof prev],
+    }));
+  };
   const handleGoBack = () => {
     setIsVisible({
       personalInformation: false,
@@ -38,6 +65,17 @@ export default function Review() {
     });
   };
 
+  const handlePaymentSuccess = async (token: string) => {
+    navigate(`/set-password?email=${formData.email}&token=${token}`, {
+      replace: true,
+    });
+  };
+
+  const handlePaymentError = (error: string) => {
+    console.error("Payment failed:", error);
+  };
+
+  console.log("SELECTED MEMBERSHIP", selectedMembership);
   return (
     <div
       className={`transition-all duration-500 ${
@@ -47,7 +85,6 @@ export default function Review() {
       }`}
     >
       <div className="pb-8">
-        {/* Back Button */}
         <div className="mb-4 flex justify-end px-6 pt-6 sm:px-8 sm:pt-8">
           <button
             onClick={handleGoBack}
@@ -62,7 +99,6 @@ export default function Review() {
           <h2 className="mb-6 text-2xl font-bold md:text-3xl">Membership</h2>
 
           <div className="overflow-hidden rounded-lg border border-gray-200">
-            {/* Membership Summary */}
             <div className="p-5">
               <div className="flex items-center gap-4">
                 <div className="shrink-0">
@@ -75,22 +111,21 @@ export default function Review() {
                 </div>
                 <div className="flex-1 text-left">
                   <div className="font-bold text-black">
-                    {selectedMembership?.title || "Premium Club Access"}
+                    {selectedMembership?.title}
                   </div>
                   <div className="text-sm text-gray-400">
-                    {selectedMembership?.club || "Selected Club"}
+                    {selectedMembership?.club}
                   </div>
                 </div>
                 <div className="text-right">
                   <div className="text-lg font-bold text-black">
-                    {selectedMembership?.price || "$79"}
+                    {selectedMembership?.price}
                   </div>
                   <div className="text-xs text-gray-400">Month</div>
                 </div>
               </div>
             </div>
 
-            {/* Member Information */}
             <div className="h-px w-full bg-gray-200" />
             <div className="p-5">
               <div className="text-left">
@@ -104,17 +139,16 @@ export default function Review() {
                   Phone: {formData.phoneNumber}
                 </div>
                 <div className="mt-1 text-sm text-gray-400">
-                  Club: {formData.userClub}
+                  Club: {formData.clubName}
                 </div>
               </div>
             </div>
 
-            {/* Start Date */}
             <div className="h-px w-full bg-gray-200" />
             <div className="p-5">
               <div className="text-left">
                 <div className="font-medium">
-                  Membership start: Thursday - 03/19/26
+                  Membership start:{shortDay} - {today}
                 </div>
                 <div className="mt-1 text-sm text-gray-400">
                   12 mo-commitment
@@ -122,13 +156,12 @@ export default function Review() {
               </div>
             </div>
 
-            {/* Prorated Amount */}
             <div className="h-px w-full bg-gray-200" />
             <div className="flex flex-col gap-2 p-5 sm:flex-row sm:items-center sm:justify-between">
               <div className="text-left">
                 <div className="font-medium">March</div>
                 <div className="text-sm text-gray-400">
-                  Prorated 03/09/26 - 03/31/26
+                  Prorated {today} - {lastDayOfMonth}
                 </div>
               </div>
               <div className="font-medium sm:text-right">
@@ -136,7 +169,6 @@ export default function Review() {
               </div>
             </div>
 
-            {/* Initiation Fee */}
             <div className="h-px w-full bg-gray-200" />
             <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex-1 text-left">
@@ -151,21 +183,18 @@ export default function Review() {
               </div>
             </div>
 
-            {/* Subtotal */}
             <div className="h-px w-full bg-gray-200" />
             <div className="flex items-center justify-between p-5">
               <div className="font-medium">Subtotal</div>
               <div>${subtotal.toFixed(2)}</div>
             </div>
 
-            {/* Taxes */}
             <div className="h-px w-full bg-gray-200" />
             <div className="flex items-center justify-between p-5">
               <div className="font-medium">Taxes</div>
               <div>${taxes.toFixed(2)}</div>
             </div>
 
-            {/* Total */}
             <div className="h-px w-full bg-gray-200" />
             <div className="flex items-center justify-between bg-gray-50 p-5">
               <div className="font-bold">Total Due Today</div>
@@ -173,7 +202,6 @@ export default function Review() {
             </div>
           </div>
 
-          {/* Terms and Conditions */}
           <div className="mt-8 space-y-4 text-left">
             <div className="flex gap-3">
               <input
@@ -201,7 +229,8 @@ export default function Review() {
                 I agree that my membership will renew automatically and I will
                 be charged the monthly dues of ${membershipPrice.toFixed(2)}{" "}
                 (excluding taxes) every month on the 23rd day of the month
-                beginning March 2026 until I cancel, price subject to change
+                beginning {monthName} 2026 until I cancel, price subject to
+                change
               </div>
             </div>
 
@@ -220,28 +249,19 @@ export default function Review() {
             </div>
           </div>
 
-          {/* Stripe Test Mode Info */}
-          <div className="mt-6 flex items-start gap-2 rounded-md border border-blue-200 bg-blue-50 p-3 text-left">
-            <Info size={18} className="mt-0.5 shrink-0 text-blue-500" />
-            <div className="text-xs text-blue-700">
-              <span className="font-bold">Test Mode:</span> This is a Stripe
-              demo. Use{" "}
-              <span className="font-mono font-bold">4242 4242 4242 4242</span>{" "}
-              for testing with any future expiry and CVC.
-            </div>
-          </div>
-
-          {/* Purchase Button */}
-          <button
-            disabled={!allTermsAccepted}
-            className={`mt-4 w-full rounded-md py-4 text-center font-medium transition-colors ${
-              allTermsAccepted
-                ? "bg-black text-white hover:bg-gray-800"
-                : "cursor-not-allowed bg-gray-200 text-gray-400"
-            }`}
-          >
-            Purchase Membership
-          </button>
+          <StripeProvider>
+            <PaymentForm
+              amount={totalDue}
+              onSuccess={handlePaymentSuccess}
+              onError={handlePaymentError}
+              buttonText={`Pay $${totalDue.toFixed(2)}`}
+              disabled={!allTermsAccepted}
+              userInfor={{
+                ...formData,
+                membershipTitle: selectedMembership?.title,
+              }}
+            />
+          </StripeProvider>
         </div>
       </div>
     </div>
