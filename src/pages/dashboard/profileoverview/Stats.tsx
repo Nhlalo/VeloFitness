@@ -2,13 +2,13 @@ function Stats() {
   return (
     <div className="grid grid-cols-2 gap-4 pt-4">
       <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
-        <div className="mb-1 text-2xl font-light">12</div>
+        <div className="mb-1 text-2xl font-light">0</div>
         <div className="font-mono text-xs tracking-wide text-white/40 uppercase">
           Classes Attended
         </div>
       </div>
       <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
-        <div className="mb-1 text-2xl font-light">3</div>
+        <div className="mb-1 text-2xl font-light">0</div>
         <div className="font-mono text-xs tracking-wide text-white/40 uppercase">
           Guest Passes Used
         </div>
@@ -16,8 +16,6 @@ function Stats() {
     </div>
   );
 }
-
-// components/QuickStats.jsx
 
 function QuickStats() {
   return (
@@ -28,7 +26,7 @@ function QuickStats() {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-sm text-white/60">Check-ins this month</span>
-          <span className="text-lg font-light">8</span>
+          <span className="text-lg font-light">0</span>
         </div>
         <div className="flex items-center justify-between">
           <span className="text-sm text-white/60">Favorite class</span>
