@@ -1,8 +1,73 @@
 import { formFields } from "../../../data/constants/inputsvalidation";
 import { User } from "../../../types/user.interface";
+import ErrorMessage from "../../../components/shared/ErrorMessage";
 
-interface Props {
-  user: User;
+function FormFieldContainer({
+  children,
+  isError,
+}: {
+  children: React.ReactNode;
+  isError: boolean;
+}) {
+  return (
+    <div
+      className={`border-b pb-3 transition-colors ${
+        isError
+          ? "border-red-500"
+          : "border-white/10 group-hover:border-white/30"
+      }`}
+    >
+      {children}
+    </div>
+  );
+}
+
+interface InputProps {
+  type?: string;
+  inputName: string;
+  value: string | undefined;
+  jsxPattern: string;
+  isEditing: boolean;
+  title?: string;
+  minLength: number;
+  maxLength: number;
+  isError: boolean;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+function Input({
+  type = "text",
+  inputName,
+  value,
+  jsxPattern,
+  isEditing,
+  minLength,
+  maxLength,
+  isError,
+  title,
+  handleChange,
+}: InputProps) {
+  return (
+    <input
+      type={type}
+      name={inputName}
+      value={value}
+      onChange={handleChange}
+      readOnly={!isEditing}
+      pattern={jsxPattern}
+      title={title}
+      minLength={minLength}
+      maxLength={maxLength}
+      required
+      className={`w-full bg-transparent text-xl font-light tracking-wide focus:outline-none ${
+        !isEditing ? "cursor-default" : "focus:border-b focus:border-white/50"
+      } ${isError ? "text-red-400" : ""}`}
+    />
+  );
+}
+
+interface PersonalDetailsProps {
+  user: User | null;
   formErrors: Record<string, boolean>;
   isEditing: boolean;
   handleChange: (
@@ -14,6 +79,7 @@ interface Props {
   handleCancelClick: () => void;
   handleSaveClick: () => void;
 }
+
 export default function PersonalDetails({
   user,
   formErrors,
@@ -22,7 +88,7 @@ export default function PersonalDetails({
   handleEditClick,
   handleCancelClick,
   handleSaveClick,
-}: Props) {
+}: PersonalDetailsProps) {
   return (
     <div className="group">
       <div className="mb-6 flex items-center justify-between">
@@ -61,89 +127,53 @@ export default function PersonalDetails({
       </div>
 
       <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
-        {/* Name Row */}
         <div className="grid grid-cols-2 gap-6">
-          <div
-            className={`border-b pb-3 transition-colors ${
-              formErrors.name
-                ? "border-red-500"
-                : "border-white/10 group-hover:border-white/30"
-            }`}
-          >
+          <FormFieldContainer isError={formErrors.name}>
             <div className="mb-1 font-mono text-xs text-white/40">
               First Name
             </div>
-            <input
-              type="text"
-              name="name"
-              value={user.name}
-              onChange={(e) =>
+            <Input
+              inputName="name"
+              value={user?.name}
+              handleChange={(e) =>
                 handleChange(e, "name", formFields.name.jsPattern)
               }
-              readOnly={!isEditing}
-              pattern={formFields.name.jsxPattern}
+              jsxPattern={formFields.name.jsxPattern}
               title={formFields.name.title}
               minLength={formFields.name.minLength}
               maxLength={formFields.name.maxLength}
-              required
-              className={`w-full bg-transparent text-xl font-light tracking-wide focus:outline-none ${
-                !isEditing
-                  ? "cursor-default"
-                  : "focus:border-b focus:border-white/50"
-              } ${formErrors.name ? "text-red-400" : ""}`}
+              isEditing={isEditing}
+              isError={formErrors.name}
             />
             {formErrors.name && (
-              <div className="mt-1 text-xs text-red-400">
-                {formFields.name.errorMessage}
-              </div>
+              <ErrorMessage message={formFields.name.errorMessage} />
             )}
-          </div>
+          </FormFieldContainer>
 
-          <div
-            className={`border-b pb-3 transition-colors ${
-              formErrors.surname
-                ? "border-red-500"
-                : "border-white/10 group-hover:border-white/30"
-            }`}
-          >
+          <FormFieldContainer isError={formErrors.surname}>
             <div className="mb-1 font-mono text-xs text-white/40">
               Last Name
             </div>
-            <input
-              type="text"
-              name="surname"
-              value={user.surname}
-              onChange={(e) =>
+            <Input
+              inputName="surname"
+              value={user?.surname}
+              handleChange={(e) =>
                 handleChange(e, "surname", formFields.surname.jsPattern)
               }
-              readOnly={!isEditing}
-              pattern={formFields.surname.jsxPattern}
+              jsxPattern={formFields.surname.jsxPattern}
               title={formFields.surname.title}
               minLength={formFields.surname.minLength}
               maxLength={formFields.surname.maxLength}
-              required
-              className={`w-full bg-transparent text-xl font-light tracking-wide focus:outline-none ${
-                !isEditing
-                  ? "cursor-default"
-                  : "focus:border-b focus:border-white/50"
-              } ${formErrors.surname ? "text-red-400" : ""}`}
+              isEditing={isEditing}
+              isError={formErrors.surname}
             />
             {formErrors.surname && (
-              <div className="mt-1 text-xs text-red-400">
-                {formFields.surname.errorMessage}
-              </div>
+              <ErrorMessage message={formFields.surname.errorMessage} />
             )}
-          </div>
+          </FormFieldContainer>
         </div>
 
-        {/* Email */}
-        <div
-          className={`border-b pb-3 transition-colors ${
-            formErrors.email
-              ? "border-red-500"
-              : "border-white/10 group-hover:border-white/30"
-          }`}
-        >
+        <FormFieldContainer isError={formErrors.email}>
           <div className="mb-1 font-mono text-xs text-white/40">
             Email Address
           </div>
@@ -151,102 +181,60 @@ export default function PersonalDetails({
             <input
               type="email"
               name="email"
-              value={user.email}
-              onChange={(e) =>
-                handleChange(e, "email", formFields.email.jsPattern)
-              }
-              readOnly={!isEditing}
-              pattern={formFields.email.jsxPattern}
-              maxLength={formFields.email.maxLength}
-              required
-              className={`flex-1 bg-transparent text-lg font-light tracking-wide focus:outline-none ${
-                !isEditing
-                  ? "cursor-default"
-                  : "focus:border-b focus:border-white/50"
-              } ${formErrors.email ? "text-red-400" : ""}`}
+              value={user?.email}
+              readOnly
+              className={`flex-1 bg-transparent text-lg font-light tracking-wide focus:outline-none`}
             />
             <span className="inline-flex items-center gap-1 rounded-full bg-white/5 px-2 py-0.5 font-mono text-[10px] text-white/40">
               verified
             </span>
           </div>
-          {formErrors.email && (
-            <div className="mt-1 text-xs text-red-400">
-              {formFields.email.errorMessage}
-            </div>
-          )}
-        </div>
+        </FormFieldContainer>
 
-        {/* Phone & Zip Row */}
         <div className="grid grid-cols-2 gap-6">
-          <div
-            className={`border-b pb-3 transition-colors ${
-              formErrors.phoneNumber
-                ? "border-red-500"
-                : "border-white/10 group-hover:border-white/30"
-            }`}
-          >
+          <FormFieldContainer isError={formErrors.phoneNumber}>
             <div className="mb-1 font-mono text-xs text-white/40">
               Phone Number
             </div>
-            <input
+            <Input
               type="tel"
-              name="phoneNumber"
-              value={user.phoneNumber}
-              onChange={(e) =>
+              inputName="phoneNumber"
+              value={user?.phoneNumber}
+              handleChange={(e) =>
                 handleChange(e, "phoneNumber", formFields.phoneNumber.jsPattern)
               }
-              readOnly={!isEditing}
-              pattern={formFields.phoneNumber.jsxPattern}
+              jsxPattern={formFields.phoneNumber.jsxPattern}
               minLength={formFields.phoneNumber.minLength}
               maxLength={formFields.phoneNumber.maxLength}
-              required
-              className={`w-full bg-transparent text-lg font-light tracking-wide focus:outline-none ${
-                !isEditing
-                  ? "cursor-default"
-                  : "focus:border-b focus:border-white/50"
-              } ${formErrors.phoneNumber ? "text-red-400" : ""}`}
+              isEditing={isEditing}
+              isError={formErrors.phoneNumber}
             />
             {formErrors.phoneNumber && (
-              <div className="mt-1 text-xs text-red-400">
-                {formFields.phoneNumber.errorMessage}
-              </div>
+              <ErrorMessage message={formFields.phoneNumber.errorMessage} />
             )}
-          </div>
+          </FormFieldContainer>
 
-          <div
-            className={`border-b pb-3 transition-colors ${
-              formErrors.zipCode
-                ? "border-red-500"
-                : "border-white/10 group-hover:border-white/30"
-            }`}
-          >
+          <FormFieldContainer isError={formErrors.zipCode}>
             <div className="mb-1 font-mono text-xs text-white/40">
               Postal Code
             </div>
-            <input
-              type="text"
-              name="zipCode"
-              value={user.zipCode}
-              onChange={(e) =>
+            <Input
+              inputName="zipCode"
+              value={user?.zipCode}
+              handleChange={(e) =>
                 handleChange(e, "zipCode", formFields.zipCode.jsPattern)
               }
-              readOnly={!isEditing}
-              pattern={formFields.zipCode.jsxPattern}
+              jsxPattern={formFields.zipCode.jsxPattern}
               minLength={formFields.zipCode.minLength}
               maxLength={formFields.zipCode.maxLength}
-              required
-              className={`w-full bg-transparent text-lg font-light tracking-wide focus:outline-none ${
-                !isEditing
-                  ? "cursor-default"
-                  : "focus:border-b focus:border-white/50"
-              } ${formErrors.zipCode ? "text-red-400" : ""}`}
+              isEditing={isEditing}
+              isError={formErrors.zipCode}
             />
+
             {formErrors.zipCode && (
-              <div className="mt-1 text-xs text-red-400">
-                {formFields.zipCode.errorMessage}
-              </div>
+              <ErrorMessage message={formFields.zipCode.errorMessage} />
             )}
-          </div>
+          </FormFieldContainer>
         </div>
       </form>
     </div>
