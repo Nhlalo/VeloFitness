@@ -1,26 +1,25 @@
 import { CardElement } from "@stripe/react-stripe-js";
 import { useStripePayment } from "../../hooks/useStripePayment";
 import { STRIPE_DEMO_NOTICE } from "../../config/stripe";
-import type { PaymentIntent } from "@stripe/stripe-js";
 import { Info, Lock } from "lucide-react";
 
-// Props type definition
 type PaymentFormProps = {
   amount: number;
   currency?: string;
-  onSuccess: (paymentIntent: PaymentIntent) => void;
+  onSuccess: (token: string) => void;
   onError: (error: string) => void;
   buttonText?: string;
   disabled?: boolean;
+  userInfor: Record<string, string>;
 };
 
 export default function PaymentForm({
   amount,
-  currency = "usd",
   onSuccess,
   onError,
   buttonText,
   disabled = false,
+  userInfor,
 }: PaymentFormProps) {
   const {
     processPayment,
@@ -33,23 +32,24 @@ export default function PaymentForm({
     setCardError,
   } = useStripePayment();
 
-  // Check if form is ready for submission
   const isFormValid = !disabled && cardComplete && !loading && !success;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!isFormValid) return;
+    if (!isFormValid || loading) return;
 
-    const result = await processPayment(amount, currency, {
-      customerName: "Member",
-      customerEmail: "member@example.com",
-      membershipType: "Premium Club",
-      orderId: new Date().toISOString(),
-    });
+    const result = await processPayment(
+      {
+        customerEmail: userInfor.email,
+        customerName: userInfor.name,
+        orderId: `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      },
+      userInfor,
+    );
 
     if (result.success && onSuccess && result.paymentIntent) {
-      onSuccess(result.paymentIntent);
+      onSuccess(result.token);
     }
     if (!result.success && onError && result.error) {
       onError(result.error);
@@ -71,7 +71,6 @@ export default function PaymentForm({
       <form onSubmit={handleSubmit}>
         <h3 className="mb-4 text-lg font-semibold text-gray-900">Payment</h3>
 
-        {/* Demo Notice */}
         <div className="mb-4 flex items-start gap-2 rounded-md border border-blue-200 bg-blue-50 p-3">
           <Info size={18} className="mt-0.5 shrink-0 text-blue-500" />
           <div className="text-xs text-blue-700">
@@ -84,7 +83,6 @@ export default function PaymentForm({
           </div>
         </div>
 
-        {/* Card Element */}
         <div
           className={`mb-4 rounded-lg border bg-white p-3 transition-all ${
             disabled
@@ -115,14 +113,12 @@ export default function PaymentForm({
           />
         </div>
 
-        {/* Card Error Message */}
         {cardError && !disabled && (
           <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3">
             <p className="text-sm text-red-700">{cardError}</p>
           </div>
         )}
 
-        {/* Terms Required Message */}
         {disabled && (
           <div className="mb-4 rounded-md border border-yellow-200 bg-yellow-50 p-3">
             <p className="text-sm text-yellow-800">
@@ -131,7 +127,6 @@ export default function PaymentForm({
           </div>
         )}
 
-        {/* Card Required Message */}
         {!disabled && !cardComplete && !cardError && (
           <div className="mb-4 rounded-md border border-blue-200 bg-blue-50 p-3">
             <p className="text-sm text-blue-800">
@@ -140,14 +135,12 @@ export default function PaymentForm({
           </div>
         )}
 
-        {/* Error Message */}
         {error && (
           <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3">
             <p className="text-sm text-red-700">{error}</p>
           </div>
         )}
 
-        {/* Success Message */}
         {success && (
           <div className="mb-4 rounded-md border border-green-200 bg-green-50 p-3">
             <p className="text-sm text-green-700">
@@ -156,13 +149,11 @@ export default function PaymentForm({
           </div>
         )}
 
-        {/* Security Notice */}
         <div className="mb-4 flex items-center justify-center gap-2 text-xs text-gray-500">
           <Lock size={12} />
           <span>Secure payment powered by Stripe</span>
         </div>
 
-        {/* Submit Button - Disabled until terms accepted AND card is complete */}
         <button
           type="submit"
           disabled={!isFormValid}
