@@ -4,7 +4,6 @@
    - We want browser-native defaults, not zero-based reset
 */
 @import "tailwindcss";
-@import url(normalize.css);
 
 @layer base {
   html {
