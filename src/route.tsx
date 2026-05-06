@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import { homeColors } from "./data/constants/colors";
 import RootLayout from "./components/layout/RootLayout";
 import Home from "./pages/home/Home";
+import ProtectedRoute from "./components/shared/ProtectedRoute.tsx";
 
 const router = createBrowserRouter([
   {
@@ -35,16 +36,7 @@ const router = createBrowserRouter([
           colors: { ...homeColors },
         },
       },
-      {
-        path: "clubs/:country/:club",
-        lazy: async () => {
-          const module = await import("./pages/clubs/Club.tsx");
-          return { Component: module.default };
-        },
-        handle: {
-          colors: { ...homeColors },
-        },
-      },
+
       {
         path: "classes",
         lazy: async () => {
@@ -77,6 +69,17 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "set-password",
+        lazy: async () => {
+          const module = await import("./pages/setpassword/SetPassword.tsx");
+          return { Component: module.default };
+        },
+        handle: {
+          header: "hidden",
+          footer: "hidden",
+        },
+      },
+      {
         path: "signin",
         lazy: async () => {
           const module = await import("./pages/signin/SignIn.tsx");
@@ -88,10 +91,28 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "password-message",
+        lazy: async () => {
+          const module =
+            await import("./pages/passwordmessage/PasswordMessage.tsx");
+          return { Component: module.default };
+        },
+        handle: {
+          header: "hidden",
+          footer: "hidden",
+        },
+      },
+      {
         path: "profile",
         lazy: async () => {
           const module = await import("./pages/dashboard/Dashboard.tsx");
-          return { Component: module.default };
+          return {
+            Component: () => (
+              <ProtectedRoute redirectTo="/signin">
+                <module.default />
+              </ProtectedRoute>
+            ),
+          };
         },
         handle: {
           header: "hidden",
@@ -103,7 +124,13 @@ const router = createBrowserRouter([
         lazy: async () => {
           const module =
             await import("./pages/dashboard/membershiphub/MembershipHub.tsx");
-          return { Component: module.default };
+          return {
+            Component: () => (
+              <ProtectedRoute redirectTo="/signin">
+                <module.default />
+              </ProtectedRoute>
+            ),
+          };
         },
         handle: {
           header: "hidden",
