@@ -6,11 +6,6 @@ import { gymDescription } from "../../data/constants/gymlocation";
 import Results from "../../components/shared/Result";
 import ClubSelection from "./ClubSelection";
 
-interface ClubOptionsProps {
-  isDisplay: boolean;
-  onClose: () => void;
-  onSelectClub?: (clubName: string) => void; // Add this prop for parent communication
-}
 interface ClubDataMemo {
   selectedClubs: Gym[];
   setSelectedClubs: React.Dispatch<React.SetStateAction<Gym[]>>;
@@ -21,6 +16,12 @@ const ClubDataContext = createContext<ClubDataMemo>({
   setSelectedClubs: () => {},
   setIsClubClicked: () => {},
 });
+
+interface ClubOptionsProps {
+  isDisplay: boolean;
+  onClose: () => void;
+  onSelectClub?: (clubName: string) => void;
+}
 
 export default function ClubOptions({
   isDisplay,
@@ -64,12 +65,12 @@ export default function ClubOptions({
     <>
       {/* Overlay */}
       <div
+        aria-hidden="true"
         className={`fixed inset-0 z-30 bg-black/50 transition-opacity duration-300 ${
           isDisplay
             ? "pointer-events-auto visible opacity-100"
             : "pointer-events-none opacity-0"
         }`}
-        aria-hidden="true"
         onClick={() => {
           onClose();
           handleCloseClubSelection();
