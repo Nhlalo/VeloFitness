@@ -1,4 +1,5 @@
 import Container from "./Container";
+import Img from "./Img";
 
 interface Props {
   heading: string;
@@ -22,7 +23,7 @@ export default function Classes({ heading, description, imageSource }: Props) {
           </button>
         </div>
         <div className="flex-1 overflow-hidden lg:max-w-[43%]">
-          <img
+          <Img
             src={imageSource}
             alt="training"
             loading="lazy"

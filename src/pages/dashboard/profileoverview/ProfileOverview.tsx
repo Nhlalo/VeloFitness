@@ -4,7 +4,7 @@ import { useAuth } from "../../../context/authContext";
 import apiRequest from "../../../service/appApi";
 import validateField from "../../../utils/validateInputs";
 import generateInitials from "../../../utils/generateInitials";
-import ClubModal from "./clubModal";
+import ClubModal from "./ClubModal";
 import ProfileHeader from "./ProfileHeader";
 import PersonalDetails from "./PersonalDetails";
 import { Stats, QuickStats } from "./Stats";

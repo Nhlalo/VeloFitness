@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, ChevronRight } from "lucide-react";
 import { acquireNewGym } from "../../../utils/acquireGymData";
+import Img from "../../../components/shared/Img";
 
 interface ClubModalProps {
   isOpen: boolean;
@@ -87,8 +88,8 @@ export default function ClubModal({
                     <div className="flex gap-4">
                       <div className="shrink-0">
                         <div className="h-20 w-20 overflow-hidden rounded-lg bg-white/10">
-                          <img
-                            src={club.image}
+                          <Img
+                            src={club.image as string}
                             alt={club.name}
                             className="h-full w-full object-cover"
                             loading="lazy"

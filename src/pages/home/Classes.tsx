@@ -1,7 +1,6 @@
 import useNavigateBasedOnLogin from "../../hooks/useNavigateBasedOnLogIn";
+import Img from "../../components/shared/Img";
 import Container from "../../components/shared/Container";
-import TenseTraining from "../../assets/images/tense-training.jpg";
-import TenseTraining2 from "../../assets/images/tense-training2.jpg";
 
 export default function Classes() {
   const { handleClick } = useNavigateBasedOnLogin("/profile");
@@ -10,14 +9,14 @@ export default function Classes() {
       <div className="flex flex-col items-center gap-8 py-20 lg:flex-row lg:items-stretch">
         <div className="max-w-125 flex-1 items-center justify-center py-9 lg:max-w-full">
           <div className="relative">
-            <img
-              src={TenseTraining}
+            <Img
+              src="tense-training.jpg"
               alt="tense training"
               className="w-full rounded-lg"
               loading="lazy"
             />
-            <img
-              src={TenseTraining2}
+            <Img
+              src="tense-training2.jpg"
               alt="tense training"
               className="absolute -bottom-18 -left-9 ml-2 w-[50%] rounded-lg"
               loading="lazy"

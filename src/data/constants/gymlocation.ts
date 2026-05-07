@@ -1,14 +1,4 @@
 import { Gym, Description } from "../../types/club.interface";
-import USAGymImg from "../../assets/images/boston.jpg";
-import SAGymImg from "../../assets/images/Johannesburg.jpg";
-import canadaGymImg from "../../assets/images/canada.jpg";
-import backBayImg from "../../assets/images/back-bay-gym.jpg";
-import financialDistrictImg from "../../assets/images/financial-district-fitness.jpg";
-import sandtonCityImg from "../../assets/images/sandton-city-fitness.jpg";
-import mabonengImg from "../../assets/images/maboneng-urban-fitness.jpg";
-import bayStreetImg from "../../assets/images/bay-street-fitness.jpg";
-import yorkvilleImg from "../../assets/images/yorkville-urban-fitness.jpg";
-import kingWestImg from "../../assets/images/king-west-fitness.jpg";
 
 const gymUSAAmenties: string[] = [
   "Boxing Studio",
@@ -41,7 +31,7 @@ const USAGyms: Gym[] = [
     state: "Boston",
     country: "USA",
     cellNumber: "(647) 555-0167",
-    image: backBayImg,
+    image: "/back-bay-gym.jpg",
     amenties: gymUSAAmenties,
   },
   {
@@ -52,7 +42,7 @@ const USAGyms: Gym[] = [
     state: "Boston",
     country: "USA",
     cellNumber: "(857) 555-0567",
-    image: financialDistrictImg,
+    image: "/financial-district-fitness.jpg",
     amenties: gymUSAAmenties,
   },
 ];
@@ -66,7 +56,7 @@ const SAGyms: Gym[] = [
     city: "Johannesburg",
     country: "South Africa",
     cellNumber: "(011) 555-1234",
-    image: sandtonCityImg,
+    image: "/sandton-city-fitness.jpg",
     amenties: gymSAAmenties,
   },
   {
@@ -77,7 +67,7 @@ const SAGyms: Gym[] = [
     city: "Johannesburg",
     country: "South Africa",
     cellNumber: "011) 555-2345",
-    image: mabonengImg,
+    image: "/maboneng-urban-fitness.jpg",
     amenties: gymSAAmenties,
   },
 ];
@@ -91,7 +81,7 @@ const canadaGyms: Gym[] = [
     city: "Toronto",
     country: "Canada",
     cellNumber: "(647) 555-0167",
-    image: bayStreetImg,
+    image: "/bay-street-fitness.jpg",
     amenties: gymCanadaAmenties,
   },
   {
@@ -102,7 +92,7 @@ const canadaGyms: Gym[] = [
     cellNumber: "(778) 555-0456",
     country: "Canada",
     city: "Toronto",
-    image: yorkvilleImg,
+    image: "/yorkville-urban-fitness.jpg",
     amenties: gymCanadaAmenties,
   },
   {
@@ -113,7 +103,7 @@ const canadaGyms: Gym[] = [
     city: "Toronto",
     country: "Canada",
     cellNumber: "(416) 555-0123",
-    image: kingWestImg,
+    image: "/king-west-fitness.jpg",
     amenties: gymCanadaAmenties,
   },
 ];
@@ -123,21 +113,21 @@ const gymDescription: Description[] = [
     country: "USA",
     description:
       "From the heart of Back Bay to the tree-lined streets of Chestnut Hill, our Boston clubs are crafted for an unparalleled experience. Every location provides the essential elements of well-being, including innovative classes, expert trainers, and now The Stacked Studio, our dedicated space for strength training, only at Vélo Fitness Chestnut Hill.",
-    image: USAGymImg,
+    image: "/boston.jpg",
     clubs: USAGyms,
   },
   {
     country: "South Africa",
     description:
       "From the vibrant energy of Maboneng to the sophisticated heart of Sandton, our Johannesburg clubs are crafted for excellence. Every location delivers the key pillars of wellness, including dynamic group training, elite personal coaching, and now the Altitude Conditioning Zone, our exclusive high-performance training studio, only at Vélo Fitness Sandton.",
-    image: SAGymImg,
+    image: "/Johannesburg.jpg",
     clubs: SAGyms,
   },
   {
     country: "Canada",
     description:
       "From the waterfront energy of Vancouver to the sophisticated core of Toronto, our Canadian clubs are built for optimal performance. Every location provides the fundamental elements of fitness, including cutting-edge classes, world-class trainers, and now the Hot Yoga Sanctuary, our dedicated studio for heat-based practice, only at Vélo Fitness Toronto.",
-    image: canadaGymImg,
+    image: "/canada.jpg",
     clubs: canadaGyms,
   },
 ];

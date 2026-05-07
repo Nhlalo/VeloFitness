@@ -3,12 +3,12 @@ import { Link, useLocation, useNavigate } from "react-router";
 import useRouteHandle from "../../../hooks/useRouteHandle.tsx";
 import { useAuth } from "../../../context/authContext.tsx";
 import { Menu, ChevronDown } from "lucide-react";
+import Img from "../../shared/Img.tsx";
 import { navLinksContent } from "../../../data/constants/navigation.ts";
 import generateInitials from "../../../utils/generateInitials.ts";
 import handleScrollToTop from "../../../utils/scrollToTop.ts";
 import LoggedInModal from "./LoggedInModal.tsx";
 import Sidebar from "./Sidebar.tsx";
-import Logo from "../../../assets/images/logo.png";
 
 export default function Header({}) {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -111,7 +111,12 @@ export default function Header({}) {
               style={{ backgroundColor: currentColors?.logoBG }}
               aria-hidden="true"
             >
-              <img src={Logo} alt="Vélo Fitness" className="h-auto w-[95%]" />
+              <Img
+                src="/logo.png"
+                alt="Vélo Fitness"
+                className="h-auto w-[95%]"
+                loading="eager"
+              />
             </div>
             <figcaption
               aria-hidden="true"

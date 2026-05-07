@@ -1,10 +1,11 @@
+import { useContext } from "react";
 import { useLocation } from "react-router";
 import { LoaderCircle } from "lucide-react";
 import useFindClub from "../../hooks/useFindClub";
 import useNavigateClubPage from "../../hooks/useNavigateClubPage";
 import { Gym, Description } from "../../types/club.interface";
 import { ClubDataContext } from "../../pages/jointoday/ClubOptions";
-import { useContext } from "react";
+import Img from "./Img";
 
 interface ResultsProps {
   location: string;
@@ -86,10 +87,11 @@ function Data({
               }
             >
               <div className="aspect-2/1 w-14" aria-hidden="true">
-                <img
-                  src={content.image}
+                <Img
+                  src={content.image as string}
                   alt="Gym Club"
                   className="h-full w-full object-cover"
+                  loading="eager"
                 />
               </div>
               <div className="flex grow flex-col items-start">

@@ -1,6 +1,7 @@
 import useNavigateBasedOnLogin from "../../hooks/useNavigateBasedOnLogIn";
 import Container from "./Container";
 import { Props } from "../../types/classes.interface";
+import Img from "./Img";
 
 export default function SubClasses({
   heading,
@@ -30,7 +31,7 @@ export default function SubClasses({
         </div>
 
         <div className="w-full lg:w-1/2">
-          <img
+          <Img
             src={imageSource}
             alt="training"
             loading="lazy"

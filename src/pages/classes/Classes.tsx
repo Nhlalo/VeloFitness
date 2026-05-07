@@ -8,10 +8,7 @@ import Container from "../../components/shared/Container";
 import SubClasses from "../../components/shared/SubClasses";
 import HeroBanner from "../../components/shared/HeroBanner";
 import WorkOutVideo from "../../assets/videos/class-herobanner.mp4";
-import PersonalTraining from "../../assets/images/classes-personalTraining.jpg";
-import Training from "../../assets/images/classes-training.jpg";
-import BikeRiding from "../../assets/images/classes-bikeriding.jpg";
-import Yoga from "../../assets/images/classes-yoga.jpg";
+import Img from "../../components/shared/Img";
 
 interface ExclusiveDescription {
   heading: string;
@@ -25,14 +22,14 @@ const classesDescription: Props[] = [
     heading: "Unlimited Signature Classes",
     description:
       "Science-backed classes developed by industry minds to maximize transformation.",
-    imageSource: Training,
+    imageSource: "/classes-training.jpg",
     path: "/profile",
   },
   {
     heading: " Expert Instructors",
     description:
       "  Renowned Instructors build community and ignite Members to push past their limits",
-    imageSource: PersonalTraining,
+    imageSource: "/classes-personalTraining.jpg",
     path: "/profile",
   },
 ];
@@ -49,21 +46,21 @@ const exclusivesDescription: ExclusiveDescription[] = [
     heading: "PRECISION RIDE ™",
     description:
       "A performance-based cycling experience exclusive to Equinox. This class uses precision metrics to monitor your power and quantify your progress over time. Build endurance, increase aerobic capacity, and discover your reason to ride.",
-    imageSrc: BikeRiding,
+    imageSrc: "/classes-bikeriding.jpg",
     alt: "Person riding a bike",
   },
   {
     heading: "SCULPTED YOGA™",
     description:
       "Take Vinyasa up a notch with a challenging class that combines yoga with lightweight sculpting. Incorporating Bala Bangles and hand weights, this class merges Vinyasa flow with low-impact toning exercises to enhance strength, mobility, and balance.",
-    imageSrc: Yoga,
+    imageSrc: "/classes-yoga.jpg",
     alt: "Two people practicing yoga",
   },
   {
     heading: "PILATES RISE",
     description:
       "Evolve your Pilates practice with our contemporary approach that sculpts your core, glutes, and full body. Start with classical Pilates movements, then intensify, build, and burn for a transformative Pilates experience.",
-    imageSrc: Yoga,
+    imageSrc: "/classes-yoga.jpg",
     alt: "A person stretching ",
   },
 ];
@@ -110,14 +107,15 @@ function Exclusives() {
                   className="relative aspect-square w-full"
                   ref={imgContainerRef}
                 >
-                  <img
+                  <Img
                     src={content.imageSrc}
                     alt={content.alt}
                     className={`${activeIndex == index ? "lg:scale-100" : "lg:scale-75"} h-full w-full object-cover`}
                     ref={(el) => {
                       itemRefs.current[index] = el;
                     }}
-                    data-index={index}
+                    index={index}
+                    loading="eager"
                   />
 
                   {/* Desktop view*/}

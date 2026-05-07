@@ -1,9 +1,7 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import useCarousel from "../../hooks/useCarousel";
-import GroupTraining from "../../assets/images/group-training.jpg";
-import PersonalTraining from "../../assets/images/personal-training.jpg";
-import Club from "../../assets/images/gym-club.jpg";
+import Img from "../../components/shared/Img";
 
 type Training = {
   heading: string;
@@ -75,25 +73,25 @@ export default function JoinUs() {
       </p>
       <div className="relative">
         {/* Image is relative, while others are absoulte, as it will determine the size of div to avoid constant reflow */}
-        <img
-          src={GroupTraining}
+        <Img
+          src="/group-training.jpg"
           alt="Group training inside a gym"
           className={`${imgClass("Discover Classes")} static`}
-          aria-hidden="true"
+          isHidden={true}
           loading="lazy"
         />
-        <img
-          src={PersonalTraining}
+        <Img
+          src="/personal-training.jpg"
           alt="Personal training inside a gym"
           className={`${imgClass("Discover Personal Training")} absolute top-0 left-0 h-full`}
-          aria-hidden="true"
+          isHidden={true}
           loading="lazy"
         />
-        <img
-          src={Club}
+        <Img
+          src="/gym-club.jpg"
           alt="Gym club"
           className={`${imgClass("Discover Clubs")} absolute top-0 left-0 h-full`}
-          aria-hidden="true"
+          isHidden={true}
           loading="lazy"
         />
         <div

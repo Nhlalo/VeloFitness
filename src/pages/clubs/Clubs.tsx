@@ -5,6 +5,7 @@ import { gymDescription } from "../../data/constants/gymlocation";
 import { acquireNumberGyms } from "../../utils/acquireGymData";
 import Header from "./Header";
 import Container from "../../components/shared/Container";
+import Img from "../../components/shared/Img";
 
 function GymLocations() {
   const { determinePathRedirection, handleClick } = useNavigateClubPage();
@@ -48,10 +49,11 @@ function GymLocations() {
                 </ul>
               </div>
               <div className="hidden aspect-3/2 grow flex-col items-center md:flex lg:flex-1">
-                <img
+                <Img
                   src={content.image}
                   alt="Gym club"
                   className="h-full w-full object-cover"
+                  loading="lazy"
                 />
               </div>
             </Link>

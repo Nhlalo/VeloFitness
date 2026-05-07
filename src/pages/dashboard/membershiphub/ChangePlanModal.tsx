@@ -1,5 +1,6 @@
 import { Check, X } from "lucide-react";
 import { MembershipData } from "../../../data/constants/membershipSubscription";
+import Img from "../../../components/shared/Img";
 
 interface ChangePlanModalProps {
   isOpen: boolean;
@@ -51,7 +52,7 @@ export default function ChangePlanModal({
                   <div className="p-6">
                     <div className="mb-4 flex justify-center">
                       <div className="h-24 w-24 overflow-hidden rounded-xl border border-white/10">
-                        <img
+                        <Img
                           src={plan.image}
                           alt={plan.title}
                           className="h-full w-full object-cover"

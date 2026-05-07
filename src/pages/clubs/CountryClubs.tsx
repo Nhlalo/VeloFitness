@@ -2,6 +2,7 @@ import { Link, useParams, useSearchParams } from "react-router";
 import { ArrowRight } from "lucide-react";
 import useNavigateBasedOnLogin from "../../hooks/useNavigateBasedOnLogIn";
 import { useAuth } from "../../context/authContext";
+import Img from "../../components/shared/Img";
 import { Gym } from "../../types/club.interface";
 import Header from "./Header";
 import Container from "../../components/shared/Container";
@@ -71,10 +72,11 @@ export default function CountryClub() {
                   </ul>
                 </div>
                 <div className="hidden aspect-3/2 grow flex-col items-center md:flex lg:flex-1">
-                  <img
-                    src={content.image}
+                  <Img
+                    src={content.image as string}
                     alt="Gym club"
                     className="h-full w-full object-cover"
+                    loading="eager"
                   />
                 </div>
               </Link>

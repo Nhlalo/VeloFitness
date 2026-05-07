@@ -11,7 +11,7 @@ import { X } from "lucide-react";
 import Membership from "./Membership";
 import PersonalInformation from "./PersonalInformation";
 import Review from "./Review";
-import BackgroundImg from "../../assets/images/jointoday-background.jpg";
+import Img from "../../components/shared/Img";
 
 interface visibilityMemo {
   isVisible: Record<string, boolean>;
@@ -81,10 +81,11 @@ function PaymentProcess({ children }: { children: React.ReactNode }) {
             <div className="w-full lg:sticky lg:top-6 lg:w-1/2 lg:self-start">
               <div className="relative w-full lg:h-[calc(100vh-3rem)] lg:rounded-lg">
                 <div className="relative h-screen w-full lg:h-[95vh]">
-                  <img
-                    src={BackgroundImg}
+                  <Img
+                    src="/jointoday-background.jpg"
                     alt=""
                     className="h-full w-full object-cover"
+                    loading="eager"
                   />
                   <div className="absolute inset-0 bg-cover bg-center">
                     <div className="absolute inset-0 bg-black/40" />

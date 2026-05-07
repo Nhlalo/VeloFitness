@@ -1,9 +1,10 @@
 import { useContext, useEffect } from "react";
 import { X, Search } from "lucide-react";
 import useClubSearch from "../../hooks/useClubSearch";
+import { ClubDataContext } from "./ClubOptions";
 import { Gym } from "../../types/club.interface";
 import Results from "../../components/shared/Result";
-import { ClubDataContext } from "./ClubOptions";
+import Img from "../../components/shared/Img";
 
 interface ClubSelectionProps {
   isDisplay: boolean;
@@ -156,7 +157,7 @@ export default function ClubSelection({
 
                         <div className="sm:w-1/3">
                           {club.image && (
-                            <img
+                            <Img
                               src={club.image}
                               alt={`${club.name} gym`}
                               className="h-32 w-full rounded-lg object-cover"

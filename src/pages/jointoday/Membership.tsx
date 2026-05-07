@@ -2,7 +2,8 @@ import { useContext, useState } from "react";
 import { X } from "lucide-react";
 import { VisibilityContext } from "./JoinToday";
 import { MembershipData } from "../../types/membershipdata.interface";
-import { membershipData } from "../../data/constants/membershipfee";
+import { membershipData } from "../../data/constants/membershipSubscription";
+import Img from "../../components/shared/Img";
 
 export default function Membership() {
   const { isVisible, setIsVisible, setSelectedMembership, selectedMembership } =
@@ -75,7 +76,7 @@ export default function Membership() {
                 <div className="flex items-center gap-3 p-3 sm:gap-4 sm:p-4">
                   <div className="shrink-0">
                     <div className="h-14 w-20 overflow-hidden rounded-md sm:h-16 sm:w-24">
-                      <img
+                      <Img
                         src={item.image}
                         alt={item.title}
                         className="h-full w-full object-cover"

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import Club from "../../assets/images/gym-club.jpg";
+import Img from "../../components/shared/Img";
 
 export default function Membership() {
   const navigate = useNavigate();
@@ -8,10 +8,10 @@ export default function Membership() {
   }
   return (
     <section className="relative">
-      <img
-        src={Club}
+      <Img
+        src="/gym-club.jpg"
         alt="Gym facility"
-        aria-hidden="true"
+        isHidden={true}
         className="min-h-105"
         loading="lazy"
       />

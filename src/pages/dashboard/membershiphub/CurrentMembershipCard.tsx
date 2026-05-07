@@ -1,5 +1,6 @@
 import { Sparkle } from "lucide-react";
 import { MembershipData } from "../../../data/constants/membershipSubscription";
+import Img from "../../../components/shared/Img";
 
 interface CurrentMembershipCardProps {
   membership: MembershipData | null | undefined;
@@ -30,9 +31,9 @@ export default function CurrentMembershipCard({
                   : "border-white/20"
               }`}
             >
-              <img
-                src={membership?.image}
-                alt={membership?.title}
+              <Img
+                src={membership?.image as string}
+                alt={membership?.title as string}
                 className="h-full w-full object-cover"
                 loading="lazy"
               />

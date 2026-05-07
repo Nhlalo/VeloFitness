@@ -1,7 +1,3 @@
-import PremiumClub from "../../assets/images/jointoday-premiumgym.jpg";
-import EliteClub from "../../assets/images/jointoday-elitemembership.jpg";
-import StandardClub from "../../assets/images/jointoday-signature.jpg";
-
 export interface MembershipData {
   id: number;
   image: string;
@@ -15,7 +11,7 @@ export interface MembershipData {
 const membershipData: MembershipData[] = [
   {
     id: 1,
-    image: StandardClub,
+    image: "/jointoday-signature.jpg",
     title: "L'Ordre des Champions", // The Order of Champions
     club: "Signature Experience",
     price: "$79",
@@ -32,7 +28,7 @@ const membershipData: MembershipData[] = [
 
   {
     id: 2,
-    image: EliteClub,
+    image: "/jointoday-elitemembership.jpg",
     club: "Elite Member Benefits",
     title: "La Société Privée", // The Private Society
     price: "$99",
@@ -49,7 +45,7 @@ const membershipData: MembershipData[] = [
 
   {
     id: 3,
-    image: PremiumClub,
+    image: "/jointoday-premiumgym.jpg",
     club: "Premium Club Access",
     title: "Le Cercle d'Or", // The Golden Circle
     price: "$129",
