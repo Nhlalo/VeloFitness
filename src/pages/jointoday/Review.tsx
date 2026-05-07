@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
-import { VisibilityContext } from "./JoinToday";
 import { X } from "lucide-react";
+import { VisibilityContext } from "./JoinToday";
+import Img from "../../components/shared/Img";
 
 import StripeProvider from "../../components/payment/StripeProvider";
 import PaymentForm from "../../components/payment/PaymentForm";
@@ -102,12 +103,14 @@ export default function Review() {
             <div className="p-5">
               <div className="flex items-center gap-4">
                 <div className="shrink-0">
-                  <img
-                    src={selectedMembership?.image}
-                    alt={selectedMembership?.title || "Membership"}
-                    className="h-12 w-12 rounded-full object-cover"
-                    loading="lazy"
-                  />
+                  {selectedMembership?.image && (
+                    <Img
+                      src={selectedMembership?.image}
+                      alt={selectedMembership?.title}
+                      className="h-12 w-12 rounded-full object-cover"
+                      loading="lazy"
+                    />
+                  )}
                 </div>
                 <div className="flex-1 text-left">
                   <div className="font-bold text-black">
