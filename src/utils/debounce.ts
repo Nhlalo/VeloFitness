@@ -6,13 +6,10 @@ export default function debounce<T extends AnyFunction>(
   callback: T,
   delay: number,
 ): (...args: Parameters<T>) => void {
-  let timeoutId: ReturnType<typeof setTimeout>; // Better type than :number
-
+  let timeoutId: ReturnType<typeof setTimeout>;
   return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
-    // Clear the previous timeout
     clearTimeout(timeoutId);
 
-    // Set a new timeout
     timeoutId = setTimeout(() => {
       callback.apply(this, args);
     }, delay);
