@@ -3,5 +3,8 @@ export default function generateInitials(
   surname: string | undefined,
 ) {
   if (!name || !surname) return "";
-  return name.slice(0, 1).toUpperCase() + surname.slice(0, 1).toUpperCase();
+  return (
+    name.trim().slice(0, 1).toUpperCase() +
+    surname.trim().slice(0, 1).toUpperCase()
+  );
 }
