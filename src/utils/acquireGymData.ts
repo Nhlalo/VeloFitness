@@ -14,15 +14,17 @@ function acquireLocalGyms(
   return new Promise((resolve, reject) => {
     if (typeof location !== "string") {
       reject("Incorrect Datatype - location must be a string");
-      return; // Stop execution immediately
+      return;
+    }
+    if (!location.trim().length) {
+      reject("Empty input - input cannot be white spaces only");
+      return;
     }
 
-    // This setTimeout will ONLY run if validation passes
     setTimeout(() => {
       try {
         const locationLowerCase = location.toLowerCase().trim();
 
-        // Find match in gymDescription
         const match = gymDescription.filter((gym) =>
           gym.country.toLowerCase().includes(locationLowerCase),
         );
@@ -32,7 +34,6 @@ function acquireLocalGyms(
           return;
         }
 
-        // Find match according to matching zip, postal or name
         const result = gyms.filter(
           (gym) =>
             gym.name.toLowerCase().includes(locationLowerCase) ||
@@ -67,7 +68,6 @@ function acquireNewGym(location: string) {
   const locationLowerCase = location.toLowerCase().trim();
   const gyms: Gym[] = [...USAGyms, ...SAGyms, ...canadaGyms];
 
-  // Find match according to matching zip, postal or name
   const result = gyms.filter(
     (gym) =>
       gym.name.toLowerCase().includes(locationLowerCase) ||
