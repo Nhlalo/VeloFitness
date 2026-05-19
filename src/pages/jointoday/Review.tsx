@@ -69,6 +69,7 @@ export default function Review() {
   const handlePaymentSuccess = async (token: string) => {
     navigate(`/set-password?email=${formData.email}&token=${token}`, {
       replace: true,
+      state: { from: "jointoday" },
     });
   };
 
