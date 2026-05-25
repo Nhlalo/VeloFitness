@@ -35,7 +35,7 @@ const VisibilityContext = createContext<visibilityMemo>({
   setSelectedMembership: () => {},
 });
 
-function PaymentProcess({ children }: { children: React.ReactNode }) {
+function PaymentProcess() {
   const { isVisible } = useContext(VisibilityContext);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
@@ -65,22 +65,22 @@ function PaymentProcess({ children }: { children: React.ReactNode }) {
       <div className="w-full bg-white">
         <button
           onClick={handleBackClick}
-          className="absolute top-4 right-4 z-10 rounded-full p-2 transition-colors hover:bg-black lg:top-6 lg:right-6 lg:text-black lg:hover:bg-gray-100"
+          className="absolute top-4 right-4 z-20 rounded-full p-2 transition-colors hover:bg-black lg:top-3 lg:right-3 lg:text-black lg:hover:bg-gray-100"
           aria-label="Go back"
         >
           <X
             aria-hidden="true"
             size={20}
-            className="text-black sm:text-white lg:text-black"
+            className="text-white md:text-black"
           />
         </button>
 
         <div className="mx-auto lg:px-8 lg:py-6">
-          <div className="flex flex-col lg:flex-row lg:gap-8">
-            {/* Left Column - Image - Stays at 50% width on all screen sizes */}
+          <div className="flex flex-col md:flex-row lg:gap-8">
+            {/* Left Column - Image */}
             <div className="w-full lg:sticky lg:top-6 lg:w-1/2 lg:self-start">
               <div className="relative w-full lg:h-[calc(100vh-3rem)] lg:rounded-lg">
-                <div className="relative h-screen w-full lg:h-[95vh]">
+                <div className="relative h-screen w-full lg:h-[92vh]">
                   <Img
                     src="/jointoday-background.jpg"
                     alt=""
@@ -116,7 +116,6 @@ function PaymentProcess({ children }: { children: React.ReactNode }) {
               <div
                 ref={containerRef}
                 className="space-y-6 overflow-x-hidden overflow-y-auto px-4 py-6 sm:px-6 md:px-8 lg:px-0 lg:py-0 lg:pl-4 xl:pl-6"
-                style={{ maxHeight: "calc(100vh - 2rem)" }}
               >
                 <div className="lg:sticky lg:top-0 lg:z-10 lg:bg-white">
                   <div className="flex w-full">
@@ -165,7 +164,9 @@ function PaymentProcess({ children }: { children: React.ReactNode }) {
                 </div>
 
                 <div className="relative min-h-screen pb-8 lg:pb-12">
-                  {children}
+                  {isVisible.personalInformation && <PersonalInformation />}
+                  {isVisible.membership && <Membership />}
+                  {isVisible.review && <Review />}
                 </div>
               </div>
             </div>
@@ -175,13 +176,11 @@ function PaymentProcess({ children }: { children: React.ReactNode }) {
 
       {showLeaveModal && (
         <>
-          {/* Overlay */}
           <div
             aria-hidden="true"
             className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
             onClick={handleStay}
           />
-
           <div
             aria-modal="true"
             role="dialog"
@@ -191,7 +190,6 @@ function PaymentProcess({ children }: { children: React.ReactNode }) {
               <h2 className="mb-6 text-2xl font-bold text-black">
                 Are You Sure You Want To Leave?
               </h2>
-
               <div className="flex flex-col gap-3 sm:flex-row">
                 <button
                   onClick={handleStay}
@@ -199,7 +197,6 @@ function PaymentProcess({ children }: { children: React.ReactNode }) {
                 >
                   Stay
                 </button>
-
                 <button
                   onClick={handleLeave}
                   className="flex-1 rounded-lg border-2 border-black bg-white px-6 py-3 text-base font-semibold text-black transition-colors hover:bg-gray-100"
@@ -247,11 +244,7 @@ export default function JoinToday() {
 
   return (
     <VisibilityContext.Provider value={contextValue}>
-      <PaymentProcess>
-        <PersonalInformation />
-        <Membership />
-        <Review />
-      </PaymentProcess>
+      <PaymentProcess />
     </VisibilityContext.Provider>
   );
 }
