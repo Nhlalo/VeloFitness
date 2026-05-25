@@ -36,15 +36,7 @@ export default function Membership() {
   };
 
   return (
-    <div
-      className={`transition-all duration-500 ${
-        isVisible.membership
-          ? "visible translate-x-0 opacity-100"
-          : isVisible.review
-            ? "pointer-events-none invisible absolute inset-0 -translate-x-full opacity-0"
-            : "pointer-events-none invisible absolute inset-0 translate-x-full opacity-0"
-      }`}
-    >
+    <div>
       <div className="p-6 sm:p-8">
         <div className="mb-4 flex justify-end">
           <button

@@ -60,8 +60,8 @@ interface FormErrors {
 }
 
 export default function PersonalInformation() {
-  const { isVisible, setIsVisible, formData, setFormData } =
-    useContext(VisibilityContext);
+  const { setIsVisible, formData, setFormData } = useContext(VisibilityContext);
+
   const [formErrors, setFormErrors] = useState<FormErrors>({
     name: false,
     surname: false,
@@ -132,13 +132,7 @@ export default function PersonalInformation() {
 
   return (
     <>
-      <div
-        className={`transition-all duration-500 ${
-          isVisible.personalInformation
-            ? "visible translate-x-0 opacity-100"
-            : "pointer-events-none invisible absolute inset-0 -translate-x-full opacity-0"
-        }`}
-      >
+      <div className="noscrollbar">
         <div className="space-y-6 sm:space-y-8">
           <div>
             <h2 className="text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl">
