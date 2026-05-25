@@ -2,12 +2,14 @@ import { createBrowserRouter } from "react-router";
 import { homeColors } from "./data/constants/colors";
 import RootLayout from "./components/layout/RootLayout";
 import Home from "./pages/home/Home";
+import ErrorElement from "./pages/errorelement/ErrorElement.tsx";
 import ProtectedRoute from "./components/shared/ProtectedRoute.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorElement />,
     children: [
       {
         index: true,
