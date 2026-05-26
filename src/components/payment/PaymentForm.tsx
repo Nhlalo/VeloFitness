@@ -141,14 +141,6 @@ export default function PaymentForm({
           </div>
         )}
 
-        {success && (
-          <div className="mb-4 rounded-md border border-green-200 bg-green-50 p-3">
-            <p className="text-sm text-green-700">
-              ✓ Payment successful! Your membership is being processed.
-            </p>
-          </div>
-        )}
-
         <div className="mb-4 flex items-center justify-center gap-2 text-xs text-gray-500">
           <Lock size={12} />
           <span>Secure payment powered by Stripe</span>
