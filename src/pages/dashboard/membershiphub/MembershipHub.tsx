@@ -11,6 +11,7 @@ import CurrentMembershipCard from "./CurrentMembershipCard";
 import UsageInsights from "./UsageInsights";
 import ChangePlanModal from "./ChangePlanModal";
 import CancelConfirmModal from "./CancelConfirmModal";
+import { useNavigate } from "react-router";
 
 function findMembershipData(
   membershipsData: MembershipData[],
@@ -50,6 +51,7 @@ export default function MembershipHub() {
     });
   const [loading, setLoading] = useState<boolean>(false);
 
+  const navigate = useNavigate();
   const availablePlans = membershipData.filter(
     (plan) =>
       plan?.title?.toLowerCase() !== user?.membershipTitle?.toLowerCase(),
@@ -70,11 +72,16 @@ export default function MembershipHub() {
       );
 
       if (!response.ok) {
+        if (response.status == 401) {
+          console.error("Unauthorised: Token expired");
+          navigate("/signin");
+          return;
+        }
         throw new Error("Membership change failed");
       }
+
       const data = await response.json();
 
-      console.log(data);
       const membershipPlan = findMembershipData(
         membershipData,
         data.user.membershipTitle,
@@ -114,6 +121,11 @@ export default function MembershipHub() {
       const response = await apiRequest("membership/cancel");
 
       if (!response.ok) {
+        if (response.status == 401) {
+          console.error("Unauthorised: Token expired");
+          navigate("/signin");
+          return;
+        }
         throw new Error("Cancellation failed");
       }
 
@@ -165,10 +177,15 @@ export default function MembershipHub() {
       const response = await apiRequest("membership/reactivate");
 
       if (!response.ok) {
+        if (response.status == 401) {
+          console.error("Unauthorised: Token expired");
+          navigate("/signin");
+          return;
+        }
         throw new Error("Reactivation failed");
       }
+
       const data = await response.json();
-      console.log("DATA", data);
 
       setCancellationStatus({
         isCancelled: false,
