@@ -60,7 +60,17 @@ export default function CancelConfirmModal({
             </div>
             <p className="mt-4 text-xs text-white/40">
               Your membership will remain active until{" "}
-              <span className="text-white">{membershipEndsOn}</span>.
+              <span className="text-white">
+                {new Date(membershipEndsOn as string).toLocaleDateString(
+                  "en-US",
+                  {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  },
+                )}
+              </span>
+              .
             </p>
           </div>
           <div className="flex gap-3 border-t border-red-500/30 p-6 pt-4">
