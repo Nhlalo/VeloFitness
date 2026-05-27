@@ -74,7 +74,7 @@ export default function MembershipHub() {
       if (!response.ok) {
         if (response.status == 401) {
           console.error("Unauthorised: Token expired");
-          navigate("/signin");
+          navigate("/signin", { replace: true });
           return;
         }
         throw new Error("Membership change failed");
@@ -123,7 +123,7 @@ export default function MembershipHub() {
       if (!response.ok) {
         if (response.status == 401) {
           console.error("Unauthorised: Token expired");
-          navigate("/signin");
+          navigate("/signin", { replace: true });
           return;
         }
         throw new Error("Cancellation failed");
@@ -179,7 +179,7 @@ export default function MembershipHub() {
       if (!response.ok) {
         if (response.status == 401) {
           console.error("Unauthorised: Token expired");
-          navigate("/signin");
+          navigate("/signin", { replace: true });
           return;
         }
         throw new Error("Reactivation failed");
