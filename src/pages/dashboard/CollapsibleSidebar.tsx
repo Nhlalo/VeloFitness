@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { CreditCard, User } from "lucide-react";
+import { useNavigate } from "react-router";
+import { CreditCard, User, X } from "lucide-react";
 import throttle from "lodash.throttle";
 
 interface Props {
@@ -16,6 +17,8 @@ export default function CollapsibleSidebar({
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   // Check screen size
   useEffect(() => {
@@ -85,7 +88,6 @@ export default function CollapsibleSidebar({
           />
         )}
 
-        {/* Slide-out Menu - Overlay, doesn't reserve space */}
         <div
           className={`fixed top-0 left-0 z-40 h-full w-64 transform border-r border-white/10 bg-black/95 backdrop-blur-xl transition-transform duration-300 ${
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
@@ -96,6 +98,16 @@ export default function CollapsibleSidebar({
               <h2 className="text-2xl font-light">Menu</h2>
               <div className="mt-2 h-px bg-white/10" />
             </div>
+            <button
+              className="absolute top-18 left-8 flex -translate-x-1/2 items-center gap-2 rounded-lg bg-white/5 px-3 py-2 text-sm text-white/60 backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:text-white"
+              aria-label="Go back"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              <X className="h-4 w-4" />
+              <span>Back</span>
+            </button>
             <nav className="space-y-2">
               {navItems.map((item) => (
                 <button
@@ -128,11 +140,23 @@ export default function CollapsibleSidebar({
         isCollapsed ? "w-20" : "w-64"
       }`}
     >
+      {/* Toggle Collapse Button */}
       <button
         onClick={handleToggleCollapse}
         className="absolute top-8 -right-3 flex h-6 w-6 items-center justify-center rounded-full border border-white/20 bg-white/10 text-xs text-white/60 transition-all duration-300 hover:scale-110 hover:text-white"
       >
         {isCollapsed ? "→" : "←"}
+      </button>
+
+      <button
+        className="absolute top-4 left-8 flex -translate-x-1/2 items-center gap-2 rounded-lg bg-white/5 px-3 py-2 text-sm text-white/60 backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:text-white"
+        aria-label="Go back"
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        <X className="h-4 w-4" />
+        {!isCollapsed && <span>Back</span>}
       </button>
 
       <div className="flex h-full flex-col">
