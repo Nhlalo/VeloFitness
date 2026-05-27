@@ -54,10 +54,14 @@ export default function Footer() {
               </h3>
               <ul className="pl-0">
                 <li className="px-0 py-2 text-lg">
-                  <a href="">About Us</a>
+                  <a href="" onClick={(e) => e.preventDefault()}>
+                    About Us
+                  </a>
                 </li>
                 <li className="px-0 py-2 text-lg">
-                  <a href="">Apps</a>
+                  <a href="" onClick={(e) => e.preventDefault()}>
+                    Apps
+                  </a>
                 </li>
               </ul>
             </div>
@@ -67,13 +71,19 @@ export default function Footer() {
               </h3>
               <ul className="pl-0">
                 <li className="px-0 py-2 text-lg">
-                  <a href="">Terms</a>
+                  <a href="" onClick={(e) => e.preventDefault()}>
+                    Terms
+                  </a>
                 </li>
                 <li className="px-0 py-2 text-lg">
-                  <a href="">Privacy Policy</a>
+                  <a href="" onClick={(e) => e.preventDefault()}>
+                    Privacy Policy
+                  </a>
                 </li>
                 <li className="px-0 py-2 text-lg">
-                  <a href="">Manage Your Data</a>
+                  <a href="" onClick={(e) => e.preventDefault()}>
+                    Manage Your Data
+                  </a>
                 </li>
               </ul>
             </div>
@@ -85,7 +95,7 @@ export default function Footer() {
           </p>
           <ul className="mb-6 flex justify-center gap-7 pl-0">
             <li title="Facebook">
-              <a href="">
+              <a href="" onClick={(e) => e.preventDefault()}>
                 {" "}
                 <FontAwesomeIcon
                   icon={faFacebookF}
@@ -94,7 +104,7 @@ export default function Footer() {
               </a>
             </li>
             <li title="X">
-              <a href="">
+              <a href="" onClick={(e) => e.preventDefault()}>
                 {" "}
                 <FontAwesomeIcon
                   icon={faXTwitter}
@@ -103,7 +113,7 @@ export default function Footer() {
               </a>
             </li>
             <li title="Instagram">
-              <a href="">
+              <a href="" onClick={(e) => e.preventDefault()}>
                 <FontAwesomeIcon
                   icon={faInstagram}
                   style={{ width: "28px", height: "28px", fill: "white" }}
@@ -111,7 +121,7 @@ export default function Footer() {
               </a>
             </li>
             <li title="SnapChat">
-              <a href="">
+              <a href="" onClick={(e) => e.preventDefault()}>
                 <FontAwesomeIcon
                   icon={faSnapchat}
                   style={{ width: "28px", height: "28px", fill: "white" }}
