@@ -51,7 +51,7 @@ export default function CurrentMembershipCard({
                     : "bg-white/10"
                 }`}
               >
-                {isCancelled ? "Pending Cancellation" : "Active"}
+                {isCancelled ? "Cancelled" : "Active"}
               </span>
             </div>
             <p className="mb-4 text-sm text-white/60">{membership?.club}</p>
