@@ -119,8 +119,8 @@ export default function MembershipHub() {
 
       const data = await response.json();
 
-      const cancellationDate = data.user.cancelledAt
-        ? new Date(data.cancelledAt)
+      const cancellationDate = data?.user.cancelledAt
+        ? new Date(data.user.cancelledAt)
         : new Date();
 
       const membershipEndDate = user?.membershipEndDate
