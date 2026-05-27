@@ -70,6 +70,7 @@ interface PersonalDetailsProps {
   user: User | null;
   formErrors: Record<string, boolean>;
   isEditing: boolean;
+  loading: boolean;
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     inputName: string,
@@ -84,6 +85,7 @@ export default function PersonalDetails({
   user,
   formErrors,
   isEditing,
+  loading,
   handleChange,
   handleEditClick,
   handleCancelClick,
@@ -120,7 +122,7 @@ export default function PersonalDetails({
               onClick={handleSaveClick}
               className="rounded-full bg-white px-5 py-2.5 text-sm font-medium text-black transition-all duration-300 hover:bg-white/90"
             >
-              Save Changes
+              {loading ? "Saving" : "Save Changes"}
             </button>
           </div>
         )}
