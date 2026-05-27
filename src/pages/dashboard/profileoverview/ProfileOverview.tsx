@@ -63,6 +63,7 @@ export default function ProfileOverview() {
 
     if (hasErrors && hasEmptyFields) return;
 
+    setLoading(true);
     try {
       const body = {
         name: user.name,
@@ -78,6 +79,7 @@ export default function ProfileOverview() {
         setLoading(false);
         if (response.status == 401) {
           navigate("/sigin", { replace: true });
+          return;
         }
         throw new Error("Personal details change failed");
       }
@@ -192,6 +194,7 @@ export default function ProfileOverview() {
                 handleEditClick={handleEditClick}
                 handleCancelClick={handleCancelClick}
                 handleSaveClick={handleSaveClick}
+                loading={loading}
               />
 
               <Stats />
