@@ -46,10 +46,10 @@ Vélo Fitness is a full-stack gym platform where users can browse fitness classe
 
 This project is split across **two separate GitHub repositories**:
 
-| Repository                                                                     | Purpose          | Tech                                 |
-| ------------------------------------------------------------------------------ | ---------------- | ------------------------------------ |
-| [velo-fitness-frontend](https://github.com/yourusername/velo-fitness-frontend) | React frontend   | React, TypeScript, Tailwind          |
-| [velo-fitness-backend](https://github.com/yourusername/velo-fitness-backend)   | REST API backend | Node.js, Express, Prisma, PostgreSQL |
+| Repository                                                           | Purpose          | Tech                                 |
+| -------------------------------------------------------------------- | ---------------- | ------------------------------------ |
+| [velo-fitness-frontend](https://github.com/Nhlalo/VeloFitness)       | React frontend   | React, TypeScript, Tailwind          |
+| [velo-fitness-backend](https://github.com/Nhlalo/VeloFitnessBackend) | REST API backend | Node.js, Express, Prisma, PostgreSQL |
 
 ### Backend API Structure (RESTful)
 
@@ -88,7 +88,7 @@ This project is split across **two separate GitHub repositories**:
 ### Backend Setup
 
 ```bash
-git clone https://github.com/yourusername/velo-fitness-backend.git
+git clone git@github.com:Nhlalo/VeloFitnessBackend.git
 cd velo-fitness-backend
 npm install
 ```
