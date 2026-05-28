@@ -6,7 +6,7 @@ import { membershipData } from "../../data/constants/membershipSubscription";
 import Img from "../../components/shared/Img";
 
 export default function Membership() {
-  const { isVisible, setIsVisible, setSelectedMembership, selectedMembership } =
+  const { setIsVisible, setSelectedMembership, selectedMembership } =
     useContext(VisibilityContext);
   const [selectedId, setSelectedId] = useState<number | null>(
     selectedMembership?.id || null,
