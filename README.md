@@ -4,8 +4,8 @@
 
 Vélo Fitness is a full-stack gym platform where users can browse fitness classes, book spots, and pay securely. It features JWT authentication with access/refresh tokens, email confirmations, and Stripe payment processing.
 
-![Screenshot](./screenshots/home.png)
-![Booking flow](./screenshots/booking.png)
+![Screenshot](./public/screenshots/home.png)
+![Booking flow](./public/screenshots/checkout.png)
 
 ---
 
