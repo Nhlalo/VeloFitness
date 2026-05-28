@@ -24,15 +24,15 @@ Vélo Fitness is a full-stack gym platform where users can browse fitness classe
 
 ## 🛠️ Tech Stack
 
-| -------------- | -----------------------------------------------------------------|
-| Layer | Technology |
-| Frontend | React, TypeScript, Tailwind CSS, Vite |
-| Backend | Node.js, Express, REST API |
-| Database | PostgreSQL, Prisma ORM |
-| Authentication | JWT (access + refresh tokens, HTTP-only cookies) |
-| Payments | Stripe (checkout + webhooks) |
-| Email | Nodemailer / Resend (SMTP) |
-| Deployment | Netlify (frontend), Render / Railway (backend) & Aiven (database)|
+| Layer          | Technology                                                        |
+| -------------- | ----------------------------------------------------------------- |
+| Frontend       | React, TypeScript, Tailwind CSS, Vite                             |
+| Backend        | Node.js, Express, REST API                                        |
+| Database       | PostgreSQL, Prisma ORM                                            |
+| Authentication | JWT (access + refresh tokens, HTTP-only cookies)                  |
+| Payments       | Stripe (checkout + webhooks)                                      |
+| Email          | Nodemailer / Resend (SMTP)                                        |
+| Deployment     | Netlify (frontend), Render / Railway (backend) & Aiven (database) |
 
 ---
 
