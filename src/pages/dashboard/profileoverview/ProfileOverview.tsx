@@ -32,7 +32,7 @@ export default function ProfileOverview() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     inputName: string,
-    jsPattern: string,
+    jsPattern: RegExp,
   ) => {
     const { value } = e.target;
     setUser((prev) => {

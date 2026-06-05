@@ -74,7 +74,7 @@ interface PersonalDetailsProps {
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     inputName: string,
-    jsPattern: string,
+    jsPattern: RegExp,
   ) => void;
   handleEditClick: () => void;
   handleCancelClick: () => void;
