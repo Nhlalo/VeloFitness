@@ -74,7 +74,7 @@ export default function PersonalInformation() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     fieldName: string,
-    jsPattern: string,
+    jsPattern: RegExp,
   ) => {
     const value = e.target.value;
 
