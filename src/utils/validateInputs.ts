@@ -2,7 +2,7 @@ export default function validateField<T extends Record<string, any>>(
   setFormErrors: React.Dispatch<React.SetStateAction<T>>,
   fieldName: string,
   value: string,
-  pattern: string,
+  pattern: RegExp,
 ) {
   const regex = new RegExp(pattern);
   const isValid = regex.test(value);
@@ -12,7 +12,7 @@ export default function validateField<T extends Record<string, any>>(
   }));
 }
 
-function isInputValid(pattern: string, value: string) {
+function isInputValid(pattern: RegExp, value: string) {
   const regex = new RegExp(pattern);
   const isValid = regex.test(value);
   return isValid;
