@@ -85,7 +85,7 @@ export default function SignInForm({
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     inputName: string,
-    jsPattern: string,
+    jsPattern: RegExp,
   ) => {
     const { value } = e.target;
     setFormFieldsValues((prev) => ({ ...prev, [inputName]: value }));
