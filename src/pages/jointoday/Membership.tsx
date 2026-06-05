@@ -37,7 +37,7 @@ export default function Membership() {
 
   return (
     <div>
-      <div className="p-6 sm:p-8">
+      <div className="sm:p-8 sm:pt-0 md:pb-6">
         <div className="mb-4 flex justify-end">
           <button
             onClick={handleGoBack}

@@ -87,7 +87,7 @@ export default function Review() {
       }`}
     >
       <div className="pb-8">
-        <div className="mb-4 flex justify-end px-6 pt-6 sm:px-8 sm:pt-8">
+        <div className="mb-4 flex justify-end px-6 pt-6 sm:px-8 sm:pt-0">
           <button
             onClick={handleGoBack}
             className="rounded-full p-2 transition-colors hover:bg-gray-100"
