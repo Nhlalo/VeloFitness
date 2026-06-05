@@ -15,9 +15,9 @@ export default function SignIn() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-black px-4 text-white">
       <div className="relative w-full max-w-md">
-        <div className="grid">
+        <div className="relative grid">
           <div
-            className={`col-start-1 row-start-1 transition-all duration-500 ${
+            className={`col-start-1 row-start-1 transition-all delay-50 duration-500 ${
               view === "login"
                 ? "visible translate-x-0 opacity-100"
                 : "pointer-events-none invisible -translate-x-full opacity-0"
@@ -30,10 +30,10 @@ export default function SignIn() {
           </div>
 
           <div
-            className={`col-start-1 row-start-1 transition-all duration-500 ${
+            className={`absolute top-0 bottom-0 col-start-1 row-start-1 transition-all delay-100 duration-500 ${
               view === "forgot"
-                ? "visible translate-x-0 opacity-100"
-                : "pointer-events-none invisible translate-x-full opacity-0"
+                ? "visible right-0 opacity-100"
+                : "pointer-events-none invisible right-0 left-0 opacity-0"
             }`}
           >
             <ForgotPassword
