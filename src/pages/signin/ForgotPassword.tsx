@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { formFields } from "../../data/constants/inputsvalidation";
 import { isInputValid } from "../../utils/validateInputs";
 import apiRequest from "../../service/appApi";
@@ -30,6 +30,9 @@ export default function ForgotPassword({
   const handleResetPassword = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (loading) return;
+
+    setLoading(true);
+
     try {
       const response = await apiRequest("auth/reset-password-request", {
         email: resetEmail,
@@ -91,10 +94,17 @@ export default function ForgotPassword({
 
       <button
         type="submit"
-        disabled={!validateEmail}
-        className="w-full rounded-full bg-white py-3 font-medium text-black transition-all hover:bg-gray-200"
+        disabled={!validateEmail || loading}
+        className="flex w-full items-center justify-center gap-2 rounded-full bg-white py-3 font-medium text-black transition-all hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
       >
-        Reset Password
+        {loading ? (
+          <>
+            <Loader2 className="h-5 w-5 animate-spin text-black" />
+            Resetting...
+          </>
+        ) : (
+          "Reset Password"
+        )}
       </button>
     </form>
   );
